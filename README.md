@@ -38,8 +38,10 @@ The following commands create a new environment, activate it, install the packag
   # cloning from git repository
   git clone https://github.com/bopen/rose-l-ard.git rose-l-ard
   cd rose-l-ard
+  # create conda environment
   conda create -n rosel --file env.yaml
   conda activate rosel
+  # install rosel package
   pip install -e .
 ```
 
