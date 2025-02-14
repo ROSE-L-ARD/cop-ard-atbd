@@ -31,16 +31,34 @@ Non-objectives / Caveat emptor items:
 
 ## Install
 
-The easiest way to install *sarsen* is in a *conda* environment.
+The easiest way to install *rosel* is in a *conda* environment.
 The following commands create a new environment, activate it, install the package and its dependencies:
 
 ```shell
-  # cloning from git repository
-  git clone https://github.com/bopen/rose-l-ard.git rose-l-ard
-  cd rose-l-ard
-  conda create -n rosel --file env.yaml
-  conda activate activate rosel
-  pip install -e .
+# cloning from git repository
+git clone https://github.com/bopen/rose-l-ard.git rose-l-ard
+cd rose-l-ard
+
+# create a new conda environment
+conda env create -n rosel -f env.yaml
+
+# activate conda environment
+conda activate rosel
+
+# install rosel package
+pip install -e .
+```
+
+## Test installation
+In order to test the correct installation of *rosel* package execute the following command:
+```python
+# import rosel geocoding module
+import rosel.shiroma
+
+  
+# check rosel geocoding interface based on area projected algorithm
+rosel.shiroma.map_geo_ap?
+  
 ```
 
 ## Command line usage
