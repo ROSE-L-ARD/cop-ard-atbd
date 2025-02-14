@@ -47,11 +47,6 @@ This is the list of the reference documents:
 - 
 -
 
-## Project resources
-
-[![on-push](https://github.com/bopen/rose-l-ard/actions/workflows/on-push.yml/badge.svg)](https://github.com/bopen/rose-l-ard/actions/workflows/on-push.yml)
-[![codecov](https://codecov.io/gh/bopen/rose-l-ard/branch/main/graph/badge.svg?token=62S9EXDF0V)](https://codecov.io/gh/bopen/rose-l-ard)
-
 ## Contributing
 
 The main repository is hosted on GitHub.
