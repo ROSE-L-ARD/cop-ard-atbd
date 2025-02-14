@@ -39,7 +39,7 @@ The following commands create a new environment, activate it, install the packag
   git clone https://github.com/bopen/rose-l-ard.git rose-l-ard
   cd rose-l-ard
   conda create -n rosel --file env.yaml
-  conda activate activate rosel
+  conda activate rosel
   pip install -e .
 ```
 
