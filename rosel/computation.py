@@ -96,9 +96,7 @@ def optimize_chunks(data: xr.DataArray, chunks: dict) -> dict:
     i_valid = np.empty((0), dtype="int32")
 
     for k in chunks.keys():
-        c = data.chunksizes.get(
-            k, None
-        )  # type: Union[np.typing.NDArray[Any], tuple[int, ...], None]
+        c = data.chunksizes.get(k, None)  # type: Union[np.typing.NDArray[Any], tuple[int, ...], None]
         if c is not None:
             c = np.asarray(c, dtype="int32")
             if any(c[:-1] - c[0] != 0):
@@ -153,24 +151,16 @@ def get_chunks(
         if chunksizes is None:
             k: Union[str, KeysView[str]]
             v: Union[
-                np.typing.NDArray[Any],
-                Tuple[int, ...],
-                List[int],
-                Tuple[Tuple[int, int]],
-                List[Tuple[Tuple[int, int]]],
+                np.typing.NDArray[Any], Tuple[int, ...], List[int], Tuple[Tuple[int, int]], List[Tuple[Tuple[int, int]]]
             ]
 
             for k, v in data.chunksizes.items():
                 v = np.insert(np.cumsum(v), 0, 0)
                 if not (isinstance(k, str)):
                     raise Exception(f"Expected str, got {type(k)}")
-                _chunks[k], _indices[k] = zip(
-                    *tuple(((v[i], v[i + 1]), i) for i in range(len(v) - 1))
-                )
+                _chunks[k], _indices[k] = zip(*tuple(((v[i], v[i + 1]), i) for i in range(len(v) - 1)))
         else:
-            if (
-                (set(chunksizes.keys()) - set(cast(Tuple[str], data.dims))) == set()
-            ) is False:
+            if ((set(chunksizes.keys()) - set(cast(Tuple[str], data.dims))) == set()) is False:
                 raise Exception(
                     f"chunksizes element list {tuple(chunksizes.keys())} must be a subset of the data\
                     dimension set {data.dims}",
@@ -195,23 +185,15 @@ def get_chunks(
         v = list(cast(tuple, zip(*itertools.product(*_indices.values()))))
         _indices = {k: v for k, v in zip(_indices.keys(), v)}
     else:
-        k, v = chunks.keys(), cast(
-            List[Tuple[Tuple[int, int]]], list(cast(ValuesView, chunks.values()))
-        )
+        k, v = chunks.keys(), cast(List[Tuple[Tuple[int, int]]], list(cast(ValuesView, chunks.values())))
         if (set(k) == set(data.dims)) is False:
             raise Exception("chunks must contain all the data dimensions")
         if (all(len(v[0]) == len(e) for e in v)) is False:
-            raise Exception(
-                "the lists of values of chunks cannot have a different number of elements"
-            )
+            raise Exception("the lists of values of chunks cannot have a different number of elements")
         if (all(i[0] <= i[1] for j in v for i in j)) is False:
-            raise Exception(
-                "chunk start value must be lower than or equal to the corresponding end value"
-            )
+            raise Exception("chunk start value must be lower than or equal to the corresponding end value")
         if (all(np.max(v) <= data[k].size for k, v in chunks.items())) is False:
-            raise Exception(
-                "all chunks values must be lower than the size of the corresponding data dimension"
-            )
+            raise Exception("all chunks values must be lower than the size of the corresponding data dimension")
         _chunks = dict(chunks)
         _indices = {k: (0,) * len(v) for k, v in _chunks.items()}
     if chunking_optimization:
@@ -227,9 +209,7 @@ def apply_overlap(
     _chunks_ov = {}
     for k in chunks.keys():
         delta = overlap_sizes[k] if k in overlap_sizes else 0
-        _chunks_ov[k] = [
-            [s - delta if s > delta else 0, e + delta] for (s, e) in chunks[k]
-        ]
+        _chunks_ov[k] = [[s - delta if s > delta else 0, e + delta] for (s, e) in chunks[k]]
     return _chunks_ov
 
 
@@ -246,10 +226,8 @@ def try_to_combine(
         try:
             # when func returns paths, I will try  #
             # reading and then concatenating them  #
-            if all(isinstance(e, str) for e in result) and all(
-                s1_ard_core.computing.io.isdir(e) for e in result
-            ):
-                _result = [s1_ard_core.computing.io.read(e) for e in result]
+            if all(isinstance(e, str) for e in result) and all(rosel.io.isdir(e) for e in result):
+                _result = [rosel.io.read(e) for e in result]
             else:
                 raise ValueError("result does not seem to be data file")
         except (FileNotFoundError, ValueError):
@@ -270,17 +248,11 @@ def try_to_combine(
                 _result = xr.combine_by_coords(_result)
                 _ok = True
             except:
-                logger.warning(
-                    "conbine_by_coords failed results will be returned as a list"
-                )
+                logger.warning("conbine_by_coords failed results will be returned as a list")
         return _result if _ok else result
 
     result: Any  # mypy fix
-    for result in (
-        zip(*results)
-        if all(isinstance(e, (list, tuple)) for e in results)
-        else (results,)
-    ):
+    for result in zip(*results) if all(isinstance(e, (list, tuple)) for e in results) else (results,):
         _s = [getattr(e, "attrs", {}).get("store_path", None) for e in result]
         if (_s[0] is not None) and all(_s[0] == e for e in _s):
             # all the result elements have been saved into the same store_path. In such a case  #
@@ -300,14 +272,7 @@ def retrieve_client(
     client_options: dict = {},
     enable_dask: bool = True,
     **kwargs: dict,
-) -> Tuple[
-    Union[dask.distributed.Client, DummyClient],
-    bool,
-    bool,
-    Union[bool, None],
-    bool,
-    int,
-]:
+) -> Tuple[Union[dask.distributed.Client, DummyClient], bool, bool, Union[bool, None], bool, int]:
     c_opt = copy.deepcopy(client_options)
     # client options retrieve #
     name = c_opt.pop("name", None)
@@ -322,9 +287,7 @@ def retrieve_client(
         jobs_chunksize = 20_000
         try:
             # client retrieve if dask is enabled #
-            client: Union[DummyClient, dask.distributed.client.Client] = (
-                dask.distributed.get_client(name)
-            )
+            client: Union[DummyClient, dask.distributed.client.Client] = dask.distributed.get_client(name)
         except (ValueError, OSError):
             create = True
             logger.warning("No global client found a new one will be created")
@@ -378,9 +341,7 @@ def map_blocks(
     chunking_optimization: bool = False,
     overlap_sizes: Mapping[str, Any] = {},
     fix_memory_leak: bool | Literal["auto"] = False,  # n_replicate: int = 0,
-    scatter_strategy: (
-        Literal["once-and-for-all", "inside-loop", "no-scatter"] | None
-    ) = None,
+    scatter_strategy: Literal["once-and-for-all", "inside-loop", "no-scatter"] | None = None,
     resources: Mapping[str, Any] = {"cores": 1, "memory": 1024},  # memory in MB
     scheduler: str | None = "synchronous",
     client_options: Mapping[str, Any] = {},
@@ -448,6 +409,9 @@ def map_blocks(
                            - dask.dask_jobqueue.SLURMCluster (SLURM)
 
     """
+    RESERVED_KWARGS = ("job_id", "chunk", "block_id", "chunk_ov")
+    if (set(kwargs.keys()) == (set(kwargs.keys()) - set(RESERVED_KWARGS))) is False:
+        raise Exception(f"{RESERVED_KWARGS} are reserved. Got {kwargs}")
     # client retrieve #
     client, enable_dask, restart, destroy, broadcast, jobs_chunksize = retrieve_client(
         client_options,
@@ -457,44 +421,49 @@ def map_blocks(
     # function signature extraction #
     func_parameters = inspect.signature(func).parameters
 
+    def get_params(**kwargs):
+        func_parameters = inspect.signature(func).parameters
+        kwargs = {k: v for k, v in kwargs.items() if k not in RESERVED_KWARGS}
+        return func_parameters, kwargs
+
+    func_parameters, kwargs_ = get_params(**kwargs)
+
     # input objs from now on must be lists or tuples  #
     # DO NOT MOVE THE FOLLOWING FOUR LINES FROM HERE  #
-    _objs = [obj] if not isinstance(obj, (list, tuple)) else list(obj)
-    _objs_ov = [obj_ov] if not isinstance(obj_ov, (list, tuple)) else list(obj_ov)
-    _args = [args] if not isinstance(args, (list, tuple)) else list(args)
+    def check_inputs(obj, obj_ov, args):
+        _objs = [obj] if not isinstance(obj, (list, tuple)) else list(obj)
+        _objs_ov = [obj_ov] if not isinstance(obj_ov, (list, tuple)) else list(obj_ov)
+        _args = [args] if not isinstance(args, (list, tuple)) else list(args)
+        return _objs, _objs_ov, _args
+
+    _objs, _objs_ov, _args = check_inputs(obj, obj_ov, args)
     i_ov = len(_objs) + 1
 
     # flag_ov = bool(_objs_ov)
 
     # optimal scattering strategy selection #
-    scatter_strategy, apply_isel = select_scatter_strategy(
-        (_objs + _objs_ov), scatter_strategy
-    )
+    scatter_strategy, apply_isel = select_scatter_strategy((_objs + _objs_ov), scatter_strategy)
     logger.debug(f"Selected scatter strategy: {scatter_strategy}")
 
     @conditional_delayed(enable_dask)
     def execute(objs, args, indices, block_id, job_id, apply_isel=apply_isel):
         # reserved keywords set #
         if "chunk" in func_parameters:
-            kwargs["chunk"] = indices[0]
+            kwargs_["chunk"] = indices[0]
         if "chunk_ov" in func_parameters:
-            kwargs["chunk_ov"] = indices[i_ov]
-
+            kwargs_["chunk_ov"] = indices[i_ov]
         if "job_id" in func_parameters:
-            kwargs["job_id"] = job_id
+            kwargs_["job_id"] = job_id
         if "block_id" in func_parameters:
-            kwargs["block_id"] = block_id
-
+            kwargs_["block_id"] = block_id
         # processing execution #
         if apply_isel is True:
             objs = [obj.isel(index) for (obj, index) in zip(objs, indices)]
         with dask.annotate(resources=resources), dask.config.set(scheduler=scheduler):
-            res = func(*objs, *args, **kwargs)
+            res = func(*objs, *args, **kwargs_)
         return res
 
-    _chunks, _block_ids, _n_chunks = get_chunks(
-        _objs[0], chunks, chunksizes, chunking_optimization
-    )
+    _chunks, _block_ids, _n_chunks = get_chunks(_objs[0], chunks, chunksizes, chunking_optimization)
     logger.debug(f"Number of blocks to be processed: {_n_chunks}")
 
     # when requested, the overlapped chunks will be computed #
@@ -505,18 +474,32 @@ def map_blocks(
         fix_memory_leak = _n_chunks > jobs_chunksize
 
     # dask bug: a dict cannot be scattered #
-    _future_args = [
-        _arg if isinstance(_arg, dict) else client.scatter(_arg, broadcast=broadcast)
-        for _arg in _args
-    ]
+    _future_args = [_arg if isinstance(_arg, dict) else client.scatter(_arg, broadcast=broadcast) for _arg in _args]
     if scatter_strategy == "no-scatter":
         _future_objs = _objs + _objs_ov
     elif scatter_strategy == "once-and-for-all":
-        _future_objs = [
-            client.scatter(_obj, broadcast=broadcast) for _obj in (_objs + _objs_ov)
-        ]
+        _future_objs = [client.scatter(_obj, broadcast=broadcast) for _obj in (_objs + _objs_ov)]
 
     results, job_array = [], []
+
+    def compute_results(fix_memory_leak, enable_dask, restart, destroy, job_array):
+        _future_args = []
+        _future_objs = []
+        if fix_memory_leak and enable_dask and (restart or destroy):
+            results_ = [DummyFuture(e.result()) for e in client.compute(job_array)]
+            # client restart #
+            client.restart()
+
+            # if required data must be re-scattering on the new cluster #
+            _future_args = [
+                _arg if isinstance(_arg, dict) else client.scatter(_arg, broadcast=broadcast) for _arg in _args
+            ]
+            if scatter_strategy == "once-and-for-all":
+                _future_objs = [client.scatter(_obj, broadcast=broadcast) for _obj in (_objs + _objs_ov)]
+        else:
+            results_ = client.compute(job_array)
+        return results_, _future_args, _future_objs
+
     for j in range(_n_chunks):
         _block_id = {k: v[j] for k, v in _block_ids.items()}
         _chunk = {k: slice(v[j][0], v[j][1], None) for k, v in _chunks.items()}
@@ -524,44 +507,20 @@ def map_blocks(
 
         # chunk to slice indices #
         _i = [{k: v for k, v in _chunk.items() if k in _obj.dims} for _obj in _objs]
-        _i += [
-            {k: v for k, v in _chunk_ov.items() if k in _obj.dims} for _obj in _objs_ov
-        ]
+        _i += [{k: v for k, v in _chunk_ov.items() if k in _obj.dims} for _obj in _objs_ov]
 
         if scatter_strategy == "inside-loop":
-            _objs_isel = [
-                _obj.isel(index) for _obj, index in zip((_objs + _objs_ov), _i)
-            ]
-            _future_objs = [
-                client.scatter(_obj, broadcast=broadcast) for _obj in _objs_isel
-            ]
+            _objs_isel = [_obj.isel(index) for _obj, index in zip((_objs + _objs_ov), _i)]
+            _future_objs = [client.scatter(_obj, broadcast=broadcast) for _obj in _objs_isel]
         job_array += [execute(_future_objs, _future_args, _i, _block_id, j)]
         if (j + 1) % jobs_chunksize == 0:
-            if fix_memory_leak and enable_dask and (restart or destroy):
-                results, job_array = (
-                    results
-                    + [DummyFuture(e.result()) for e in client.compute(job_array)],
-                    [],
-                )
-                # client restart #
-                client.restart()
-
-                # if required data must be re-scattering on the new cluster #
-                _future_args = [
-                    (
-                        _arg
-                        if isinstance(_arg, dict)
-                        else client.scatter(_arg, broadcast=broadcast)
-                    )
-                    for _arg in _args
-                ]
-                if scatter_strategy == "once-and-for-all":
-                    _future_objs = [
-                        client.scatter(_obj, broadcast=broadcast)
-                        for _obj in (_objs + _objs_ov)
-                    ]
-            else:
-                results, job_array = results + client.compute(job_array), []
+            r, fa, fo = compute_results(fix_memory_leak, enable_dask, restart, destroy, job_array)
+            job_array = []
+            results = results + r
+            if fa:
+                _future_args = fa
+            if fo:
+                _future_objs = fo
 
     if job_array:
         results += client.compute(job_array)
@@ -573,7 +532,6 @@ def map_blocks(
         client.restart()
     else:
         [client.cancel(e) for e in _future_args + _future_objs]
-
     return try_to_combine(results) if combine else results
 
 
@@ -612,9 +570,7 @@ def map(
             return func(*args, **kwargs)
 
     # client retrieve #
-    client, enable_dask, restart, destroy, _, _ = retrieve_client(
-        client_options, enable_dask=enable_dask
-    )
+    client, enable_dask, restart, destroy, _, _ = retrieve_client(client_options, enable_dask=enable_dask)
     results = client.gather(client.map(execute, *_args, **kwargs))
 
     if destroy:
@@ -674,9 +630,7 @@ def create_cluster(
     import psutil
 
     if (type in ["LOCAL", "SLURM", "DUMMY"]) is False:
-        raise Exception(
-            "Invalid cluster type. Allowed types are LOCAL, SLURM and DUMMY"
-        )
+        raise Exception("Invalid cluster type. Allowed types are LOCAL, SLURM and DUMMY")
 
     # get the number of logical cores and RAM memory
     if n_jobs is None:
@@ -686,9 +640,7 @@ def create_cluster(
         if kwargs.get("processes", True) is False:
             job_memory *= n_jobs
 
-    logger.debug(
-        f"<Cluster info: type={type}, " f"n_jobs={n_jobs}, job_memory={job_memory}>"
-    )
+    logger.debug(f"<Cluster info: type={type}, " f"n_jobs={n_jobs}, job_memory={job_memory}>")
     if type == "SLURM":
         import dask_jobqueue
 
@@ -729,9 +681,7 @@ def create_client(
 
     """
     if (type in ["LOCAL", "SLURM", "DUMMY"]) is False:
-        raise Exception(
-            "Invalid cluster type. Allowed types are LOCAL, SLURM and DUMMY"
-        )
+        raise Exception("Invalid cluster type. Allowed types are LOCAL, SLURM and DUMMY")
 
     cluster = create_cluster(type, n_jobs, job_memory, **kwargs)
 
