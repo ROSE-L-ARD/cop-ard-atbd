@@ -350,7 +350,6 @@ def compute_geo_ap(
             col_multilook = (row * rg_size + col).astype("int32")
             data = np.ones_like(col_multilook, dtype=bool)
             radar_coords = radar_coords - radar_min
-            # Using csc_array, because for a matrix M x N, csr_array has indptr of size M+1
             T = scipy.sparse.csr_array(
                 (data, (radar_coords, col_multilook)), shape=(radar_max - radar_min + 1, rg_size * az_size)
             )
