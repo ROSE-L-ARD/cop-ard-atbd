@@ -52,9 +52,7 @@ def write(
         )
         is False
     ):
-        raise Exception(
-            f"Data type must be either a xr.Dataset or a xr.DataArray. Received {type(data).__name__}"
-        )
+        raise Exception(f"Data type must be either a xr.Dataset or a xr.DataArray. Received {type(data).__name__}")
     if isinstance(data, datatree.DataTree) and group is not None:
         AssertionError("group must be None if type(data) == datatree.Datatree")
 
@@ -115,11 +113,15 @@ def write(
         # drop all dimension coordinates to avoid concurrent writing
         _data = _data.drop_vars(set(_data.dims).intersection(set(_data.coords)))
 
-    try:
-        _data = _data.assign_attrs(_data_attrs)
-    except AttributeError:
-        for k, v in _data_attrs.items():
-            _data.attrs[k] = v
+    def assign_attrs(_data, _data_attrs):
+        if isinstance(_data, (xr.DataArray, xr.Dataset)):
+            _data = _data.assign_attrs(_data_attrs)
+        else:
+            for k, v in _data_attrs.items():
+                _data.attrs[k] = v
+        return _data
+
+    _data = assign_attrs(_data, _data_attrs)
     _data.to_zarr(  # type: ignore
         _file_path,
         mode=mode,
@@ -368,9 +370,7 @@ def decorator(func):
                 return
 
         _func = getattr(fs, func.__name__)
-        _kwargs = {
-            k: v for k, v in kwargs.items() if k in inspect.signature(_func).parameters
-        }
+        _kwargs = {k: v for k, v in kwargs.items() if k in inspect.signature(_func).parameters}
         res = _func(path, **_kwargs)
 
         # Function dependent result post-processing
@@ -573,9 +573,7 @@ class MetadataTemplate:
                     # Attempt to cast the value to the expected type
                     cast_value = expected_type(value)
                 except (ValueError, TypeError) as e:
-                    raise TypeError(
-                        f"Key '{key}' expects type {expected_type}, but casting failed: {e}"
-                    )
+                    raise TypeError(f"Key '{key}' expects type {expected_type}, but casting failed: {e}")
                 rendered[key] = cast_value
             elif default_value is not None:
                 # Use default value if provided
@@ -586,9 +584,7 @@ class MetadataTemplate:
         return rendered
 
 
-def read_datatree_node(
-    data: datatree.DataTree, node_path: str, as_dataset: bool = True
-):
+def read_datatree_node(data: datatree.DataTree, node_path: str, as_dataset: bool = True):
     node: Union[datatree.DataTree, xr.DataArray, xr.Dataset] = data
     for tag in node_path.split("/"):
         if tag in node.keys():
