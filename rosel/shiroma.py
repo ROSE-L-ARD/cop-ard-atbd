@@ -192,7 +192,6 @@ def map_geo_ap(
     data_path_shiroma: str,
     data_path_geo_ap: str,
     multilook: Dict[str, int] = {"azimuth_time": 1, "slant_range_time": 1},
-    get_average: bool = False,
     enable_dask: bool = True,
     read: bool = False,
     scheduler: str = "synchronous",
@@ -207,8 +206,6 @@ def map_geo_ap(
         data_path_shiroma (str): Path to the directory where the weights and global values are stored.
         data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
         multilook (Dict, optional): Defaults to {"azimuth_time": 1, "slant_range_time": 1}.
-        get_average (bool, optional): Whether to compute the average of the facets values associated 
-                                      to a geo-grid pixel. Defaults to False.
         enable_dask (bool, optional): Whether to enable Dask for parallel computation. Defaults to True.
         read (bool, optional): Whether to read the computed results back into memory after computation.
                                Defaults to False.
@@ -261,7 +258,7 @@ def map_geo_ap(
     overlap = {"axis": 0, "y": 1, "x": 1}
     chunks = compute_chunks(dict(simulation.chunksizes), overlap)
 
-    args = [c_path, chunk_length, dim_x_global, data_path_shiroma, data_path_geo_ap, bbox, multilook, get_average]
+    args = [c_path, chunk_length, dim_x_global, data_path_shiroma, data_path_geo_ap, bbox, multilook]
     rosel.computation.map_blocks(
         func=compute_geo_ap,
         obj=simulation,
@@ -284,7 +281,6 @@ def compute_geo_ap(
     data_path_geo_ap: str,
     bbox: np.ndarray,
     multilook: Dict[str, int],
-    get_average: bool,
     job_id=None,
 ) -> None:
     """
@@ -300,7 +296,6 @@ def compute_geo_ap(
         data_path_shiroma (str): Path to the directory where the weights and global values are stored.
         data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
         multilook (Dict): ...
-        get_average (bool): Whether to compute the average of the facets values associated to a geo-grid pixel.
         job_id (int): Identifier for the job.
 
     Returns:
@@ -372,10 +367,7 @@ def compute_geo_ap(
                 (w[:, radar_min : radar_max + 1] @ T[:, T_min : T_max + 1] @ c).reshape(dim_y, 4 * dim_x),
                 dims=["y", "x"],
             )
-        if get_average:
-            g = (g.coarsen(x=4).sum()/4.0).astype("complex64")  # type: ignore
-        else:
-            g = (g.coarsen(x=4).sum()/2.0).astype("complex64")  # type: ignore
+        g = (g.coarsen(x=4).sum()/4.0).astype("complex64")  # type: ignore
         rosel.io.write(
             g.drop_vars(g.coords),
             data_path=rosel.io.normpath(data_path_geo_ap),
