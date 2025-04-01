@@ -1,0 +1,41 @@
+
+title: ATBD for ARD Generation
+author: Federico Minati (B-Open Solutions), Francesco De Zan (Delta-Phi Gmbh), Juan M Lopez-Sanchez (Universidad de Alicante), P. Lopez Dekker (TU-Delft)
+
+# logo: logo.png
+execute:
+  execute_notebooks: cache
+
+# Citations and bibliography
+bibtex_bibfiles:
+  - references.bib  # Path to your .bib file
+
+sphinx:
+  extra_extensions:
+    - sphinx.ext.mathjax      # Render LaTeX with MathJax
+    - sphinx.ext.todo         # Enable TODO directives
+    - sphinx.ext.autosectionlabel  # Automatically label sections for easy cross-referencing
+    - sphinxcontrib.bibtex
+  bibtex_bibfiles:
+    - references.bib  # Path to your .bib file
+  bibtex_reference_style: numeric
+  config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  # Enable MathJax for LaTeX rendering
+    autosectionlabel_prefix_document: true # Optional: Add document name to section labels
+
+# LaTeX settings for PDF export (optional)
+latex:
+  use_jupyterbook_latex: true
+
+repository:
+  url: https://github.com/bopen/rose-l-ard 
+  branch: main # Or your default branch name
+  path_to_book: . # Optional path to your book's folder, if it's not in the root
+  edit_content: true # Optional, allows users to edit content
+
+html:
+  use_issues_button: true
+  use_repository_button: true
+  use_edit_button: true
+  home_page_in_navbar: false
+
