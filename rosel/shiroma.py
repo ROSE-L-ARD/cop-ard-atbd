@@ -79,14 +79,14 @@ def apply_flattening(slc: xr.DataArray, A: xr.DataArray, eps: float, data_path: 
     the argument 'chunk'.
 
     Args:
-        c (xr.DataArray): The intensity of the radar image for each radar-grid pixel.
+        c (xr.DataArray): The radar image for each radar-grid pixel.
         A (xr.DataArray): The accumulated gamma-naught area for each radar-grid pixel.
         eps (float): Sets to 0 the values of A lower than eps.
-        data_path (str):  The path to the directory where the flattened intensity is stored.
+        data_path (str): The path to the directory where the flattened radar image is stored.
         chunk (dict):  The chunk associated with the job.
 
     Returns:
-        None: This function saves the flattened intensity directly to the disk and
+        None: This function saves the flattened radar image directly to the disk and
               does not return any data.
     """
 
@@ -108,7 +108,6 @@ def flatten_radar_image(
     slc: xr.DataArray,
     A: xr.DataArray,
     data_path: str,
-    data_name: str = "flattened_intensity",
     eps: float = 1e-3,
     multilook: Dict[str, int] = {"azimuth_time": 1, "slant_range_time": 1},
     enable_dask: bool = True,
@@ -124,8 +123,6 @@ def flatten_radar_image(
         slc (xr.DataArray): The intensity of the radar image for each radar-grid pixel.
         A (xr.DataArray): The accumulated gamma-naught area for each radar-grid pixel.
         data_path (str): The path to the directory where the flattened intensity is stored.
-        data_name (str, optional): The name of the directory where the flattened intensity is stored.
-                                   Defaults to "flattened_intensity".
         eps (float, optional): Sets to 0 the values of A lower than eps. Defaults to 1e-3.
         enable_dask (bool, optional): Whether to enable Dask for parallel computation. Defaults to True.
         read (bool, optional): Whether to read the computed results back into memory after computation.
@@ -170,13 +167,13 @@ def flatten_radar_image(
 
     rosel.io.write(
         c,
-        data_path=rosel.io.normpath(f"{data_path}/{data_name}"),
+        data_path=rosel.io.normpath(data_path),
         compute=False,
         skip_read=True,
         fill_value=0.0,
         mode="w",
     )
-    args = [eps, rosel.io.normpath(f"{data_path}/{data_name}")]
+    args = [eps, rosel.io.normpath(data_path)]
     rosel.computation.map_blocks(
         apply_flattening,
         obj=(slc, A),
@@ -186,14 +183,14 @@ def flatten_radar_image(
         scheduler=scheduler,
         client_options=client_options,
     )
-    return rosel.io.read(rosel.io.normpath(f"{data_path}/{data_name}"), mask_and_scale=False).v if read else None
+    return rosel.io.read(rosel.io.normpath(data_path), mask_and_scale=False).v if read else None
 
 
 def map_geo_ap(
     c_path: str,
     simulation: xr.DataArray,
-    data_path: str,
-    data_name: str = "geo_ap",
+    data_path_shiroma: str,
+    data_path_geo_ap: str,
     multilook: Dict[str, int] = {"azimuth_time": 1, "slant_range_time": 1},
     enable_dask: bool = True,
     read: bool = False,
@@ -206,9 +203,8 @@ def map_geo_ap(
     Args:
         c_path (str): Path to the flattened radar image.
         simulation (xr.DataArray): The radar data simulation.
-        data_path (str): Path to the directory where results will be saved.
-        data_name (str, optional): The name of the zarr directory where the geocoded image is stored.
-                                   Defaults to "geo_ap".
+        data_path_shiroma (str): Path to the directory where the weights and global values are stored.
+        data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
         multilook (Dict, optional): Defaults to {"azimuth_time": 1, "slant_range_time": 1}.
         enable_dask (bool, optional): Whether to enable Dask for parallel computation. Defaults to True.
         read (bool, optional): Whether to read the computed results back into memory after computation.
@@ -227,7 +223,7 @@ def map_geo_ap(
     """
     if not (set(multilook) == {"azimuth_time", "slant_range_time"}):
         raise Exception(f"Expected dictionary with keys azimuth_time and slant_range_time. Got {multilook}")
-    global_values = rosel.io.read(data_path=rosel.io.normpath(f"{data_path}/global_values"))
+    global_values = rosel.io.read(data_path=rosel.io.normpath(f"{data_path_shiroma}/global_values"))
     dim_x_global = int(global_values.geo_xsize.values)
     dim_y_global = int(global_values.geo_ysize.values)
     bbox = global_values.bbox.values
@@ -252,7 +248,7 @@ def map_geo_ap(
     )
     rosel.io.write(
         g_global,
-        data_path=rosel.io.normpath(f"{data_path}/{data_name}"),
+        data_path=rosel.io.normpath(data_path_geo_ap),
         compute=False,
         skip_read=True,
         fill_value=0.0,
@@ -262,7 +258,7 @@ def map_geo_ap(
     overlap = {"axis": 0, "y": 1, "x": 1}
     chunks = compute_chunks(dict(simulation.chunksizes), overlap)
 
-    args = [c_path, chunk_length, dim_x_global, data_path, data_name, bbox, multilook]
+    args = [c_path, chunk_length, dim_x_global, data_path_shiroma, data_path_geo_ap, bbox, multilook]
     rosel.computation.map_blocks(
         func=compute_geo_ap,
         obj=simulation,
@@ -273,7 +269,7 @@ def map_geo_ap(
         client_options=client_options,
     )
 
-    return rosel.io.read(rosel.io.normpath(f"{data_path}/{data_name}"), mask_and_scale=False).v if read else None
+    return rosel.io.read(rosel.io.normpath(data_path_geo_ap), mask_and_scale=False).v if read else None
 
 
 def compute_geo_ap(
@@ -281,8 +277,8 @@ def compute_geo_ap(
     c_path: str,
     chunk_length: int,
     dim_x_global: int,
-    data_path: str,
-    data_name: str,
+    data_path_shiroma: str,
+    data_path_geo_ap: str,
     bbox: np.ndarray,
     multilook: Dict[str, int],
     job_id=None,
@@ -297,8 +293,8 @@ def compute_geo_ap(
         dim_x_global (int): Geogrid size along the x-axis.
         bbox (np.ndarray): Bounding box coordinates ([0, 0, slc.slant_range_time.size, slc.azimuth_time.size])
                            defining the region of interest.
-        data_path (str): Path to the directory where results will be saved.
-        data_name (str): The name of the directory where the geocoded image is stored.
+        data_path_shiroma (str): Path to the directory where the weights and global values are stored.
+        data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
         multilook (Dict): ...
         job_id (int): Identifier for the job.
 
@@ -316,8 +312,10 @@ def compute_geo_ap(
         "x": slice(column_number * chunk_length, column_number * chunk_length + dim_x),
     }
     # load corresponding weights
-    if rosel.io.exists(path=rosel.io.normpath(f"{data_path}/w/{row_number}.{column_number}.npz")):
-        with rosel.io.open(path=rosel.io.normpath(f"{data_path}/w/{row_number}.{column_number}.npz"), mode="rb") as f:
+    if rosel.io.exists(path=rosel.io.normpath(f"{data_path_shiroma}/w/{row_number}.{column_number}.npz")):
+        with rosel.io.open(
+            path=rosel.io.normpath(f"{data_path_shiroma}/w/{row_number}.{column_number}.npz"), mode="rb"
+        ) as f:
             w = scipy.sparse.load_npz(f)
     else:
         w = scipy.sparse.csr_array((1, 1))
@@ -369,11 +367,10 @@ def compute_geo_ap(
                 (w[:, radar_min : radar_max + 1] @ T[:, T_min : T_max + 1] @ c).reshape(dim_y, 4 * dim_x),
                 dims=["y", "x"],
             )
-
-        g = (g.coarsen(x=4).sum() / 2.0).astype("complex64")  # type: ignore
+        g = (g.coarsen(x=4).sum()/4.0).astype("complex64")  # type: ignore
         rosel.io.write(
             g.drop_vars(g.coords),
-            data_path=rosel.io.normpath(f"{data_path}/{data_name}"),
+            data_path=rosel.io.normpath(data_path_geo_ap),
             region=region,
             consolidated=False,
             mode="r+",
