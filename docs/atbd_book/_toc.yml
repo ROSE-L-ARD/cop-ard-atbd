@@ -1,0 +1,23 @@
+
+format: jb-book
+root: intro
+parts:
+  - caption: CSLC/GSLC
+    chapters:
+      - file: cslc/cslc_atbd
+  - caption: NRB
+    chapters:
+      - file: nrb/nrb_atbd
+  - caption: COV/GCOV
+    chapters:
+      - file: pol/pol_atbd
+  - caption: ORB
+    chapters:
+      - file: orb/orb_atbd
+  - caption: CMLC/GMLC
+    chapters:
+      - file: mlc/mlc_atbd
+  - caption: Common Algorithms
+    chapters:
+      - file: common/common_algorithms
+
