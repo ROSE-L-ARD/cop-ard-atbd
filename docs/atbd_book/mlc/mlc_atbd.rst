@@ -8,12 +8,13 @@ Algorithm Theoretical Basis Document (ATBD) - MLC
 Overview
 ===========
 
-The MLC product is a multilooked ARD product suited to large-scale interferometric applications. It is inspired by intermediate products which are normally present in PS/DS and SBAS chains before phase unwrapping. For the ROSE-L missions the proposed resolution of this product is 50 m. It is intended to simplify the access to interferometric measurements which are usually quite unaccessible: the product is intended to have reduced noise as it is already multilooked, it is generated with a mechanism to minimize long-term phase drifts related to vegetation effects, and it has a much smaller size compared to the original CSLC stack. The product is first generated in radar coordinates on a sub-sampling of the original SLC grid. Because of this, this version is called CMLC (Co-registered Multi-looked Complex). Its final version after geocoding is called GMLC.
+The MLC product is a multi-looked ARD product suited to large-scale interferometric applications. It is inspired by intermediate products which are normally present in PS/DS and SBAS chains before phase unwrapping. For the ROSE-L missions the proposed resolution of this product is 50 m. It is intended to simplify the access to interferometric measurements which are usually quite unaccessible: the product is intended to have reduced noise as it is already multilooked, it is generated with a mechanism to minimize long-term phase drifts related to vegetation effects, and it has a much smaller size compared to the original CSLC stack. The product is first generated in radar coordinates on a sub-sampling of the original SLC grid. Because of this, this version is called CMLC (Co-registered Multi-looked Complex). Its final version after geocoding is called GMLC.
 
 There are different approaches in the literature to generate such product. Here we describe an algorithm which exhibits the following characteristics:
-- it is very lightweight in terms of data I/O and computation
-- it enables continuous product update as new images are acquired and the CLSC stack grows
-- it incorporates a long-term drift correction
+
+- it is very lightweight in terms of data I/O and computation,
+- it enables continuous product update as new images are acquired and the CLSC stack grows,
+- it incorporates a long-term drift correction.
 
 
 Product Description
@@ -54,7 +55,7 @@ The input for the generation of this product is a CSLC product, i.e. a stack of 
 Internal data
 -----------------
 
-This algorithm keeps two special images between each update step. These images are linear combinations of images that have been already processed and are introduced to avoid accessing the entire past history.
+This algorithm keeps two special images between each update step, one is called "running reference" and the other "past reference". These images are linear combinations of images that have been already processed and are introduced to avoid accessing the entire past history.
 
 Auxiliary data
 ------------------
@@ -85,7 +86,8 @@ At the very beginning, the reference :math:`z_n` is going to be initialized with
 
 The short-term coherence :math:`\gamma^s_n` is simply taken as the coherence of the same interferogram between :math:`y_n` and :math:`z_n` shown above.
 
-### Running reference update
+Running reference update
+-----------------------------
 After the estimation of the interferometric phase :math:`\phi_n`, we are going to use it to update the running reference :math:`z_n` by including the contribution of the current CSLC :math:`y_n.`
 
 .. math::
@@ -120,9 +122,12 @@ We take initially a snapshot of the running reference :math:`z` as a stable refe
 After that we update the stable reference with a pace with is slower than the pace we update the running reference, so that the stable reference represents older acquisitions.
 
 .. math::
-    p_{n+1} = \beta p_n + z_n.
+    p_{n+1} = \beta_1 p_n + \beta_2 z_n.
 
-With the choice :math:`\beta = 1` the stable reference is simply the sum of all past running references from step :math:`m` onwards. It represents therefore the mid-point between the current acquisition and the :math:`m^{th}` acquisition.
+With the choice :math:`\beta = 1, \gamma=1` the stable reference is simply the sum of all past running references from step :math:`m` onwards. It represents therefore the mid-point between the current acquisition and the :math:`m^{th}` acquisition.
+
+With the choice :math:`\gamma=0` the stable reference is not going to be updated with new information and remains frozen.
+
 
 The long-term coherence :math:`\gamma^l_n` is taken as the coherence of the same interferogram between :math:`y_n` and :math:`p_n`.
 
@@ -134,6 +139,13 @@ Geocoding
 Mosaicking
 --------------
 * :ref:`MOSAIC <common_mosaic_label>`
+
+
+Algorithm improvement
+=====================
+- Better sampling in radar coordinates of CMLC product
+- Saving and make use of several "past references", e.g. one for each year
+- Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we are going to optimize simultaneously the short and the long-term coherence.
 
 
 Data visualization
@@ -148,7 +160,7 @@ For example in QGIS on can pick two rasters that correspond to the chose dates a
 .. math::
     \phi = \phi_1 - \phi_2
 
-and feed it to a function that realizes the two-argument arctangent by using only tangent, sine, and cosine:
+and feed it to a function that realizes the two-argument arctangent by using only the common arctangent, sine, and cosine:
 
 .. math::
     \varphi = \mathrm{atan2}\left(\sin(\phi), \cos(\phi)\right) = 2\:\mathrm{atan}\left(\frac{\sin(\phi)}{1+\cos(\phi)}\right)= 2\:\mathrm{atan}\left(\frac{1- \cos(\phi)}{\sin(\phi)}\right).
@@ -173,14 +185,15 @@ Code
 
 
 .. code-block:: python
-    :caption: parameters definition
+    :caption: parameter definition
 
     # selecting window sizes (rg, az) and mini_size (number of acquisitions after which the long-term calibration kicks-in)
     w_rg = 10
     w_az = 20
     mini_size = 10
     memory_param = 0.90 # autoregression parameter for the reference update (0 => totally forgetting the past)
-    memory_param_past = 0.95 # autoregression parameter for the past reference update (0 => totally forgetting the past)
+    memory_param_past_beta1 = 0.95 # autor-egressive parameter for the past reference update (0 => totally forgetting the past)
+    memory_param_past_beta2 = 1 # moving-average parameter for the past reference update
     coherence_threshold = 0.1 # threshold to calibrate current reference with a past reference (below that, skip calibration)
 
 .. code-block:: python
@@ -255,7 +268,7 @@ Code
             if np.abs(corr_phase) > coherence_threshold :
                 current_reference[:] = current_reference * (np.conj(corr_phase)/np.abs(corr_phase))
                 long_term_coherence[n] = np.abs(make_coh(past_reference,slc))
-            past_reference = past_reference * memory_param_past + current_reference
+            past_reference = past_reference * memory_param_past_beta_1 + current_reference * memory_param_past_beta_2
 
 
 Validation and Quality Assessment
