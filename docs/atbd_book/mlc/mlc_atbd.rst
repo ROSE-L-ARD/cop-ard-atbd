@@ -8,7 +8,9 @@ Algorithm Theoretical Basis Document (ATBD) - MLC
 Overview
 ===========
 
-The MLC product is a multi-looked ARD product suited to large-scale interferometric applications. It is inspired by intermediate products which are normally present in PS/DS and SBAS chains before phase unwrapping. For the ROSE-L missions the proposed resolution of this product is 50 m. It is intended to simplify the access to interferometric measurements which are usually quite unaccessible: the product is intended to have reduced noise as it is already multilooked, it is generated with a mechanism to minimize long-term phase drifts related to vegetation effects, and it has a much smaller size compared to the original CSLC stack. The product is first generated in radar coordinates on a sub-sampling of the original SLC grid. Because of this, this version is called CMLC (Co-registered Multi-looked Complex). Its final version after geocoding is called GMLC.
+The MLC product is a multi-looked ARD product suited to large-scale interferometric applications. It is inspired by intermediate products which are normally present in PS/DS and SBAS chains before phase unwrapping (:cite:author:`Teba2008,Fornaro2015,Ansari2018,Pepe2019`). For the ROSE-L missions the proposed resolution of this product is 50 m.
+
+The MLC product is intended to simplify the access to interferometric measurements which are usually quite unaccessible: the product has reduced noise compared to full-resolution interferograms as it is already multilooked, it is generated with a mechanism to minimize long-term phase drifts related to vegetation effects, and it has a much smaller size compared to the original CSLC stack. The product is first generated in radar coordinates on a sub-sampling of the original SLC grid. Because of this, this version is called CMLC (Co-registered Multi-looked Complex). Its final version after geocoding is called GMLC.
 
 There are different approaches in the literature to generate such product. Here we describe an algorithm which exhibits the following characteristics:
 
@@ -30,8 +32,8 @@ This product includes two quality layers in the form of coherence. Quality layer
 
 The GMLC ground grid is defined to ensure compatibility between missions and products.
 
-Main variables
-------------------
+Main output variables
+---------------------
 
 - **Wrapped multilooked phase** :math:`\phi_n`: This is a temporal collection of phase maps that can be used to generate multi-looked interferograms for any chosen pair of acquisitions in the stack, without having to start from full-resolution images. Taken singularly, each map represents conceptually the interferometric phase between each acquisition and a fixed reference (e.g. the first acquisition in the stack) that one could compute directly by forming an interferogram with the reference. In practice, the direct interferometric phase and the MLC phase will differ: the MLC phase should be less noisy.
 
@@ -39,13 +41,25 @@ Main variables
 
 - **Short-term coherence** :math:`\gamma^s_n`: This is a temporal collection of coherence maps that represents the short-term coherence of each acquisition with its recent past. This information can be useful as an indication of the noisiness of interferograms computed between acquisitions that are separated by a short time interval (e.g. a few weeks). The exact interpretation depends on the chosen processing parameters.
 
+
+
+
 Metadata
 ------------
 
-...
+None (TBC).
+
 
 Input data
 =============
+
+.. figure:: ./images/CMLC_generation.png
+   :name: Workflow for CMLC generation.
+   :scale: 60%
+   :align: center
+
+   High-level workflow for CMLC generation.
+
 
 SAR data
 ------------
@@ -55,23 +69,23 @@ The input for the generation of this product is a CSLC product, i.e. a stack of 
 Internal data
 -----------------
 
-This algorithm keeps two special images between each update step, one is called "running reference" and the other "past reference". These images are linear combinations of images that have been already processed and are introduced to avoid accessing the entire past history.
+This algorithm keeps two special images between each update step, one is called "current reference" and the other "past reference". These images are linear combinations of images that have been already processed and are introduced to avoid accessing the entire past history.
 
 Auxiliary data
 ------------------
 
-...
+None (TBC).
 
 
 Algorithm description
 ========================
 
-.. figure:: ./images/CMLC_generation.png
-   :name: Workflow for CMLC generation.
-   :scale: 60%
+.. figure:: ./images/CMLC_cartoon_detailed_v2.png
+   :name: Detailed workflow for CMLC generation.
+   :scale: 50%
    :align: center
 
-   Workflow for CMLC generation.
+   Detailed internal workflow for CMLC generation.
 
 Phase and short-term coherence estimation
 ---------------------------------------------
@@ -86,27 +100,27 @@ At the very beginning, the reference :math:`z_n` is going to be initialized with
 
 The short-term coherence :math:`\gamma^s_n` is simply taken as the coherence of the same interferogram between :math:`y_n` and :math:`z_n` shown above.
 
-Running reference update
+Current reference update
 -----------------------------
-After the estimation of the interferometric phase :math:`\phi_n`, we are going to use it to update the running reference :math:`z_n` by including the contribution of the current CSLC :math:`y_n.`
+After the estimation of the interferometric phase :math:`\phi_n`, we are going to use it to update the current reference :math:`z_n` by including the contribution of the current CSLC :math:`y_n.`
 
 .. math::
     z_{n+1} = \alpha z_n + y_n e^{-j\phi_n}.
 
 
-The memory parameter :math:`\alpha` controls the bandwidth of the running reference, a small parameter corresponds to a short memory, which is optimal for fast-decorrelating scenarios. A large value of the parameter is suited to stable targets.
+The memory parameter :math:`\alpha` controls the bandwidth of the current reference, a small parameter corresponds to a short memory, which is optimal for fast-decorrelating scenarios. A large value of the parameter is suited to stable targets.
 
-Running reference calibration
+Current reference calibration
 ---------------------------------
 
-As time passes, the running reference risks drifting away from the phase of the first acquisition of the stack. For this reason we are going to calibrate its phase with a more stable reference :math:`p` by generating an interferogram and compensating the phase:
+As time passes, the current reference risks drifting away from the phase of the first acquisition of the stack. For this reason we are going to calibrate its phase with a more stable reference :math:`p` by generating an interferogram and compensating the phase:
 
 .. math::
-    \varphi = \angle \sum_{(r,a) \in \Omega} p_n^*(r,a) z_{n+1}(r,a).
+    \varphi_n = \angle \sum_{(r,a) \in \Omega} p_n^*(r,a) z_{n+1}(r,a).
 
 
 .. math::
-    z_{n+1} \leftarrow z_{n+1} e^{-j\varphi}.
+    z_{n+1} \leftarrow z_{n+1} e^{-j\varphi_n}.
 
 
 The phase compensation is performed only if the coherence between :math:`p_n` and :math:`z_{n+1}` is above a chosen threshold (e.g. 0.1) to avoid adding noise in cases of low coherence.
@@ -114,19 +128,19 @@ The phase compensation is performed only if the coherence between :math:`p_n` an
 Stable reference generation and update
 ------------------------------------------
 
-We take initially a snapshot of the running reference :math:`z` as a stable reference :math:`p` after a certain number of update steps (e.g. :math:`m=10` which would correspond to 60 days for a 6-day repeat ROSE-L time series):
+We take initially a snapshot of the current reference :math:`z` as a stable reference :math:`p` after a certain number of update steps (e.g. :math:`m=10` which would correspond to 60 days for a 6-day repeat ROSE-L time series):
 
 .. math::
-    p_n = z_n, \quad \textrm{for} \quad n=m.
+    p_n = z_n, \quad \textrm{for} \quad n=M.
 
-After that we update the stable reference with a pace with is slower than the pace we update the running reference, so that the stable reference represents older acquisitions.
+After that we update the stable reference with a pace with is slower than the pace we update the current reference, so that the stable reference represents older acquisitions.
 
 .. math::
     p_{n+1} = \beta_1 p_n + \beta_2 z_n.
 
-With the choice :math:`\beta = 1, \gamma=1` the stable reference is simply the sum of all past running references from step :math:`m` onwards. It represents therefore the mid-point between the current acquisition and the :math:`m^{th}` acquisition.
+With the choice :math:`\beta_1 = 1, \beta_2=1` the stable reference is simply the sum of all past "current references" from step :math:`M` onwards. It represents therefore the mid-point between the current acquisition and the :math:`M^{th}` acquisition.
 
-With the choice :math:`\gamma=0` the stable reference is not going to be updated with new information and remains frozen.
+With the choice :math:`\beta_2=0` the stable reference is not going to be updated with new information and remains frozen.
 
 
 The long-term coherence :math:`\gamma^l_n` is taken as the coherence of the same interferogram between :math:`y_n` and :math:`p_n`.
@@ -141,11 +155,17 @@ Mosaicking
 * :ref:`MOSAIC <common_mosaic_label>`
 
 
-Algorithm improvement
-=====================
+Algorithm complexity
+====================
+The algorithm is computationally very cheap once the CSLC product is available. In involves the generation of a couple of interferograms at each step (i.e. for each new incoming acquisition), re-phasing of the SLC data and linear combinations. It is designed for a continuous update: for example it does not to include any matrix inversion, differently from (:cite:author:`Teba2008,Ansari2017, Ansari2018`). The complexity grows linearly with the number of acquisitions.
+
+In contrast, algorithms based on the coherence matrix have a complexity that grows quadratically with the number of acquisitions since the number of interferograms is the square of the number of images. If the algorithm foresees a matrix inversion the complexity is potentially even higher.
+
+Possible algorithm improvements
+===============================
 - Better sampling in radar coordinates of CMLC product
 - Saving and make use of several "past references", e.g. one for each year
-- Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we are going to optimize simultaneously the short and the long-term coherence.
+- Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we need to optimize simultaneously the short and the long-term coherence.
 
 
 Data visualization
@@ -271,11 +291,13 @@ Code
             past_reference = past_reference * memory_param_past_beta_1 + current_reference * memory_param_past_beta_2
 
 
-Validation and Quality Assessment
-=====================================
 
-* Test 1
-* Test 2
+..
+    Validation and Quality Assessment
+    =====================================
+
+  * Test 1
+  * Test 2
 
 
 References
@@ -286,4 +308,212 @@ References
 Appendices
 =============
 
-* [Detailed mathematical derivations]
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`y_n`
+   * - Description
+     - A patch of co-registered slc data (from the n-th acquisition)
+   * - Purpose
+     - Input: SAR data
+   * - Units
+     - (see CSLC product)
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (range, azimuth) or vectorized in a single spatial dimension
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - ``slc``
+   * - 
+     -
+   * - Symbol
+     - :math:`z_n`
+   * - Description
+     - The current reference, a linear combination of past co-registered slc data until the (n-1)-th acquisition
+   * - Purpose
+     - Internal: an interferometric reference to estimate the interferometric phase for the n-th acquisition 
+   * - Units
+     - (see CSLC product)
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (range, azimuth) or vectorized in a single spatial dimension
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - :math:`y_1`, i.e. the first acquisition
+   * - Name in pseudo-code
+     - ``current_reference``
+   * - 
+     -
+   * - Symbol
+     - :math:`p_n`
+   * - Description
+     - The past reference, a linear combination of current references
+   * - Purpose
+     - Internal: an interferometric reference to calibrate the phase of the current reference 
+   * - Units
+     - (see CSLC product)
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (range, azimuth) or vectorized in a single spatial dimension
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - :math:`p_n = z_n`, for a fixed :math:`M` (minimum stack size)
+   * - Name in pseudo-code
+     - ``past_reference``
+   * - 
+     -
+   * - Symbol
+     - :math:`\phi_n`
+   * - Description
+     - The interferometric phase for the n-th acquisition
+   * - Purpose
+     - Internal and Output: main CMLC output, it is also used to update the current reference
+   * - Units
+     - rad
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar (1 scalar for each acquisition and spatial patch)
+   * - Range of values
+     - :math:`[-\pi,\pi)`
+   * - Initial/default values
+     - :math:`\phi_0 = 0`
+   * - Name in pseudo-code
+     - ``np.angle(interf[n])`` (i.e. ``interf`` is kept as a complex value in the code)
+   * - 
+     -
+   * - Symbol
+     - :math:`\gamma_n^s`
+   * - Description
+     - The short-term coherence (magnitude), the coherence between the current reference and for the n-th acquisition
+   * - Purpose
+     - Output
+   * - Units
+     - natural units
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar (1 scalar for each acquisition and spatial patch)
+   * - Range of values
+     - :math:`[0,1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - ``short_term_coherence[n]``
+   * - 
+     -
+   * - Symbol
+     - :math:`\varphi_n`
+   * - Description
+     - The calibration phase for the (n+1)-th current reference
+   * - Purpose
+     - Internal
+   * - Units
+     - rad
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar (1 scalar for each acquisition and spatial patch)
+   * - Range of values
+     - :math:`[-\pi,\pi)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - ``np.angle(corr_phase)`` (i.e. ``corr_phase`` is kept as a complex value in the code)
+   * - 
+     -
+   * - Symbol
+     - :math:`\gamma_n^l`
+   * - Description
+     - The long-term coherence (magnitude), the coherence between the past reference and for the n-th acquisition
+   * - Purpose
+     - Output
+   * - Units
+     - natural units
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar (1 scalar for each acquisition and spatial patch)
+   * - Range of values
+     - :math:`[0,1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - ``long_term_coherence[n]``
+   * - 
+     -
+   * - Symbol
+     - :math:`\alpha`
+   * - Description
+     - Memory parameter for updating the current reference
+   * - Purpose
+     - User input
+   * - Units
+     - natural units
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`(0,1]`
+   * - Initial/default values
+     - 0.95
+   * - Name in pseudo-code
+     - ``memory_param``
+   * - 
+     -
+   * - Symbol
+     - :math:`\beta_1, \, \beta_2`
+   * - Description
+     - Memory parameters for updating the past reference
+   * - Purpose
+     - User input
+   * - Units
+     - natural units
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`(0,1]`
+   * - Initial/default values
+     - (1,0)
+   * - Name in pseudo-code
+     - ``memory_param_past_beta1,memory_param_past_beta2``
+   * - 
+     -
+   * - Symbol
+     - :math:`M`
+   * - Description
+     - Minimum size to activate phase calibration of the current reference
+   * - Purpose
+     - User input
+   * - Units
+     - natural units
+   * - Type
+     - int
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[1,\dots,N]`, where :math:`N` is the number of acquisitions
+   * - Initial/default values
+     - 10
+   * - Name in pseudo-code
+     - ``mini_size``
+   
+   
