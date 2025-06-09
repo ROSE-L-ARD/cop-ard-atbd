@@ -19,7 +19,7 @@ import dask.array as da
 import numpy as np
 import scipy
 import xarray as xr
-
+import itertools
 import rosel.computation
 import rosel.io
 
@@ -71,6 +71,38 @@ def compute_chunks(chunks: dict, overlap: dict) -> Dict:
             axis = np.tile([0, 3], ((len(chunks["y"]) - dy) * (len(chunks["x"]) - dx), 1)).tolist()
 
     return {"y": y, "x": x, "axis": axis}
+
+
+def compute_chunks_new(chunks: dict, overlap: dict = {"y": 1, "x": 1}) -> Dict:
+    """
+    Compute overlapped chunks to use in s1_ard_core.computing.computation.map_blocks.
+
+    Args:
+        chunks (dict): Dictionary of simulation chunks
+        overlap (dict): Dictionary defining the overlap between chunks
+
+    Returns:
+        chunks (Dict): dictionary containing overlapped chunks
+    """
+    if (overlap["x"] < chunks["x"][0]) is False:
+        raise Exception(f"Overlap {overlap['x']} is bigger than chunk length {chunks['x'][0]}")
+    if (overlap["y"] < chunks["y"][0]) is False:
+        raise Exception(f"Overlap {overlap['y']} is bigger than chunk length {chunks['y'][0]}")
+
+    ch = {}
+    for k, v in chunks.items():
+        li = list(v)
+        li.insert(0, 0)
+        if k in overlap and len(v) != 1:
+            delta = overlap[k]
+            ch[k] = [[en * s, en * s + e + delta] for en, (s, e) in enumerate(zip(li[0:-2], li[1:-1]))]
+            if chunks[k][-1] != 1:
+                ch[k].append([ch[k][-1][1] - delta, ch[k][-1][1] - delta + chunks[k][-1]])
+        else:
+            ch[k] = [[en * s, en * s + e] for en, (s, e) in enumerate(zip(li[:-1], li[1:]))]
+
+    r = np.array(list(itertools.product(*[v for v in ch.values()])))
+    return {k: r[:, en].tolist() for en, k in enumerate(chunks.keys())}
 
 
 def apply_flattening(slc: xr.DataArray, A: xr.DataArray, eps: float, data_path: str, chunk=None) -> None:
@@ -223,7 +255,9 @@ def map_geo_ap(
     """
     if not (set(multilook) == {"azimuth_time", "slant_range_time"}):
         raise Exception(f"Expected dictionary with keys azimuth_time and slant_range_time. Got {multilook}")
-    global_values = rosel.io.read(data_path=rosel.io.normpath(f"{data_path_shiroma}/global_values"))
+    global_values = rosel.io.read(
+        data_path=rosel.io.normpath(f"{data_path_shiroma}/global_values"), consolidate_metadata=False
+    )
     dim_x_global = int(global_values.geo_xsize.values)
     dim_y_global = int(global_values.geo_ysize.values)
     bbox = global_values.bbox.values
@@ -367,7 +401,207 @@ def compute_geo_ap(
                 (w[:, radar_min : radar_max + 1] @ T[:, T_min : T_max + 1] @ c).reshape(dim_y, 4 * dim_x),
                 dims=["y", "x"],
             )
-        g = (g.coarsen(x=4).sum()/4.0).astype("complex64")  # type: ignore
+        g = (g.coarsen(x=4).sum() / 4.0).astype("complex64")  # type: ignore
+        rosel.io.write(
+            g.drop_vars(g.coords),
+            data_path=rosel.io.normpath(data_path_geo_ap),
+            region=region,
+            consolidated=False,
+            mode="r+",
+            skip_read=True,
+        )
+    return
+
+
+def map_geo_ap_new(
+    c_path: str,
+    data_path_shiroma: str,
+    data_path_geo_ap: str,
+    multilook: Dict[str, int] = {"azimuth_time": 1, "slant_range_time": 1},
+    enable_dask: bool = True,
+    read: bool = False,
+    client_options: Mapping[str, Any] = {},
+) -> xr.DataArray | None:
+    """
+    Compute the geocoded values for each pixel in the geogrid.
+
+    Args:
+        c_path (str): Path to the flattened radar image.
+        simulation (xr.DataArray): The radar data simulation.
+        data_path_shiroma (str): Path to the directory where the weights and global values are stored.
+        data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
+        multilook (Dict, optional): Defaults to {"azimuth_time": 1, "slant_range_time": 1}.
+        enable_dask (bool, optional): Whether to enable Dask for parallel computation. Defaults to True.
+        read (bool, optional): Whether to read the computed results back into memory after computation.
+                               Defaults to False.
+        resources (Mapping[str, Any], optional): Resources available for the computation.
+        Defaults to {"cores": 1, "memory": 1024}.
+        scheduler (str or None, optional): Dask scheduler to use. Defaults to "synchronous".
+        enable_dask (bool, optional): Whether to enable Dask for parallel computation. Defaults to True.
+        resources (Mapping[str, Any], optional): Resources available for the computation.
+                                                 Defaults to {"cores": 1, "memory": 1024}.
+        scheduler (str or None, optional): Dask scheduler to use. Defaults to "synchronous".
+        client_options (Mapping[str, Any], optional): Options for the Dask client, if using Dask.
+                                                      Defaults to an empty dictionary.
+    Returns:
+        xr.DataArray | None: The geocoded values for each pixel in the geogrid  (if 'read' is True).
+    """
+    if not (set(multilook) == {"azimuth_time", "slant_range_time"}):
+        raise Exception(f"Expected dictionary with keys azimuth_time and slant_range_time. Got {multilook}")
+    global_values = rosel.io.read(
+        data_path=rosel.io.normpath(f"{data_path_shiroma}/global_values"), consolidate_metadata=False
+    )
+    dim_x_global = global_values.geo_xsize.values[0]
+    dim_y_global = global_values.geo_ysize.values[0]
+    x = global_values.x_coords.values
+    y = global_values.y_coords.values
+    bbox = global_values.bbox.values
+    # chunk_length has to be the same chunk_length used in map_w
+    chunk_length = global_values.chunk_length.values[0]
+    crs = global_values.crs.values[0]
+    x = (x[0:-1] + x[1:]) / 2
+    y = (y[0:-1] + y[1:]) / 2
+    g_global = xr.Dataset(
+        data_vars={
+            "v": (
+                ["y", "x"],
+                da.empty(shape=(dim_y_global, dim_x_global), chunks=(chunk_length, chunk_length), dtype="complex64"),
+            )
+        },
+        coords={"y": y, "x": x},
+    )
+    g_global.rio.write_crs(crs, inplace=True)
+    rosel.io.write(
+        g_global,
+        data_path=rosel.io.normpath(data_path_geo_ap),
+        compute=False,
+        skip_read=True,
+        fill_value=0.0,
+    )
+    chunks = {
+        "y": chunk_length,
+        "x": chunk_length,
+    }
+    empty_data = xr.Dataset(
+        data_vars={
+            "v": (
+                ["y", "x"],
+                da.empty(shape=(dim_y_global + 1, dim_x_global + 1), dtype="float32"),
+            )
+        },
+    ).chunk(chunks)
+    # compute chunks
+    chunks = compute_chunks_new(dict(empty_data.chunksizes))
+
+    args = [c_path, chunk_length, dim_x_global, data_path_shiroma, data_path_geo_ap, bbox, multilook]
+    rosel.computation.map_blocks(
+        func=compute_geo_ap_new,
+        obj=empty_data,
+        args=args,
+        chunks=chunks,
+        enable_dask=enable_dask,
+        client_options=client_options,
+    )
+
+    return rosel.io.read(rosel.io.normpath(data_path_geo_ap), mask_and_scale=False).v if read else None
+
+
+def compute_geo_ap_new(
+    empty_data: xr.DataArray,
+    c_path: str,
+    chunk_length: int,
+    dim_x_global: int,
+    data_path_shiroma: str,
+    data_path_geo_ap: str,
+    bbox: np.ndarray,
+    multilook: Dict[str, int],
+    job_id=None,
+) -> None:
+    """
+    Compute the geocoded values for each pixel in the geogrid within the current nlook block.
+
+    Args:
+        simulation (xr.DataArray): The radar data simulation.
+        c_path (str): Path to the flattened intensity of the radar image.
+        chunk_length (int): Size of a chunk.
+        dim_x_global (int): Geogrid size along the x-axis.
+        bbox (np.ndarray): Bounding box coordinates ([0, 0, slc.slant_range_time.size, slc.azimuth_time.size])
+                           defining the region of interest.
+        data_path_shiroma (str): Path to the directory where the weights and global values are stored.
+        data_path_geo_ap (str): Path to the directory where the geocoded values will be saved.
+        multilook (Dict): ...
+        job_id (int): Identifier for the job.
+
+    Returns:
+        None: This function saves the computed geocoded values directly to the disk and does not return any data.
+    """
+    dim_x = empty_data.x.size - 1
+    dim_y = empty_data.y.size - 1
+
+    # create region
+    row_number = job_id // (np.ceil(dim_x_global / chunk_length).astype(int))
+    column_number = job_id % (np.ceil(dim_x_global / chunk_length).astype(int))
+    region = {
+        "y": slice(row_number * chunk_length, row_number * chunk_length + dim_y),
+        "x": slice(column_number * chunk_length, column_number * chunk_length + dim_x),
+    }
+    # load corresponding weights
+    f = rosel.io.normpath(f"{data_path_shiroma}/w/{row_number}.{column_number}")
+    if rosel.io.exists(f):
+        ds = cast(xr.Dataset, rosel.io.read(f, consolidate_metadata=False))
+        data = ds.data.values
+        indices = ds.indices.values
+        indptr = ds.indptr.values
+        shape = ds.shape.values
+        w = scipy.sparse.csr_array((data, indices, indptr), shape=shape)
+        w = (w / w.sum(axis=1)[:, np.newaxis]).tocsr()
+
+        radar_min = np.min(w.indices)
+        radar_max = np.max(w.indices)
+
+        if (multilook["azimuth_time"] == 1) & (multilook["slant_range_time"] == 1):
+            y1 = radar_min // bbox[2]
+            y2 = radar_max // bbox[2] + 1
+
+            translated_radar_min = radar_min - y1 * bbox[2]
+            translated_radar_max = radar_max - y1 * bbox[2]
+            c = (
+                rosel.io.read(c_path, consolidate_metadata=False, mask_and_scale=False)
+                .isel(azimuth_time=slice(y1, y2))
+                .v.values.ravel()[translated_radar_min : translated_radar_max + 1]
+            )
+            g = xr.DataArray((w[:, radar_min : radar_max + 1] @ c).reshape(dim_y, 4 * dim_x), dims=["y", "x"])
+        else:
+            dr = 0 if bbox[2] % multilook["slant_range_time"] == 0 else 1
+            da = 0 if bbox[3] % multilook["azimuth_time"] == 0 else 1
+            rg_size = bbox[2] // multilook["slant_range_time"] + dr
+            az_size = bbox[3] // multilook["azimuth_time"] + da
+            radar_coords = np.unique(w.indices)
+            col = ((radar_coords % bbox[2]) // multilook["slant_range_time"]).astype("int32")
+            row = (radar_coords // bbox[2]) // multilook["azimuth_time"]
+            col_multilook = (row * rg_size + col).astype("int32")
+            data = np.ones_like(col_multilook, dtype=bool)
+            radar_coords = radar_coords - radar_min
+            T = scipy.sparse.csr_array(
+                (data, (radar_coords, col_multilook)), shape=(radar_max - radar_min + 1, rg_size * az_size)
+            )
+            T_min = np.min(T.indices)
+            T_max = np.max(T.indices)
+            y1 = T_min // rg_size
+            y2 = T_max // rg_size + 1
+
+            translated_radar_min = T_min - y1 * rg_size
+            translated_radar_max = T_max - y1 * rg_size
+            c = (
+                rosel.io.read(c_path, consolidate_metadata=False, mask_and_scale=False)
+                .isel(azimuth_time=slice(y1, y2))
+                .v.values.ravel()[translated_radar_min : translated_radar_max + 1]
+            )
+            g = xr.DataArray(
+                (w[:, radar_min : radar_max + 1] @ T[:, T_min : T_max + 1] @ c).reshape(dim_y, 4 * dim_x),
+                dims=["y", "x"],
+            )
+        g = (g.coarsen(x=4).sum() / 4.0).astype("complex64")  # type: ignore
         rosel.io.write(
             g.drop_vars(g.coords),
             data_path=rosel.io.normpath(data_path_geo_ap),
