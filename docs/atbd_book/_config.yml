@@ -34,6 +34,7 @@ repository:
   edit_content: true # Optional, allows users to edit content
 
 html:
+  use_numbered_headers: true  # Enable numbered headers for sections
   use_issues_button: true
   use_repository_button: true
   use_edit_button: true

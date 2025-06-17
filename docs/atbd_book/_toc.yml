@@ -1,23 +1,60 @@
-
 format: jb-book
 root: intro
 parts:
+  - caption: Introduction
+    chapters:
+    - file: intro/Introduction
   - caption: CSLC/GSLC
-    chapters:
+    chapters: 
+      - file: cslc/cslc_overview
+      - file: cslc/cslc_product
       - file: cslc/cslc_atbd
-  - caption: NRB
-    chapters:
-      - file: nrb/nrb_atbd
-  - caption: COV/GCOV
-    chapters:
-      - file: pol/pol_atbd
-  - caption: ORB
-    chapters:
-      - file: orb/orb_atbd
+      - file: cslc/cslc_data_vis
+      - file: cslc/cslc_code
   - caption: CMLC/GMLC
     chapters:
+      - file: mlc/mlc_overview
+      - file: mlc/mlc_product
       - file: mlc/mlc_atbd
+      - file: mlc/mlc_data_vis
+      - file: mlc/mlc_code 
   - caption: Common Algorithms
     chapters:
-      - file: common/common_algorithms
+      - file: common/tools
+      - file: common/calibration
+        sections:
+          - file: common/noise_calibration
+          - file: common/amplitude_calibration
+          - file: common/phase_deramping
+          - file: common/phase_reramping
+      - file: common/geocoding
+        sections:
+          - file: common/AP-geocoding
+          - file: common/PH-geocoding
+      - file: common/interpolation
+        sections:
+          - file: common/regular_grid_to_sparse_grid_image_interpolation_sinc
+          - file: common/sparse_grid_to_regular_grid_image_interpolation_linear
+      - file: common/flattening
+        sections:
+          - file: common/phase_flattening
+          - file: common/gamma_flattening
+      - file: common/reference_DEM
+        sections:
+          - file: common/reference_DEM_import
+          - file: common/reference_DEM_resampling
+      - file: common/geometry
+        sections:
+          - file: common/coordinate_conversion
+          - file: common/radar_rasterization
+          - file: common/radar_mapping
+      - file: common/coregistration
+        sections:
+          - file: common_coregistration_model
+          - file: common_coregistration_data
+      - file: common/mosaic
+  - caption: Appendices
+    chapters:
+      # - file: appendix/additional_resources
+      - file: glossary
 

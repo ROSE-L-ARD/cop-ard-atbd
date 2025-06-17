@@ -3,14 +3,20 @@
 Algorithm Theoretical Basis Document (ATBD)
 =================================================
 
+Products and algorithms
+=======================
+
 This Jupyter Book documents the Algorithm Theoretical Basis Documents (ATBDs) for the generation of the following Analysis Ready Data (ARD) products: 
 
 * Co-registerd Single Look Complex :ref:`(CSLC/GSLC) <cslc_label>`, 
-* Normalized Radar Backscatter :ref:`(NRB) <nrb_label>`, 
+* Normalized Radar Backscatter :ref:`(NRB/ENRB) <nrb_label>`, 
 * Polarimetry :ref:`(COV/GCOV) <pol_label>`,
-* Ocean Radar Backscatter :ref:`(ORB) <orb_label>`, 
+* Ocean Radar Backscatter :ref:`(ORB/EORB) <orb_label>`, 
 * Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_label>`,
-* ...
+* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_label>`,
+* Stripmap Equivalent :ref:`(STRIPEQ) <stripeq_label>`.
+
+A section is dedicated also to the set of common algorithms shared between the different processing chains :ref:`(Common algorithms) <Common_tools>`.
 
 
 Acknowledgments
@@ -21,13 +27,21 @@ We would like to express our sincere gratitude to all the members of the project
 Project team members
 --------------------
 
-* **Alessio Morea (Bopen Solutions)**
+* **Alessio Morea (B-open Solutions)**
 
-* **Francesco Trillo (Bopen Solutions)**
+* **Federico Minati (B-open Solutions)**
 
-* **Francesco Vecchioli (Bopen Solutions)**
+* **Francesco Trillo (B-open Solutions)**
+
+* **Francesco Vecchioli (B-open Solutions)**
 
 * **Alejadro Mestre-Quereda (Universitad de Alicante)**
+
+* **Juan M Lopez-Sanchez (Universitad de Alicante)**
+
+* **Francesco De Zan (Delta-phi)**
+
+* **Paco Lopez-Dekker (TU-Delft)**
 
 * **Yan Yuan (TU-Delft)**
 
