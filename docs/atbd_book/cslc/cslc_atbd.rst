@@ -18,15 +18,25 @@
 Algorithm Theoretical Basis Document (ATBD) 
 ========================================================
 
-The generation of CSLC & GSLC products involves several complex processing units and an overview of the processing workflow is reported in :numref:`CSLC_diagram`.
+The generation of CSLC products involves several complex processing units and an overview of the processing workflow is reported in :numref:`CSLC_diagram`.
 
 .. _CSLC_diagram_figure:
-.. figure:: images/ARD_overview_default_diagram_v3.drawio.png
+.. figure:: images/CSLC_diagram.drawio.png
    :name: CSLC_diagram
-   :scale: 60%
+   :width: 600
    :align: center
 
-   *Co-registration* flow diagram.
+   *CSLC* generation flow diagram.
+
+In case of GSLC product and additional *Geocoding* functionality is requested and the corresponding workflow is reported in :numref:`GSLC_diagram`.
+
+.. _CSLC_diagram_figure:
+.. figure:: images/GSLC_diagram.drawio.png
+   :name: GSLC_diagram
+   :width: 600
+   :align: center
+
+   *GSLC* generation flow diagram.
 
 The processing units involved are:
 
