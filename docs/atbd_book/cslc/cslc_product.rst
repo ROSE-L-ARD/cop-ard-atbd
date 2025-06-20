@@ -16,16 +16,10 @@ The reference radar grid will be "virtual": it is generated using a nominal refe
 
 Optionally, the reference grid could be real: in this case, it corresponds to the radar grid of an SLC image selected as the reference.  
 
-The global, freely accessible Sentinel-1 acquisitions present a significant opportunity to broaden the user base for these advanced applications.  
-To fully leverage this potential, it is crucial to address challenges specific to the unique acquisition modes of the Sentinel-1 mission.  
-Efforts must also aim to reduce the dependence on acquisition geometry and apply advanced processing techniques to minimize artifacts,  
-ensuring the delivery of high-quality, clean products to users.  
-
 Key features of the Co-registered Single Look Complex (CSLC) product include:  
 
   - Removal of the topographic phase signature using external Digital Elevation Models (DEMs) and precise orbital data.  
-  - Application of atmospheric corrections (for troposphere and ionosphere effects) using ETAD data.  
-  - Use of ETAD layers to correct timing information.  
+  - Application of timing corrections for troposphere and ionosphere effects, using models (e.g. ETAD) or data driven approaches.
 
 The CSLC product must preserve all original information without introducing distortions, as it serves as the foundation for deriving other Analysis Ready Data (ARD) products.  
 
@@ -41,7 +35,7 @@ Main output variables
 
 - **cslc**: Co-registered single look complex stack of data ready for interferometry:
 
-    - the amplitude is in :math:`\β_{LUT}^0` convention, obtained by the calibration step using beta-zero LUT from the SLC annotations; 
+    - the amplitude is in :math:`\beta^0` convention, obtained by the calibration step using beta-zero LUT from the SLC annotations; 
     - the phase corresponds to the interpolated and resampled SLC flattened phase with respect to the reference orbit and the input Digital Elevation Model (DEM)
     
 
