@@ -30,7 +30,7 @@ The generation of CSLC products involves several complex processing units and an
 
 In case of GSLC product and additional *Geocoding* functionality is requested and the corresponding workflow is reported in :numref:`GSLC_diagram`.
 
-.. _CSLC_diagram_figure:
+.. _GSLC_diagram_figure:
 .. figure:: images/GSLC_diagram.drawio.png
    :name: GSLC_diagram
    :width: 600

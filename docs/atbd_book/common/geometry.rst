@@ -13,7 +13,7 @@
    limitations under the License.
 
 
-.. _Reference_Geometry_Products:
+.. _reference_geometry:
 
 Reference Geometry
 ------------------------

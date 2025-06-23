@@ -56,7 +56,7 @@ The algorithm follows these steps:
 
 .. figure:: images/regular_grid_triangulation_bw.png
    :name: regular_grid_triangulation
-   :width: 600
+   :width: 300
    :align: center
 
    Triangulation of a regular grid.
@@ -71,6 +71,7 @@ The algorithm follows these steps:
    Deformed triangulation of radar coordinates.
 
 3. For each triangle facet:
+   
    - Define the **linear interpolation function**, substituting geographic coordinates with radar coordinates.
    - Apply the **linear interpolation function** to the output points belonging to the triangle, as shown in :numref:`interpolation_on_triang`:
 

@@ -31,9 +31,6 @@ The *coordinate conversion* tool requires the following inputs:
 - :math:`annot`: L1 Image annotations
 - :math:`orb`: Orbital data, including satellite position, velocity and acceleration
 
-The inputs format and specifications are detailed in :ref:`[RP-PFS-S1L12] <[RP-PFS-S1L12]>` and
-:ref:`[RP-ADFS-S1L12] <[RP-ADFS-S1L12]>`.
-
 
 Outputs
 -------

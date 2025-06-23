@@ -28,9 +28,6 @@ The *phase deramping* tool requires the following inputs:
 - :math:`annot`: L1 Image annotations
 - :math:`slc`: Calibrated L1 data
 
-The input formats and specifications are detailed in :ref:`[RP-PFS-S1L12] <[RP-PFS-S1L12]>` and
-:ref:`[RP-ADFS-S1L12] <[RP-ADFS-S1L12]>`.
-
 Outputs
 -------
 The *phase deramping* tool produces complex L1 data with unaltered amplitude and modified phase,  
@@ -44,7 +41,7 @@ Algorithm
 ---------
 The *phase deramping* procedure must account for both TOPSAR modulation (for IW and EW acquisition modes)  
 and the presence of a Doppler centroid.  
-The mechanism to reconstruct the TOPSAR modulation is extensively explained in :ref:`[RD-TOPS-DEMOD] <[RD-TOPS-DEMOD]>`.  
+The mechanism to reconstruct the TOPSAR modulation is extensively explained in :cite:`RD-TOPS-DEMOD`.  
 The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is shown in the figure below.
 
 .. _TOPS_time_freq_diagram_figure:

@@ -16,9 +16,6 @@ The *noise removal* tool requires the following inputs:
 - :math:`annot`: L1 Image annotations
 - :math:`slc`: L1 Image data
 
-The inputs format and specifications are detailed in :ref:`[RP-PFS-S1L12] <[RP-PFS-S1L12]>` and
-:ref:`[RP-ADFS-S1L12] <[RP-ADFS-S1L12]>`.
-
 
 Outputs
 -------

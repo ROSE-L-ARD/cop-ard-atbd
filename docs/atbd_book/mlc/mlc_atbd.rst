@@ -132,11 +132,6 @@ Possible algorithm improvements
   * Test 2
 
 
-References
-=============
-
-.. bibliography::
-
 Appendices
 =============
 

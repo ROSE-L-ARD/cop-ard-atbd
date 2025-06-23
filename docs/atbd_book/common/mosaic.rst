@@ -24,76 +24,55 @@ The *Mosaic* tool provides the following output:
 
 - :math:`\gamma^0_{mosaic}`: Geographic tiles of mosaicked NRB map
 - :math:`\theta_{mosaic}`: Geographic tiles of mosaicked local incidence angle map
-- :math:`n_mosaic`: Geographic tiles of mosaicked Number of looks
-- :math:`m^l_mosaic`: Geographic tiles of mosaicked layover mask
-- :math:`m^s_mosaic`: Geographic tiles of mosaicked shadow mask
+- :math:`n_{mosaic}`: Geographic tiles of mosaicked Number of looks
+- :math:`m^l_{mosaic}`: Geographic tiles of mosaicked layover mask
+- :math:`m^s_{mosaic}`: Geographic tiles of mosaicked shadow mask
+- :math:`id_{mosaic}`: id of the burst used to extract the information 
 
 Algorithms
 ----------
 
-The modules of the projected NRB product :math:`\gamma^0` in correspondence with each burst are already calibrated and geocoded using the best available information.  
-The overlapping areas between bursts or strips are used to obtain seamless mosaicked images.  
-Two possible approaches can be used to mosaic data:
+The modules of the projected NRB product :math:`\gamma^0`, corresponding to each burst, are already calibrated and geocoded using the best available information.  
+Points on the output mosaic are selected according to their distance from the center of the burst.  
+As the data are calibrated, this enables the generation of seamless mosaicked images.
 
-- exploit the overlapping area between bursts or subswaths, indexed as :math:`i=1,2,...,N`, averaging values according to the number of looks :math:`n`, as computed in :ref:`Area based projection algorithm <radar_rasterization>`;
-- select the points accordingly to the distance with respect to the center of the burst. 
+The reliability associated with each resolution cell of each input map is provided by the number of looks :math:`n`, as computed in :ref:`Area based projection algorithm <radar_rasterization>`.
 
-The reliability associated with each resolution cell of each input map is provided by the number of looks :math:`n`, as computed in :ref:`Area based projection algorithm <radar_rasterization>`.  
-To obtain a seamless mosaic, a scaling function :math:`w` can be applied considering the distance from the border of each input image.  
-The speed of the decay function is a configuration parameter.  
-The weight function in correspondence with each image :math:`i` is:
+After aligning all input projected NRB variables listed above, the bursts to be mosaicked are sequentially analyzed following these steps:
 
-.. math::
-   :label: mosaic_weight
+- compute the distance from the burst center  
+- for points where this distance is smaller than the one already stored:  
+   - replace all variables with those of the current burst  
+   - update the stored distance for the modified points  
+   - save the burst ID for the updated points  
 
-   W_i = n_i * w_i , \forall i \in \{1,...,N\}
-
-:eq:`mosaic_weight`
-
-After the alignment of all input projected NRB, :math:`\gamma^0_i` and weight images, the mosaic is obtained as:
-
-.. math::
-   :label: mosaic_mosaic
-
-   \gamma^0_{mosaic} = \frac{\sum_{i=1}^{N}{W_i \gamma^0_i}}{\sum_{i=1}^{N}{W_i}}
-
-:eq:`mosaic_mosaic`
-
-The following figure shows an example of a mosaicked :math:`\gamma^0` map in VV polarization superimposed onto an optical image from Google Maps.  
-The transition between different bursts is smooth, and the mosaic is homogeneous and continuous.
+The following figure shows an example of a mosaicked :math:`\gamma^0` map in VH polarization, superimposed onto an optical image from Google Maps.  
+The transition between bursts is smooth, and the mosaic appears homogeneous and continuous.
 
 .. _NRB_Mosaicking_nrb_figure:
-.. figure:: images/nrb_vv_track_044_s1ard.png
+.. figure:: images/nrb_vh_track_044_s1ard.png
    :name: NRB_Mosaicking_nrb
    :width: 600
    :align: center
 
    Mosaic of :math:`\gamma^0` in VV polarization, superimposed onto an optical image from Google Maps.
 
-The layover and shadow masks are also mosaicked summing the boolean values:
+The next figure shows the associated layover/shadow mask. Colors represent:
 
-.. math::
-   :label: mosaic_masks
+- cyan: layover  
+- orange: shadow  
+- red: layover + shadow  
 
-   m^l_{mosaic} = \sum_{i=1}^{N}{m^l_i}\\
-   m^s_{mosaic} = \sum_{i=1}^{N}{m^s_i}
+.. _NRB_Mosaicking_mask_figure:
+.. figure:: images/mask_track_044_s1ard.png
+   :name: NRB_Mosaicking_mask
+   :width: 600
+   :align: center
 
-:eq:`mosaic_masks`
+   Mosaic of the mask. Cyan corresponds to layover, orange to shadow, and red to both.
 
-The mosaiked masks are then applied to the geocoded :math:`\gamma^0_{mosaic}` product to mask out artifacts caused by geometric distortions.
-
-Similarly, the local incidence angle map :math:`\theta_{mosaic}` is obtained as:
-
-.. math::
-   :label: mosaic_mosaic_theta
-
-   \theta_{mosaic} = \frac{\sum_{i=1}^{N}{W_i \theta_i}}{\sum_{i=1}^{N}{W_i}}
-
-:eq:`mosaic_mosaic_theta`
-
-The following figure shows an example of a mosaicked local incidence angle map.  
-The local incidence angle is homogeneous and continuous.  
-In fact, it does not depend on real SAR data but is simulated using the DEM and orbital data.
+The following figure presents a mosaicked local incidence angle map.  
+The angle is homogeneous and continuous, as it is not derived from SAR data but simulated using the DEM and orbital information.
 
 .. _NRB_Mosaicking_theta_figure:
 .. figure:: images/local_incidence_angle_track_044_s1ard.png
@@ -102,19 +81,12 @@ In fact, it does not depend on real SAR data but is simulated using the DEM and 
    :align: center
 
    Mosaic of the local incidence angle, superimposed onto an optical image from Google Maps.
-   
-The new reliability index associated with the mosaic is given by the sum of the number of looks associated with each cell:
 
-.. math::
-   :label: mosaic_mosaic_nlooks
+The new reliability index associated with the mosaic is represented by the number of looks per cell.
 
-   n_{mosaic} = \sum_{i=1}^{N}{n_i}
-
-:eq:`mosaic_mosaic_nlooks`
-
-The following figure shows an example of a mosaicked nlook map.  
-Brighter pixels correspond to a higher number of looks, while darker pixels correspond to a lower number of looks.  
-The number of looks varies according to terrain slopes, and in correspondence with overlapping areas between bursts, the number increases as more pixels are averaged.
+The next figure shows a mosaicked nlook map.  
+Brighter pixels indicate a higher number of looks, while darker pixels represent lower values.  
+This variability mainly reflects terrain slope.
 
 .. _NRB_Mosaicking_nlook_figure:
 .. figure:: images/nlook_track_044_s1ard.png
@@ -122,4 +94,18 @@ The number of looks varies according to terrain slopes, and in correspondence wi
    :width: 600
    :align: center
 
-   Mosaic of nlooks. Brighter pixels correspond to the overlapping area between bursts, where the number of averaged pixels is higher.
+   Mosaic of nlooks. Brighter areas correspond to overlapping burst regions with a higher number of averaged pixels.
+
+Each point in the mosaic is tagged with the ID of the source burst from which its data originates.  
+A representative map of burst IDs is shown in the following figure.
+
+.. _NRB_Mosaicking_id_figure:
+.. figure:: images/id_track_044_s1ard.png
+   :name: NRB_Mosaicking_id
+   :width: 600
+   :align: center
+
+   Mosaic of burst indices, identifying the source burst for each point in the mosaic.
+
+
+Finally, the mosaicked data are tiled according to the modified Sentinel-2 MGRS grid.
