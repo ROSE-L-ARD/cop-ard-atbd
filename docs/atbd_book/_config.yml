@@ -30,7 +30,7 @@ latex:
 repository:
   url: https://github.com/bopen/rose-l-ard 
   branch: main # Or your default branch name
-  path_to_book: . # Optional path to your book's folder, if it's not in the root
+  path_to_book: docs/atbd_book # Optional path to your book's folder, if it's not in the root
   edit_content: true # Optional, allows users to edit content
 
 html:

@@ -1,142 +1,46 @@
+.. Copyright 2023 European Union
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 
 .. _nrb_label:
 
-=================================================
-Algorithm Theoretical Basis Document (ATBD) - NRB
-=================================================
+========================================================
+Algorithm Theoretical Basis Document (ATBD) 
+========================================================
 
+The generation of NRB products involves several complex processing units and an overview of the processing workflow is reported in :numref:`NRB_diagram`.
 
-Overview
-========
+.. _NRB_diagram_figure:
+.. figure:: images/NRB_diagram.drawio.png
+   :name: NRB_diagram
+   :width: 600
+   :align: center
 
-The Normalized Radar Backscatter (NRB) product was the first among the Analysis Ready
-Data (ARD), with its introduction by CEOS in 2017 and with its definition further refined in 2021
-with the release of version 5.5 of the document [20]. Today, various product specifications
-for radar products have been merged into the initial version of the ”Combined CEOS-ARD for
-Synthetic Aperture Radar” [22]. This product exclusively contains backscatter values and undergoes
-Radiometric Terrain Correction (RTC), providing Gamma-Nought as defined in [112],
-which mitigates the impact of differing observation geometries. It is the most readily comprehensible
-product, enabling direct visualization for visual interpretation, as well as deeper analysis.
-Indeed, analysing backscatter time series can yield information regarding the observed object’s
-type for classification purposes (land use, land cover), as well as its temporal variations,
-enabling applications such as change detection, security applications, and vegetation growth
-monitoring.
-NRB products have gained significant advancements in recent years, driven by both technological
-innovation and increasing demand for high-quality, precise data. In the scientific literature,
-numerous studies have explored the potential of NRB products for a wide range of applications.
-Sentinel-1 satellites, equipped with SAR instruments, provide continuous and systematic observations,
-facilitating the generation of NRB products at unprecedented spatial and temporal
-resolutions. A pioneering example of NRB product, derived from Sentinel-1 GRD data, is provided
-within the ”Digital Earth Africa” program [128]. Concurrently, NRB products from other
-missions, such as ALOS-2, have also been developed [62].
-Looking ahead, upcoming satellite missions acquiring data systematically at L-Band (e.g., NISAR,
-ROSE-L) and freely distributing data to the scientific community will enhance observational capabilities
-and address various challenges associated with single radar band measurements.
+   *NRB* generation flow diagram.
 
+The processing units involved are:
 
-Product Description
-======================
+  - :ref:`Calibration <calibration>`: The *Calibration Unit* includes the steps for importing input SLC data, applying noise removal, amplitude calibration, and phase deramping.
+  - :ref:`Reference DEM <reference_DEM>`: The *Reference DEM Unit* includes the step for generating a DEM interpolated onto the output geographic grid of the geocoded ARD products.
+  - :ref:`Reference Geometry <reference_geometry>`: The *Reference Geometry Unit* includes all steps required to generate geometric information, stored in intermediate products, and needed by some *Co-registration* and *Geocoding* steps. The outputs of the *Reference Geometry Unit* can be stored in a static archive and reused by other processing units as needed.
+  - :ref:`Co-registration <coregistration>`: The *Co-registration Unit* produces CSLC products with respect to a reference radar grid. It is possible to apply models (e.g. ETAD corrections), or compute the corrections to the model based coregistration, by applying image cross-correlation with respect to a real reference image.
+  - :ref:`Geocoding <geocoding>`: The *Geocoding Unit* uses CSLC and geometric information to extract GSLC/NRB products per burst or per swath (in the case of SM products).
+  - :ref:`Mosaic <mosaicking>`: The *Mosaic Unit* merge NRB products tiled per burst or per swath obtained from the Geocoding step, and cut the obtained merged products according to the Sentinel-2 modified MGRS tiles.
 
+.. note::
 
+   The NRB product can be generated for each individual SLC image independently, thereby avoiding part of the co-registration step. 
 
-Main variables
-------------------
+   Alternatively, it can be generated for a stack of SLC images by aligning all images with respect to a reference image (real or virtual) in radar geometry.
 
-- **Gamma0** :math:`\gamma_0`: 
-
-- **Local incidence angle** :math:`\theta_i`: 
-
-- **Area Normalization Factor** :math:`ANF`:
-
-- **Number of looks** :math:`N_L`:
-
-- **Mask (Layover/shadow)** :math:`M`:
-
-
-Metadata
-------------
-
-...
-
-Input data
-=============
-
-SAR data
-------------
-
-
-
-Internal data
------------------
-
-
-
-Auxiliary data
-------------------
-
-...
-
-
-Algorithm description
-========================
-
-
-Timing corrections
-------------------
-
-
-Thermal Noise Removal
----------------------
-
-
-DEM Resampling
---------------
-
-
-:ref:`Geo2Radar Coordinates Conversion <common_dem2radar_label>`
-----------------------------------------------------------------
-
-
-Radiometric Terrain Correction (RTC)
-------------------------------------
-
-
-:ref:`Geocoding <common_geocoding_amp_label>`
----------------------------------------------
-
-
-:ref:`Mosaic <common_mosaic_label>`
------------------------------------
-
-
-
-
-Data visualization
-=====================
-
-
-Code
-=======
-
-.. code-block:: python
-    :caption: Import modules
-
-    import rosel.io
-
-
-Validation and Quality Assessment
-=====================================
-
-* Test 1
-* Test 2
-
-
-References
-=============
-
-.. bibliography::
-
-Appendices
-=============
-
-* [Detailed mathematical derivations]
+   In either case, the *Co-registration Unit* is involved if timing correction is required.

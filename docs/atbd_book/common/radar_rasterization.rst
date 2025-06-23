@@ -17,7 +17,7 @@ The *Radar rasterization* tool includes the following operations:
      - :ref:`Triangular Irregular Network <Triangular_Irregular_Network>`: Extraction of the facets of the DEM.
      - :ref:`Area intersection <area_intersection>`: Computation of the Area Projection Matrix (APM) linking each geographic cell with the corresponding radar cells.
      - :ref:`Local incidence angle and contributing area <local_incidence_angle_and_contributing_area>`: Computation of the local incidence angle and the local contributing area for each geographic cell.
-     - :ref:`ANF computation <ANF_computation>`: Computation of tshe area normalization factor (ANF) to compensate backscattering for terrain slope.
+     - :ref:`ANF computation <ANF_computation>`: Computation of the area normalization factor (ANF) to compensate backscattering for terrain slope.
 
 The following figure is a simple schema for the steps necessary to obtain the intermediate products of the *Radar rasterization* tool.
 
@@ -30,7 +30,7 @@ The following figure is a simple schema for the steps necessary to obtain the in
    Schema of Radar rasterization steps.
 
 The algorithms for slope compensation and the projection matrix described below are  
-based on :ref:`[RD-SHIROMA-2022] <[RD-SHIROMA-2022]>`. The Shiroma algorithm provides a solution to  
+based on :cite:`Shiroma2022`. The Shiroma algorithm provides a solution to  
 the lack of bijective correspondence between ground and radar coordinates,  
 i.e., the two coordinate systems map "many-to-one" and "one-to-many" between them.  
 To achieve this, the reference surface is first computed over the geographical  
@@ -41,10 +41,10 @@ considered for the derivation of the radar sample correction factor.
 In addition, the Shiroma algorithm, using the slant-range projection with the area projection algorithms,  
 fills all spaces covered by the projected area elements without leaving gaps,  
 reducing or eliminating the need for DEM oversampling, as required instead by the procedure proposed by  
-:ref:`[RD-SMALL-2011] <[RD-SMALL-2011]>`.
+:cite:`Small2011`.
 
 In cases of stacks of CSLC images with orbital baselines of a few hundred meters, it is possible,  
-according to :ref:`[RD-NAVACCHI-2023] <[RD-NAVACCHI-2023]>`, to compute the ANF function and the weights of the AP algorithm  
+according to :cite:`Navacchi2023`, to compute the ANF function and the weights of the AP algorithm  
 only once for the reference virtual image and then use these weights for all secondary images.
 
 .. _ABP_inputs:
@@ -73,7 +73,7 @@ The *Radar rasterization* tool provides the following outputs:
 
 Algorithms
 ''''''''''  
-The core functionalities are based on the algorithm described in :ref:`[RD-SHIROMA-2022] <[RD-SHIROMA-2022]>`  
+The core functionalities are based on the algorithm described in :cite:`Shiroma2022`  
 and are able to derive the projection matrix for geocoding and the correction for terrain slope  
 to provide radiometrically terrain-corrected images.  
 The algorithm finds the correspondence between areas on the ground and areas on the radar image grid,  
@@ -163,7 +163,7 @@ the local contributing area for the derivation of the :math:`\gamma^0`.
    vector, :math:`\vec{r}` is the look vector, :math:`\vec{n}` is the ground surface normal,  
    :math:`\theta` is the ellipsoidal incidence angle, :math:`\theta_{i}` is the local-incidence angle,  
    and :math:`\psi` is the projection angle.  
-   Credits: :ref:`[RD-SHIROMA-2022] <[RD-SHIROMA-2022]>`.
+   Credits: :cite:`Shiroma2022`.
 
 The computation of the local contributing area requires the following steps:
 
@@ -173,7 +173,7 @@ The computation of the local contributing area requires the following steps:
 .. math::
     :label: eq_cosine
 
-    \cos(\theta_{i_{x}})=\frac{1}{4} \sum_{j \in J} \vec{r_x^j}\cdot\vec{n_x^j}, \forall{x \in D}
+    \cos(\theta_{i_{x}})=\frac{1}{4} \sum_{j \in J} \vec{r}_x^j\cdot\vec{n}_x^j, \forall{x \in D}
 
 :eq:`eq_cosine`
 
@@ -182,11 +182,11 @@ The computation of the local contributing area requires the following steps:
 .. math::
     :label: eq_Asigma
    
-    A_{\sigma_x} = \frac{1}{4} \sum_{j \in J} \lVert \vec{e_{1_x}^j} \times \vec{e_{2_x}^j} \rVert, \forall{x \in D}
+    A_{\sigma_x} = \frac{1}{4} \sum_{j \in J} \lVert \vec{e}_{1_x}^j \times \vec{e}_{2_x}^j \rVert, \forall{x \in D}
 
 :eq:`eq_Asigma`
 
-where :math:`\vec{e_1}` and :math:`\vec{e_2}` are vectors representing two of the facet’s edges.
+where :math:`\vec{e}_1` and :math:`\vec{e}_2` are vectors representing two of the facet’s edges.
 
    - Scale the facet ground surface area :math:`A_{\sigma_x}` to the facet gamma-naught area :math:`A_{\gamma_x}` to obtain the local contributing area in ground geometry (see :numref:`bck_coefficients_representation`):
 

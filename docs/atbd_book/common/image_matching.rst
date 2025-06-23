@@ -23,3 +23,14 @@ Outputs
 Algorithm
 ----------
 
+The Pearson correlation coefficient between the reference image :math:`slc_r` and the secondary image :math:`slc_s` shifted of :math:`(\Delta t_{r_s},\Delta t_{a_s})` is defined as:
+
+.. math::
+    :label: eq_pearson
+
+    \Gamma(\Delta t_{r_s}, \Delta t_{a_s}) = \left | \frac{E\left[ \text{slc}_r(t_{r_s}, t_{a_s}) \text{slc}_s^{*}(t_{r_s}+\Delta t_{r_s}, t_{a_s}+\Delta t_{a_s}) \right ]}{\sqrt{ E \left [ \left| \text{slc}_r(t_{r_s}, t_{a_s}) \right|^2 \right ] E \left [ \left| \text{slc}_s(t_{r_s}+\Delta t_{r_s}, t_{a_s}+\Delta t_{a_s}) \right|^2 \right ]}} \right | 
+
+.. note::
+    If the input reference and secondary images are complex-valued, it is important that the phase modulation due to the acquisition mode and acquisition geometry (topography) has been removed.
+
+To find the values :math:`(\Delta t_{r_s}, \Delta t_{a_s})` that maximize the function :math:`\Gamma(\Delta t_{r_s}, \Delta t_{a_s})` with sub-pixel accuracy, it is sufficient to evaluate the function at offsets that are integer multiples of the image spacing. Once the function has been computed at these integer nodes, it is possible to oversample the objective function or fit a paraboloid around the local peak to obtain the coordinates of the maximum.

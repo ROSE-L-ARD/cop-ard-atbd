@@ -35,6 +35,18 @@ Considering the calibration procedure in :ref:`Amplitude calibration <amplitude_
 
 :eq:`eq_CSLC_module`
 
+An example of SAR Sentinel-1 image intensity, corresponding to a single burst in radar geometry, is shown in :numref:`intensity_iw1_92640_044_salzburg_orig`.
+
+.. _intensity_iw1_92640_044_salzburg_orig_fig:
+
+.. figure:: images/intensity_iw1_92640_044_salzburg_orig.png
+   :name: intensity_iw1_92640_044_salzburg_orig
+   :width: 600px
+   :align: center
+
+   Example of Sentinel-1 image intensity in :math:`\beta^0`, corresponding to a single burst.
+
+
 The :math:`\gamma`-flattening step computes the :math:`\gamma^0` image in radar geometry.  
 This step, considering the preliminary evaluation of :math:`ANF` by :ref:`Radar rasterization <radar_rasterization>`, is straightforward.  
 :math:`\gamma^0` is obtained by rescaling :math:`\beta^0` using :math:`ANF`:
@@ -54,3 +66,14 @@ If the complex flattened CSLC product is requested, :math:`CSLC_{flatten}` is ob
    CSLC_{flatten} = CSLC / \sqrt{ANF}
 
 :eq:`eq_CSLC_flat`
+
+The same example of Sentinel-1 image intensity after the compensation with :math:`ANF` is reported in :numref:`intensity_iw1_92640_044_salzburg`.
+
+.. _intensity_iw1_92640_044_salzburg_fig:
+
+.. figure:: images/intensity_iw1_92640_044_salzburg.png
+   :name: intensity_iw1_92640_044_salzburg
+   :width: 600px
+   :align: center
+
+   Example of Sentinel-1 image intensity in :math:`\gamma^0` in correspondence of a single burst.

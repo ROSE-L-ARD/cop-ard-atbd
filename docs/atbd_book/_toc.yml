@@ -3,7 +3,7 @@ root: intro
 parts:
   - caption: Introduction
     chapters:
-    - file: intro/Introduction
+      - file: intro/Introduction
   - caption: CSLC/GSLC
     chapters: 
       - file: cslc/cslc_overview
@@ -11,6 +11,13 @@ parts:
       - file: cslc/cslc_atbd
       - file: cslc/cslc_data_vis
       - file: cslc/cslc_code
+  - caption: NRB
+    chapters: 
+      - file: nrb/nrb_overview
+      - file: nrb/nrb_product
+      - file: nrb/nrb_atbd
+      - file: nrb/nrb_data_vis
+      - file: nrb/nrb_code
   - caption: CMLC/GMLC
     chapters:
       - file: mlc/mlc_overview
@@ -50,11 +57,10 @@ parts:
           - file: common/radar_mapping
       - file: common/coregistration
         sections:
-          - file: common_coregistration_model
-          - file: common_coregistration_data
+          - file: common/coregistration_model_based
+          - file: common/coregistration_data_driven
       - file: common/mosaic
   - caption: Appendices
     chapters:
-      # - file: appendix/additional_resources
       - file: glossary
-
+      - file: references
