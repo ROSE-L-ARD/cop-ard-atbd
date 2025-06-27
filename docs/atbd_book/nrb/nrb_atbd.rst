@@ -30,12 +30,12 @@ The generation of NRB products involves several complex processing units and an 
 
 The processing units involved are:
 
-  - :ref:`Calibration <calibration>`: The *Calibration Unit* includes the steps for importing input SLC data, applying noise removal, amplitude calibration, and phase deramping.
-  - :ref:`Reference DEM <reference_DEM>`: The *Reference DEM Unit* includes the step for generating a DEM interpolated onto the output geographic grid of the geocoded ARD products.
-  - :ref:`Reference Geometry <reference_geometry>`: The *Reference Geometry Unit* includes all steps required to generate geometric information, stored in intermediate products, and needed by some *Co-registration* and *Geocoding* steps. The outputs of the *Reference Geometry Unit* can be stored in a static archive and reused by other processing units as needed.
-  - :ref:`Co-registration <coregistration>`: The *Co-registration Unit* produces CSLC products with respect to a reference radar grid. It is possible to apply models (e.g. ETAD corrections), or compute the corrections to the model based coregistration, by applying image cross-correlation with respect to a real reference image.
-  - :ref:`Geocoding <geocoding>`: The *Geocoding Unit* uses CSLC and geometric information to extract GSLC/NRB products per burst or per swath (in the case of SM products).
-  - :ref:`Mosaic <mosaicking>`: The *Mosaic Unit* merge NRB products tiled per burst or per swath obtained from the Geocoding step, and cut the obtained merged products according to the Sentinel-2 modified MGRS tiles.
+- :ref:`Calibration <calibration>`: The *Calibration Unit* includes the steps for importing input SLC data, applying noise removal, amplitude calibration, and phase deramping.
+- :ref:`Reference DEM <reference_DEM>`: The *Reference DEM Unit* includes the step for generating a DEM interpolated onto the output geographic grid of the geocoded ARD products.
+- :ref:`Reference Geometry <reference_geometry>`: The *Reference Geometry Unit* includes all steps required to generate geometric information, stored in intermediate products, and needed by some *Co-registration* and *Geocoding* steps. The outputs of the *Reference Geometry Unit* can be stored in a static archive and reused by other processing units as needed.
+- :ref:`Co-registration <coregistration>`: The *Co-registration Unit* produces CSLC products with respect to a reference radar grid. It is possible to apply models (e.g. ETAD corrections), or compute the corrections to the model based coregistration, by applying image cross-correlation with respect to a real reference image.
+- :ref:`Geocoding <geocoding>`: The *Geocoding Unit* uses CSLC and geometric information to extract GSLC/NRB products per burst or per swath (in the case of SM products).
+- :ref:`Mosaic <mosaicking>`: The *Mosaic Unit* merge NRB products tiled per burst or per swath obtained from the Geocoding step, and cut the obtained merged products according to the Sentinel-2 modified MGRS tiles.
 
 .. note::
 
@@ -43,4 +43,4 @@ The processing units involved are:
 
    Alternatively, it can be generated for a stack of SLC images by aligning all images with respect to a reference image (real or virtual) in radar geometry.
 
-   In either case, the *Co-registration Unit* is involved if timing correction is required.
+   In either case, the *Co-registration Unit* is involved if timing correction is required, in order to resample the image in correspondence of the correct grid.
