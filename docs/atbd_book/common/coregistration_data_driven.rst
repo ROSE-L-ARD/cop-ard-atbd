@@ -20,7 +20,7 @@ Data-Driven Co-registration
 The *Data driven co-registration* generates Single Look Complex (SLC) images co-registered with respect to a radar reference grid. 
 Each pixel of the co-registered SLC (CSLC) images represents the same ground target.
 
-CSLC products are derived from previously co-registered data with model based approach, and *Geometry Unit* outputs.
+CSLC products are derived from previously co-registered data with model based approach (Pre-coregistered, calibrated, Deramped, Demodulated SAR SLC), and *Geometry Unit* outputs (Geo2Radar Association Matrix ).
 
 The model based co-registration is necessary to pre-align as much as possible the input images, compensating for geometric distorsions, phase topographic signature and acquisition mode phase modulation.
 
@@ -29,7 +29,7 @@ In azimuth direction in case of TopSAR and ScanSAR acquisitions it is requested 
 
 Once offset measurements have to be collected in correspondence of patches over all the image, a warping function has to be reconstructed. This process is also known as :ref:`rubber sheeting <rubber_sheeting>`.
 
-The flow for CSLC production is shown in :numref:`data_driven_coregistration_diagram`.
+The flow for data driven co-registration is shown in :numref:`data_driven_coregistration_diagram`.
 
 .. _data_driven_coregistration_diagram_figure:
 .. figure:: images/Coregistration_data_driven_diagram.drawio.png
@@ -42,7 +42,7 @@ The flow for CSLC production is shown in :numref:`data_driven_coregistration_dia
 Key steps of the *Data-driven Co-registration*:
 
 - :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
-- :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
+- :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
 - :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary images warping function, merging the information with the outcomes of the model-based co-registration. 
 - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid.
 - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
