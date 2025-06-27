@@ -50,8 +50,8 @@ It includes the algorithms for the following tools:
 - :ref:`Reference geometry <reference_geometry>`: 
   
   - :ref:`Coordinate conversion <coordinate_conversion>`: Converts coordinates between different systems, such as geographic grid and radar grid.
-  - :ref:`Radar rasterization <reference_geometry_radar_rasterization>`: Computes the area projection matrix linking ground and radar coordinates, the area normalization factor (ANF in radar coordinates), and the ground incidence angle.
-  - :ref:`Radar mapping <reference_geometry_radar_mapping>`: Maps variables from ground to radar coordinates, specifically providing layover and shadow masks.
+  - :ref:`Radar rasterization <radar_rasterization>`: Computes the area projection matrix linking ground and radar coordinates, the area normalization factor (ANF in radar coordinates), and the ground incidence angle.
+  - :ref:`Radar mapping <radar_mapping>`: Maps variables from ground to radar coordinates, specifically providing layover and shadow masks.
 
 - :ref:`Co-registration <coregistration>`:
 
