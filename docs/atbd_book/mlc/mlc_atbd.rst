@@ -29,7 +29,7 @@ This algorithm keeps two special images between each update step, one is called 
 Auxiliary data
 ------------------
 
-None (TBC).
+The algorithm that generated the CSLC does not require any additional data.
 
 
 Algorithm description
@@ -118,8 +118,8 @@ In contrast, algorithms based on the coherence matrix have a complexity that gro
 
 Possible algorithm improvements
 ===============================
-- Better sampling in radar coordinates of CMLC product
-- Saving and make use of several "past references", e.g. one for each year
+- Better sampling in radar coordinates of CMLC product.
+- Saving and make use of several "past references", e.g. one for each year.
 - Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we need to optimize simultaneously the short and the long-term coherence.
 
 

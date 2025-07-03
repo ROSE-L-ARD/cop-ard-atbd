@@ -29,5 +29,5 @@ Main output variables
 Metadata
 ------------
 
-None (TBC).
+The metadata of the input CSLC product should accompany the CMLC product. In addition, the product metadata contain information about the multi-looking factor applied. It could be useful to add the type and parameters of the phase-estimation algorithm.
 
