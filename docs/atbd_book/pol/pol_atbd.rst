@@ -128,12 +128,6 @@ Validation and Quality Assessment
 * Test 1
 * Test 2
 
-
-References
-=============
-
-.. bibliography::
-
 Appendices
 =============
 

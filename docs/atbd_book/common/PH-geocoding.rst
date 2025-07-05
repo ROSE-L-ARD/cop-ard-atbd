@@ -13,7 +13,8 @@ Inputs
 -------
 
 - :math:`CSLC`: Co-registered Single Look Complex image  
-- math:`G2RAM_{ref}`: Reference Geo2Radar Association Matrix (Reference azimuth, slant range, line of sight, and height)
+- :math:`G2RAM_{ref}`: Reference Geo2Radar Association Matrix (Reference azimuth, slant range, line of sight, and height)
+- :math:`ANF`: Area normalization factor in radar geometry (optional)
 
 Outputs
 --------
@@ -26,6 +27,16 @@ Algorithm
 Point projection geocoding allows obtaining the CSLC map corresponding to the output geographic grid.  
 The phase of the GSLC is flattened with respect to the topographic phase, and its intensity may be flattened using the Area Normalization Factor (ANF).  
 The spectral content of the CSLC image is preserved, meaning that the GSLC presents the same Doppler centroid and TOPSAR modulation (if present) as the input CSLC product.
+
+The following diagram illustrates the flow of the point projection geocoding algorithm:
+
+.. _point_based_geocoding_diagram_figure:
+.. figure:: images/ph_geocoding.drawio.png
+   :name: point_based_geocoding_diagram
+   :width: 600
+   :align: center
+
+   *Point based geocoding* flow diagram.
 
 The Reference Geo2Radar Association Matrix contains, for each point of the output geographic grid, the corresponding slant range and azimuth coordinates.  
 This association generates a non-integer radar grid, requiring an interpolation procedure. Additionally, the association is generally spatially variant,  
@@ -43,14 +54,4 @@ is applied to :math:`CSLC_{deramp}`, corresponding to the radar pixels associate
 The obtained interpolated and demodulated image must be re-modulated using the method described in :ref:`Phase reramping <phase_reramping>`.  
 The final complex image is the :math:`GSLC` product.
 
-If the amplitude of the GSLC product is requested to be flattened using the ANF, only the phase is provided as output.  
-For all ground cells, the phase is evaluated as:
-
-.. math::
-   :label: eq_CSLC_phase
-   
-   \phi = arg (GSLC) = atan2 (\Im{(GSLC)}, \Re{(GSLC)})
-
-:eq:`eq_CSLC_phase`
-
-where :math:`atan2` correctly computes the arctangent function of :math:`\frac{\Im{(GSLC)}}{\Re{(GSLC)}}`, accounting for the quadrant in which the complex number is located.
+If the amplitude of the GSLC product is requested to be flattened using the ANF, it is obtained from CSLC product by applying the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`.

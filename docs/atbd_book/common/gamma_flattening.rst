@@ -63,7 +63,7 @@ If the complex flattened CSLC product is requested, :math:`CSLC_{flatten}` is ob
 .. math::
    :label: eq_CSLC_flat
 
-   CSLC_{flatten} = CSLC / \sqrt{ANF}
+   CSLC_{flatten} = CSLC / \sqrt{ANF/\beta^0}
 
 :eq:`eq_CSLC_flat`
 

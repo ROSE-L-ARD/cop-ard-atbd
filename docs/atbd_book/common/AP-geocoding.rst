@@ -23,6 +23,7 @@ Inputs
 
 - :math:`w`: Area Projection Matrix (APM)
 - :math:`img_r`: Real or complex valued image in radar geometry
+- :math:`ANF`: Area normalization factor in radar geometry (optional)
 
 Outputs
 --------
@@ -35,7 +36,7 @@ Algorithm
 Area Projection Geocoding enables the projection of both real-valued and complex-valued radar images from radar geometry to ground geometry.  
 The process relies on the Area Projection Matrix (APM), which defines the linear combination required to compute the geocoded pixel values on the output geographic grid.
 
-For **real-valued** input data, such as the flattened CSLC intensity image expressed as :math:`\gamma^0`, the geocoded map :math:`\gamma^0_g` is computed as follows:
+For **real-valued** input data, such as the flattened CSLC intensity image expressed as :math:`\gamma^0_r`, the geocoded map :math:`\gamma^0_g` is computed as follows:
 
 .. math::
    :label: eq_cell_proj_real
@@ -43,7 +44,9 @@ For **real-valued** input data, such as the flattened CSLC intensity image expre
    \gamma^0_{g_x} = \frac{\sum_{i \in M_x} w_{i,x} \gamma^0_{r_i}}{\sum_{i \in M_x} w_{i,x}}
 
 Here, :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and :math:`w_{i,x}` are the corresponding weights.  
-This formulation is equivalent to a weighted multilooking operation and produces the NRB product, and the normalization coefficient in :eq:`eq_cell_proj_1` represents the number of looks :math:`nlook_{x}` associated with output resolution cell :math:`x`.
+This formulation is equivalent to a weighted multilooking operation and produces the NRB product, and the normalization coefficient in :eq:`eq_cell_proj_real` represents the number of looks :math:`nlook_{x}` associated with output resolution cell :math:`x`.
+
+The :math:`\gamma^0_r` represents the flattened CSLC intensity in radar geometry, and it is obtained from CSLC product by applying the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`.
 
 **Layover and shadow masks** are projected using the same matrix, but since masks are expected to be boolean, the floating-point result of the matrix multiplication is thresholded to restore a binary format.
 

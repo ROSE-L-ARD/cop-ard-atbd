@@ -8,13 +8,13 @@ Products and algorithms
 
 This Jupyter Book documents the Algorithm Theoretical Basis Documents (ATBDs) for the generation of the following Analysis Ready Data (ARD) products: 
 
-* Co-registerd Single Look Complex :ref:`(CSLC/GSLC) <cslc_label>`, 
-* Normalized Radar Backscatter :ref:`(NRB/ENRB) <nrb_label>`, 
-* Polarimetry :ref:`(COV/GCOV) <pol_label>`,
-* Ocean Radar Backscatter :ref:`(ORB/EORB) <orb_label>`, 
-* Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_label>`,
-* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_label>`,
-* Stripmap Equivalent :ref:`(STRIPEQ) <stripeq_label>`.
+* Co-registerd Single Look Complex :ref:`(CSLC/GSLC) <CSLC_overview>`, 
+* Normalized Radar Backscatter :ref:`(NRB/ENRB) <NRB_overview>`, 
+* Polarimetry :ref:`(COV/GCOV) <COV_overview>`,
+* Ocean Radar Backscatter :ref:`(ORB/EORB) <ORB_overview>`, 
+* Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_overview>`,
+* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_overview>`,
+* Stripmap Equivalent :ref:`(STRIPEQ) <stripeq_overview>`.
 
 A section is dedicated also to the set of common algorithms shared between the different processing chains :ref:`(Common algorithms) <Common_tools>`.
 

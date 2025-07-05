@@ -42,5 +42,3 @@ Let :math:`slc_{nc} (t_a,t_r )` be the image corrected for thermal noise. The am
    :label: eq_amp_calib
 
    slc_{ac} (t_a,t_r )= slc_{nc} (t_a,t_r ) A_c (t_a,t_r )
-
-:eq:`eq_amp_calib`
