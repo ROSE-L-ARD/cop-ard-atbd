@@ -20,7 +20,7 @@ The calibration unit provides functionalities for removing thermal noise, calibr
 
 The algorithm can be divided into three steps, executed in the following sequence:  
 
-- :ref:`Noise removal <noise_removal>` (optional)  
+- :ref:`Noise removal <noise_removal>`
 - :ref:`Amplitude calibration <amplitude_calibration>`  
 - :ref:`Phase deramping <phase_deramping>`  
 

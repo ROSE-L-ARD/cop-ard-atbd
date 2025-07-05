@@ -18,6 +18,13 @@ parts:
       - file: nrb/nrb_atbd
       - file: nrb/nrb_data_vis
       - file: nrb/nrb_code
+  - caption: INT
+    chapters: 
+      - file: int_cohe/int_cohe_overview
+      - file: int_cohe/int_cohe_product
+      - file: int_cohe/int_cohe_atbd
+      - file: int_cohe/int_cohe_data_vis
+      - file: int_cohe/int_cohe_code
   - caption: CMLC/GMLC
     chapters:
       - file: mlc/mlc_overview
@@ -25,6 +32,13 @@ parts:
       - file: mlc/mlc_atbd
       - file: mlc/mlc_data_vis
       - file: mlc/mlc_code 
+  - caption: PRO/PAO
+    chapters:
+      - file: pro_pao/pro_pao_overview
+      - file: pro_pao/pro_pao_product
+      - file: pro_pao/pro_pao_atbd
+      - file: pro_pao/pro_pao_data_vis
+      - file: pro_pao/pro_pao_code 
   - caption: Common Algorithms
     chapters:
       - file: common/tools
@@ -36,8 +50,8 @@ parts:
           - file: common/phase_reramping
       - file: common/geocoding
         sections:
-          - file: common/AP-geocoding
           - file: common/PH-geocoding
+          - file: common/AP-geocoding
       - file: common/interpolation
         sections:
           - file: common/regular_grid_to_sparse_grid_image_interpolation_sinc
@@ -59,7 +73,13 @@ parts:
         sections:
           - file: common/coregistration_model_based
           - file: common/coregistration_data_driven
+          - file: common/image_matching
+          - file: common/esd_matching
+          - file: common/rubber_sheeting
       - file: common/mosaic
+        sections:
+          - file: common/burst_merge.rst
+          - file: common/tiling.rst
   - caption: Appendices
     chapters:
       - file: glossary

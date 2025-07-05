@@ -101,11 +101,6 @@ Validation and Quality Assessment
 * Test 2
 
 
-References
-=============
-
-.. bibliography::
-
 Appendices
 =============
 

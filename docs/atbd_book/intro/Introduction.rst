@@ -31,7 +31,7 @@ The designated ARD products are:
 
 * Co-registerd Single Look Complex :ref:`(CSLC/GSLC) <CSLC_overview>`, 
 * Normalized Radar Backscatter :ref:`(NRB/ENRB) <NRB_overview>`, 
-* Polarimetry :ref:`(COV/GCOV) <COV_overview`,
+* Polarimetry :ref:`(COV/GCOV) <COV_overview>`,
 * Ocean Radar Backscatter :ref:`(ORB/EORB) <ORB_overview>`, 
 * Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_overview>`,
 * Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_overview>`,
