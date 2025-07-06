@@ -44,11 +44,50 @@ For **real-valued** input data, such as the flattened CSLC intensity image expre
    \gamma^0_{g_x} = \frac{\sum_{i \in M_x} w_{i,x} \gamma^0_{r_i}}{\sum_{i \in M_x} w_{i,x}}
 
 Here, :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and :math:`w_{i,x}` are the corresponding weights.  
+
+:numref:`area_based_geocoding_intensity_figure` illustrates the intensity image obtained from a SAOCOM acquisition over Salamanca (ES) in ascending mode, beam S4, using this formulation.
+
+.. _area_based_geocoding_intensity_figure:
+.. figure:: images/intensity_saocom_salamanca_asc_s4.png
+   :name: area_based_geocoding_intensity
+   :width: 600
+   :align: center
+
+   *Area based geocoding* intensity image corresponding to a SAOCOM acquisition over Salamanca (ES) in ascending mode, beam S4.
+
 This formulation is equivalent to a weighted multilooking operation and produces the NRB product, and the normalization coefficient in :eq:`eq_cell_proj_real` represents the number of looks :math:`nlook_{x}` associated with output resolution cell :math:`x`.
+
+:numref:`area_based_geocoding_nlook_figure` illustrates the number of looks image obtained from the same SAOCOM acquisition over Salamanca (ES) in ascending mode, beam S4, using this formulation.
+
+.. _area_based_geocoding_nlook_figure:
+.. figure:: images/nlooks_saocom_salamanca_asc_s4.png
+   :name: area_based_geocoding_nlook
+   :width: 600
+   :align: center
+
+   *Area based geocoding* nlook image corresponding to a SAOCOM acquisition over Salamanca (ES) in ascending mode, beam S4.
 
 The :math:`\gamma^0_r` represents the flattened CSLC intensity in radar geometry, and it is obtained from CSLC product by applying the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`.
 
 **Layover and shadow masks** are projected using the same matrix, but since masks are expected to be boolean, the floating-point result of the matrix multiplication is thresholded to restore a binary format.
+
+In order to show an example of layover and shadow mask,  an area in Alpine region over Salzburg (AT), acquired by Sentinel-1 in IW mode is reported in :numref:`area_based_geocoding_lay_figure` and :numref:`area_based_geocoding_shw_figure` respectively.
+
+.. _area_based_geocoding_lay_figure:
+.. figure:: images/layover_mask_s1_iw_geo.png
+   :name: area_based_geocoding_lay
+   :width: 600
+   :align: center
+
+   *Area based geocoding* layover mask corresponding to a Sentinel-1 acquisition over Salzburg (AT) in IW mode.
+
+.. _area_based_geocoding_shw_figure:
+.. figure:: images/shadow_mask_s1_iw_geo.png
+   :name: area_based_geocoding_shw
+   :width: 600
+   :align: center
+
+   *Area based geocoding* shadow mask corresponding to a Sentinel-1 acquisition over Salzburg (AT) in IW mode.
 
 For **complex-valued** input data—such as interferometric phase (INT), multichannel (CMLC), or covariance matrix (COV) products—Area Projection Geocoding applies the same APM to the complex-valued samples:
 
