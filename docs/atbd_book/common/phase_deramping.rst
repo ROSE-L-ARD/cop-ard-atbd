@@ -62,7 +62,7 @@ The following figure presents a simplified schema of this step:
 .. figure:: images/Deramping_diagram_v1.drawio.png
    :name: Deramping_schema
    :align: center
-   :width: 600
+   :width: 300
 
    Diagram of image deramping processing step.
 

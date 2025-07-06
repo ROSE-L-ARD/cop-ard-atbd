@@ -25,15 +25,16 @@ The *ReferenceDEM* unit includes the following functionalities:
 - :ref:`DEM import <reference_DEM_import>`: Imports the DEM from the external file or the Copernicus DEM portal.  
 - :ref:`DEM resampling <reference_DEM_resampling>`: Resamples the DEM onto the output grid defined for the :term:`NRB` or :term:`GSLC` products.  
 
-The *ReferenceDEM* unit is executed once for all bursts. The resampled DEM is then used by the *Reference Geometry Unit* to evaluate correspondences between ground and radar geometry.  
-This information will subsequently be used by the *Co-registration Unit* to generate the :term:`CSLC` products and by the *Geocoding Unit* to generate the :term:`GSLC` and :term:`NRB` products.  
-
 The :numref:`reference_dem_unit_schema` presents a simplified schema of this functionality, including the necessary inputs and the generated outputs.  
 
 .. _reference_dem_unit_schema_figure:  
 .. figure:: images/ARD_Reference_DEM.drawio.png  
    :name: reference_dem_unit_schema  
-   :width: 600  
+   :width: 300  
    :align: center  
 
    Diagram of *Reference DEM unit*.  
+
+The *ReferenceDEM* unit is executed once for all bursts. The resampled DEM is then used by the *Reference Geometry Unit* to evaluate correspondences between ground and radar geometry.  
+This information will subsequently be used by the *Co-registration Unit* to generate the :term:`CSLC` products and by the *Geocoding Unit* to generate the :term:`GSLC` and :term:`NRB` products.  
+

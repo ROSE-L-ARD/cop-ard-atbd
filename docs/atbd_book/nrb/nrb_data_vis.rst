@@ -57,6 +57,7 @@ It is possible to access a specific group using its path. For instance in order 
 
    measuremnts = nrb["/32TUN/measuremnts"].ds  # Returns an xarray.Dataset
 
+.. include:: nrb_struct.rst
 
 Optional Arguments
 ''''''''''''''''''
@@ -65,6 +66,47 @@ It is possible to customize the behavior using optional parameters:
 
 - ``decode_cf=True`` to apply CF conventions
 - ``backend_kwargs={"consolidated": True}`` to read consolidated metadata
+
+
+Xarray variables plot
+-------------------------
+
+It is possible to visualize data directly with xarray:
+
+.. code-block:: python
+
+   # Normalized radar backscattering
+
+   import matplotlib.pyplot as plt
+   plt.figure(figsize=(10,10))
+   measuremnts.gamma0.coarsen(x=10,y=10,boundary='trim').mean().plot(vmax=0.1, cmap='gray')
+
+.. _NRB_saocom_naples_asc_s4:
+
+.. figure:: images/naples_saocom_asc_s4.png
+   :name: NRB_saocom_naples_asc_s4
+   :width: 600
+   :align: center
+
+   :math:`\gamma^0` obtained from SAOCOM data over Naples (IT) acquired in ascending geometry with beam S4.  
+
+.. code-block:: python
+
+   # Number of looks
+
+   import matplotlib.pyplot as plt
+   plt.figure(figsize=(10,10))
+   measuremnts.nlook.coarsen(x=10,y=10,boundary='trim').mean().plot(cmap='gray')
+
+.. _NRB_saocom_naples_nlook_asc_s4:
+
+.. figure:: images/naples_saocom_nlook_asc_s4.png
+   :name: NRB_saocom_naples_nlook_asc_s4
+   :width: 600
+   :align: center
+
+   Nlook obtained from SAOCOM data over Naples (IT) acquired in ascending geometry with beam S4.  
+
 
 Notes
 -----
