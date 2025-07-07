@@ -1,67 +1,11 @@
-
 .. _pol_label:
 
-=================================================
-Algorithm Theoretical Basis Document (ATBD) - POL
-=================================================
+========================================================
+Algorithm Theoretical Basis Document (ATBD)
+========================================================
 
-
-Overview
-========
-
-The Normalized Radar Backscatter (NRB) product was the first among the Analysis Ready
-Data (ARD), with its introduction by CEOS in 2017 and with its definition further refined in 2021
-with the release of version 5.5 of the document :cite:`CEOS-ARD_PFS_NRB`. Today, various product specifications
-for radar products have been merged into the initial version of the "Combined CEOS-ARD for
-Synthetic Aperture Radar" [22]. This product exclusively contains backscatter values and undergoes
-Radiometric Terrain Correction (RTC), providing Gamma-Nought as defined in [112],
-which mitigates the impact of differing observation geometries. It is the most readily comprehensible
-product, enabling direct visualization for visual interpretation, as well as deeper analysis.
-
-Indeed, analysing backscatter time series can yield information regarding the observed object's
-type for classification purposes (land use, land cover), as well as its temporal variations,
-enabling applications such as change detection, security applications, and vegetation growth
-monitoring.
-
-NRB products have gained significant advancements in recent years, driven by both technological
-innovation and increasing demand for high-quality, precise data. In the scientific literature,
-numerous studies have explored the potential of NRB products for a wide range of applications.
-Sentinel-1 satellites, equipped with SAR instruments, provide continuous and systematic observations,
-facilitating the generation of NRB products at unprecedented spatial and temporal
-resolutions. A pioneering example of NRB product, derived from Sentinel-1 GRD data, is provided
-within the "Digital Earth Africa" program [128]. Concurrently, NRB products from other
-missions, such as ALOS-2, have also been developed [62].
-
-Looking ahead, upcoming satellite missions acquiring data systematically at L-Band (e.g., NISAR,
-ROSE-L) and freely distributing data to the scientific community will enhance observational capabilities
-and address various challenges associated with single radar band measurements.
-
-
-Product Description
-======================
-
-The Normalized Radar Backscatter (NRB) product is foreseen and provided in several projects
-and it is the main ARD product in the portfolio of different operative and programmed missions.
-
-
-Main variables
-------------------
-
-- **Gamma0** :math:`\gamma_0`: 
-
-- **Local incidence angle** :math:`\theta_i`: 
-
-- **Area Normalization Factor** :math:`ANF`:
-
-- **Number of looks** :math:`N_L`:
-
-- **Mask (Layover/shadow)** :math:`M`:
-
-
-Metadata
-------------
-
-...
+The generation of POL products involves the same processing steps of the NRB products, but
+they are applied to additional layers of output data.
 
 Input data
 =============
@@ -69,66 +13,180 @@ Input data
 SAR data
 ------------
 
+The input for the generation of this product is a SLC or a CSLC product, i.e. a stack of
+co-registered slc's in radar geometry. In both cases, two or four polarimetric channel
+are available is available, depending on whether the images are acquired in dual-pol or
+quad-pol mode.
 
-
-Internal data
------------------
-
-
+An example with SAOCOM dual-pol data (VV-VH) is used for illustration purposes.
 
 Auxiliary data
 ------------------
 
-...
+As in the case of NRB, auxiliary information is required for applying the radiometric terrain
+correction (RTC) and the geocoding.
 
 
-Algorithm description
+Algorithm steps
 ========================
 
+Read channels and auxiliary layers
+---------------------------------------------
 
-Step1
------
+.. code::
+
+        # Read channels as SLC images for a given acquisition date
+
+        slc_vv = rosel.io.read( cslc_path_vv ).cstack.sel( acquisition_date=acquisition_date )
+        slc_vh = rosel.io.read( cslc_path_vh ).cstack.sel( acquisition_date=acquisition_date )
+        
+        # Read auxiliary layers for flattening and geocoding
+        
+        selection = rosel.io.read( selection_path )
+        A = rosel.io.read( rtc_ap_path, mask_and_scale = False ).v
+
+Radiometric terrain correction (RTC)
+---------------------------------------------
+
+.. code:: 
+
+        # Flatten the SLC values of both channels
+        
+        slc_vv_flat = rosel.shiroma.flatten_radar_image(slc_vv, A, data_path = f"{out_path}/flattened_slc_vv", read=True)
+        
+        slc_vh_flat = rosel.shiroma.flatten_radar_image(slc_vh, A, data_path = f"{out_path}/flattened_slc_vh", read=True)
+
+Covariance matrix formation: cross-products and estimation
+---------------------------------------------
+
+The expression of the dual-pol covariance matrix is:
+
+.. math::
+
+C_2 =
+    \begin{bmatrix}
+        <|VV|^2>       & <VV \cdot VH^*> \\
+        <VH\cdot VV^*> & <|VH|^2>
+    \end{bmatrix}
+
+where :math:`< >` denotes a spatial averaging or filtering, and superscript :math:`*` is the complex conjugate.
+
+.. code:: 
 
 
-Step2
------
+        if estimation_type == 'MULTI-LOOK': 
+
+            multilook = {"azimuth_time": kernel_size[0], "slant_range_time": kernel_size[1]}
+        
+            C11 = (np.abs((slc_vv_flat * slc_vv_flat.conj())).astype(np.float32).coarsen(azimuth_time=multilook["azimuth_time"], slant_range_time=multilook["slant_range_time"], boundary="pad")
+                .mean().chunk(azimuth_time=300, slant_range_time=300))
+            
+            C22 = (np.abs((slc_vh_flat * slc_vh_flat.conj())).astype(np.float32).coarsen(azimuth_time=multilook["azimuth_time"], slant_range_time=multilook["slant_range_time"], boundary="pad")
+                .mean().chunk(azimuth_time=300, slant_range_time=300))
+            
+            C12 = (slc_vv_flat * slc_vh_flat.conj()).coarsen(azimuth_time=multilook["azimuth_time"], slant_range_time=multilook["slant_range_time"], boundary="pad").mean().chunk(azimuth_time=300, slant_range_time=300)
+        
+        elif estimation_type == 'BOXCAR':
+
+            boxcar_kernel = {"azimuth_time": kernel_size[0], "slant_range_time": kernel_size[1]}
+    
+            data = np.abs((slc_vv_flat * slc_vv_flat.conj())).astype(np.float32)
+            C11  = data.rolling( azimuth_time=boxcar_kernel["azimuth_time"], slant_range_time=boxcar_kernel["slant_range_time"], center=True).mean().chunk({"azimuth_time": 1024, "slant_range_time": 1024})
+    
+            data = np.abs((slc_vh_flat * slc_vh_flat.conj())).astype(np.float32)
+            C22 = data.rolling( azimuth_time=boxcar_kernel["azimuth_time"], slant_range_time=boxcar_kernel["slant_range_time"], center=True).mean().chunk({"azimuth_time": 1024, "slant_range_time": 1024})   
+                   
+            data = slc_vv_flat * slc_vh_flat.conj()
+            C12 = data.rolling( azimuth_time=boxcar_kernel["azimuth_time"], slant_range_time=boxcar_kernel["slant_range_time"], center=True).mean().chunk({"azimuth_time": 1024, "slant_range_time": 1024})         
+            
+        elif estimation_type == 'SHIROMA':
+
+            C11 = np.abs((slc_vv_flat * slc_vv_flat.conj())).astype(np.float32)
+    
+            C22 = np.abs((slc_vh_flat * slc_vh_flat.conj())).astype(np.float32)
+                   
+            C12 = slc_vv_flat * slc_vh_flat.conj()
+            
+
+Save the COV product
+---------------------------------------------
+
+.. code:: 
+
+        rosel.io.write(C11.to_dataset(name="v"), f"{out_path}/COV/C11")
+        rosel.io.write(C22.to_dataset(name="v"), f"{out_path}/COV/C22")
+        rosel.io.write(C12.to_dataset(name="v"), f"{out_path}/COV/C12")
 
 
-Step3
------
 
+Geocoding and save the GCOV product
+---------------------------------------------
 
+Geocoding is carried out using Shiroma's approach.
+In case of 'MULTI-LOOK' estimation, the output grid can be coarsened.
+Otherwise, the output grid posting is similar to SLC resolution.
+        
+.. code::
 
-Geocoding
----------
-* :ref:`GEOCODING <geocoding>`
+        if estimation_type == 'MULTI-LOOK': 
+        
+            gC11 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C11",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C11",
+                multilook=multilook,
+                read=True,
+                enable_dask=True,
+            )
+                
+            gC22 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C22",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C22",
+                multilook=multilook,
+                read=True,
+                enable_dask=True,
+            )
+                
+            gC12 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C12",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C12",
+                multilook=multilook,
+                read=True,
+                enable_dask=True,
+            )
+        
+        else:
+            
+            gC11 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C11",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C11",
+                read=True,
+                enable_dask=True,
+            )
+    
+            gC22 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C22",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C22",
+                read=True,
+                enable_dask=True,
+            )
+    
+            gC12 = rosel.shiroma.map_geo_ap(
+                c_path=f"{out_path}/COV/C12",
+                simulation=selection,
+                data_path_shiroma=shiroma_path,
+                data_path_geo_ap=f"{out_path}/GCOV/C12",
+                read=True,
+                enable_dask=True,
+            )
+    
 
-
-Mosaicking
-----------
-* :ref:`MOSAIC <mosaicking>`
-
-
-Data visualization
-=====================
-
-
-Code
-=======
-
-.. code-block:: python
-    :caption: Import modules
-
-    import rosel.io
-
-
-Validation and Quality Assessment
-=====================================
-
-* Test 1
-* Test 2
-
-Appendices
-=============
-
-* [Detailed mathematical derivations]
