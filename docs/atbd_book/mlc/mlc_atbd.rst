@@ -102,12 +102,12 @@ The long-term coherence :math:`\gamma^l_n` is taken as the coherence of the same
 
 Geocoding
 -------------
-* :ref:`GEOCODING <common_geocoding_label>`
+* :ref:`GEOCODING <geocoding>`
 
 
 Mosaicking
 --------------
-* :ref:`MOSAIC <common_mosaic_label>`
+* :ref:`MOSAIC <mosaicking>`
 
 
 Algorithm complexity

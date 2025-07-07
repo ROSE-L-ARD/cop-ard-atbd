@@ -109,3 +109,6 @@ A representative map of burst IDs is shown in the following figure.
 
 
 Finally, the mosaicked data are tiled according to the modified Sentinel-2 MGRS grid.
+
+.. note::
+   The mosaicking procedure described for real valued data (NRB) can be also applied to complex valued data, such as CSLC in radar geometry, or GSLC in projected geometry.

@@ -80,7 +80,7 @@ See Also
 
 .. _pro_pao_qgis_guide:
 
-Loading INT / COHE / UNW products in QGIS
+Loading PRO / PAO products in QGIS
 =========================================
 
 Overview

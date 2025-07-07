@@ -13,8 +13,8 @@ This Jupyter Book documents the Algorithm Theoretical Basis Documents (ATBDs) fo
 * Polarimetry :ref:`(COV/GCOV) <COV_overview>`,
 * Ocean Radar Backscatter :ref:`(ORB/EORB) <ORB_overview>`, 
 * Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_overview>`,
-* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_overview>`,
-* Stripmap Equivalent :ref:`(STRIPEQ) <stripeq_overview>`.
+* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <pro_pao_overview>`,
+* Stripmap Equivalent :ref:`(STRIPEQ) <strip_eq_overview>`.
 
 A section is dedicated also to the set of common algorithms shared between the different processing chains :ref:`(Common algorithms) <Common_tools>`.
 

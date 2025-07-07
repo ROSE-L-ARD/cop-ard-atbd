@@ -11,6 +11,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
 .. _pro_pao_label:
 
 ========================================================
@@ -26,15 +27,14 @@ In the phase-based approach, the processing unit includes the following steps:
 
 - :ref:`interferometric processing <int_cohe_label>`: measurement of slant-range offset using the interferometric unwrapped phase and coherence between the reference and secondary images. To distinguish between movement and ionospheric effects, the Split Spectrum technique should be considered in the interferometric flow.
 - :ref:`esd <esd_matching>`: measurement of the azimuth offset between the reference and secondary images using the Enhanced Spectral Diversity (ESD) technique, applied to the residual non-dispersive phase component.
-- :ref:`forward geocoding <forward_geocoding>`: forward geocoding of the interferometric phase and azimuth offset to obtain range and azimuth offsets in ground geometry.
+- forward geocoding: projection from radar to ground coordinates of the interferometric phase and azimuth offset to obtain range and azimuth offsets in ground geometry.
 
 In the amplitude-based approach, the processing unit includes the following steps:
 
 - :ref:`image matching <image_matching>`: measurement of slant-range and azimuth offsets between the reference and secondary images using the image cross-correlation technique.
-- :ref:`forward geocoding <forward_geocoding>`: forward geocoding of the slant-range and azimuth offsets to obtain the corresponding values in ground geometry.
+- forward geocoding: projection from radar to ground coordinates of the slant-range and azimuth offsets to obtain the corresponding values in ground geometry.
 
 .. note::
-   :caption: Note
 
    The phase-based approach is recommended, as it provides more accurate measurements. However, it requires the availability of two looks to enable continuous azimuth measurements.
 

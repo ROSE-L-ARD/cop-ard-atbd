@@ -18,8 +18,6 @@ Inputs
 ''''''
 :math:`dem_{in}`: Digital Elevation Model (DEM) in the original reference system, sampled at the original spacing.
 
-The input format and specifications are described in :ref:`[RP-ADFS-S1L12] <[RP-ADFS-S1L12]>`.
-
 Outputs
 '''''''
 :math:`dem_{out}`: Reference DEM product. The DEM is resampled over the output grid defined for the :term:`NRB` or :term:`GSLC` products.  

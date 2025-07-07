@@ -4,9 +4,6 @@
 Product Description
 =================================
 
-PRO / PAO product overview  
-''''''''''''''''''''''''''''''''''''''''''  
-
 Precise Range and Azimuth Offset (PRO & PAO respectively) products represents the estimated offset between pair of SAR acquisition in slant range and azimuth directions. 
 These offsets can be obtained exploiting the phase or amplitude information.
 

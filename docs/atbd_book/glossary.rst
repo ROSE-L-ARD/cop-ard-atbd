@@ -27,6 +27,9 @@ Acronyms
     ADFS
         Auxiliary Data Files Specifications
 
+    ANF
+        Area Normalization Factor
+        
     AOI
         Area of Interest
 
@@ -51,15 +54,18 @@ Acronyms
     DC
         Doppler Centroid
 
+    DEM
+        Digital Elevation Model
+
     DH
         Dual pol – HH/HV
 
     DIL
         Data Item Library
 
-    DPR
-        Data Processors Re-engineering
-
+    DS
+        Distributed Scatterer
+        
     DV
         Dual pol – VV/VH
 
@@ -86,6 +92,9 @@ Acronyms
 
     FDBAQ
         Flexible Dynamic Block Adaptive Quantization
+
+    GIS
+        Geographic Information System
 
     GRD
         Ground Range Detected
@@ -122,6 +131,9 @@ Acronyms
 
     N/A
         Not Applicable or Not Available
+
+    NRB
+        Normalized Radar Backscatter
 
     OCN
         Ocean
@@ -161,6 +173,9 @@ Acronyms
 
     SAR
         Synthetic Aperture Radar
+
+    SBAS
+        Small Baseline Subset
 
     SH
         Single pol - HH
