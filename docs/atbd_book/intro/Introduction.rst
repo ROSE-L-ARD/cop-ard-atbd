@@ -20,9 +20,9 @@ of SAR data across a wide range of applications. The Committee on Earth Observat
 is promoting SAR ARD through a set of data standards and guidelines aimed at  
 enhancing the quality, interoperability, and accessibility of EO data acquired from various satellite SAR missions.  
 
-CEOS defines ARD as (see :ref:`[CEOS-ARD_PFS] <[CEOS-ARD_PFS]>`):  
+CEOS defines ARD as (see :cite:`CEOS-ARD_PFS_SAR`):  
 
-“CEOS Analysis Ready Data (CEOS-ARD) are satellite data that have been processed to a  
+    “CEOS Analysis Ready Data (CEOS-ARD) are satellite data that have been processed to a  
 minimum set of requirements and organized into a form that allows immediate analysis with a  
 minimum of additional user effort and interoperability both through time and with other  
 datasets.”  
@@ -34,5 +34,5 @@ The designated ARD products are:
 * Polarimetry :ref:`(COV/GCOV) <COV_overview>`,
 * Ocean Radar Backscatter :ref:`(ORB/EORB) <ORB_overview>`, 
 * Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_overview>`,
-* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <propao_overview>`,
-* Stripmap Equivalent :ref:`(STRIPEQ) <stripeq_overview>`.
+* Precise Range / Azimuth Offsets :ref:`(PRO/PAO) <pro_pao_overview>`,
+* Stripmap Equivalent :ref:`(STRIPEQ) <strip_eq_overview>`.

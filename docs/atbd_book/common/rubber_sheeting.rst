@@ -27,9 +27,20 @@ Algorithm
 The residual offsets are estimated at a set of patches in the case of image matching, or at burst overlap areas in the case of the ESD estimator.  
 Starting from this sparse set of residual corrections, relative to the offsets estimated by the model, it is necessary to reconstruct the values over the reference image grid.
 
+Let :math:`(x,y)` be the coordinates of each point in the reference image, the offsets to be applied to obtain the corresponding coordinates in the secondary image is obtained combining the model-based offset :math:`(\Delta t_{r_s}, \Delta t_{a_s})` and the data-driven residual offsets :math:`(\hat{\delta} t_{r_s}, \hat{\delta} t_{a_s})` as follows:
+
+.. math::
+    :label: eq_rubber_sheeting
+    
+    \Delta_{corr} t_{r_s}(x,y) = \Delta t_{r_s}(x,y) + \hat{\delta} t_{r_s}(x,y)
+
+    \Delta_{corr} t_{a_s}(x,y) = \Delta t_{a_s}(x,y) + \hat{\delta} t_{a_s}(x,y)
+
+The residual offsets :math:`(\hat{\delta} t_{r_s}, \hat{\delta} t_{a_s})` are reconstructed over the reference image grid using an interpolator starting from the sparse set of residual offsets estimated at the patches or burst barycenters.
+
 If the expected error arises from global effects such as orbital data inaccuracies, this reconstruction can be achieved by fitting a polynomial function of the desired order (e.g., a simple constant is generally sufficient for ESD).  
 
-In general, to compensate for ionospheric effects or where a polynomial function is insufficient to capture the offset variability across the image, an interpolator with a regularization factor must be adopted.
+In general, to compensate for ionospheric effects or where a polynomial function is insufficient to capture the offset variability across the image, an interpolator with a regularization factor must be adopted, to ensure that the interpolated values are smooth and continuous across the image.
 
 .. note::
     A robust estimation technique must be employed to remain insensitive to outliers.

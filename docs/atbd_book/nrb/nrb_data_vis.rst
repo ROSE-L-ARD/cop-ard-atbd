@@ -84,7 +84,7 @@ It is possible to visualize data directly with xarray:
 .. _NRB_saocom_naples_asc_s4:
 
 .. figure:: images/naples_saocom_asc_s4.png
-   :name: NRB_saocom_naples_asc_s4
+   :name: NRB_saocom_naples_asc_s4_
    :width: 600
    :align: center
 
@@ -101,7 +101,7 @@ It is possible to visualize data directly with xarray:
 .. _NRB_saocom_naples_nlook_asc_s4:
 
 .. figure:: images/naples_saocom_nlook_asc_s4.png
-   :name: NRB_saocom_naples_nlook_asc_s4
+   :name: NRB_saocom_naples_nlook_asc_s4_
    :width: 600
    :align: center
 

@@ -187,10 +187,10 @@ Code
    cstack = xr.open_datatree(cstack_file, engine="zarr", chunks={}, decode_coords='all')
 
    # compute the complex multilooked interferogram
-   interf_ml = (cstack * cstack.sel(acquisition_date=reference).conj()).coarsen(azimuth_time=:math:`L_a`, slant_range_time=:math:`L_a`, boundary='trim').mean()
+   interf_ml = (cstack * cstack.sel(acquisition_date=reference).conj()).coarsen(azimuth_time=L_a, slant_range_time=L_a, boundary='trim').mean()
 
    # compute the average intensity
-   intensity_ml = (np.abs(cstack)**2).coarsen(azimuth_time=:math:`L_a`, slant_range_time=:math:`L_a`, boundary='trim').mean()
+   intensity_ml = (np.abs(cstack)**2).coarsen(azimuth_time=L_a, slant_range_time=L_a, boundary='trim').mean()
 
    # compute coherence
    cohe = interf_ml / np.sqrt(intensity_ml * intensity_ml.sel(acquisition_date=reference))
@@ -217,4 +217,24 @@ Outputs
 Algorithm
 ---------
 
-One of the most used open-source algorithm for phase unwrapping processing is based the "Statistical-Cost Network-Flow Algorithm for Phase Unwrapping" :cite:`SNAPHU`.
+The absolute interferometric phase :math:`\phi ^{unw} _{r,s}` is the unambiguous phase proportional to the differential range between the interferometric pair :math:`(r,s)`.
+Starting from the complex interferogram, only the principal values of the phase can be directly measured, i.e. the measured phase values are known only modulo :math:`2 \pi`. The measured **wrapped** phase :math:`\phi _{r,s}` and **unwrapped** phase :math:`\phi ^{unw} _{r,s}` are related by:
+
+
+.. math::
+   :label: phase_unwrapping
+
+   \phi ^{unw} _{r,s} = \phi _{r,s} + 2 \pi n_{r,s}
+
+where :math:`n_{r,s}` is an integer number representing the number of :math:`2 \pi` cycles that must be added to the wrapped phase to obtain the unwrapped phase.
+The unwrapping process aims to estimate the integer values of :math:`n_{r,s}` for each point in the interferometric phase image, allowing the reconstruction of the absolute phase.
+
+The phase unwrapping is an ill-posed problem and the determination of the integer values :math:`n_{r,s}` is not unique.
+The most common approach in 2D phase unwrapping is to consider phase gradients :math:`\nabla \phi ^{unw} _{r,s}` and find the corrections to the initial estimates (wrapped gradients :math:`\nabla \phi _{r,s}`) in order to meet irrotationality constraints (the value of the phase in correspondence of a points must be independent on the integration path), minimizing a **cost function**. 
+
+Depending on the cost function, different algorithms can be used to solve the phase unwrapping problem. One of the most used open-source algorithm for phase unwrapping processing is based the "Statistical-Cost Network-Flow Algorithm for Phase Unwrapping" :cite:`SNAPHU`. SNAPHU formulates the phase unwrapping problem as a maximum a posteriori (MAP) estimation problem. Its goal is to determine the set of unwrapped phase gradient values :math:`\nabla \phi ^{unw} _{r,s}`  that maximize the posterior distribution :math:`f_{\nabla \phi ^{unw} _{r,s}} \left( \nabla \phi ^{unw} _{r,s} | \nabla \phi _{r,s} \right)`, given the set of wrapped phase gradients :math:`\nabla \phi _{r,s}` .
+
+Different statistical models may be applied for the probability density functions (PDFs) :math:`f_{\nabla \phi ^{unw} _{r,s}}`, depending on the characteristics of the interferometric phase. The cost function can include also information about image intensity and interferometric coherence. The constraints matrix has unimodular structure, and the solution considering linear cost functions with non negative weights, has integer values as expected in phase unwrapping.
+
+In addition in this case the phase unwrapping problem can be transformed in a dual problem of *network flow optimization* :cite:`costantini1998phase`. 
+

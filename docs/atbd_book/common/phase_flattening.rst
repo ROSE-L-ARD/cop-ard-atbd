@@ -7,15 +7,6 @@ Overview
 --------
 This procedure eliminates the topographic phase contribution from each SLC image’s phase by using an association matrix computed from the external DEM and orbital data. The operation is performed in the radar coordinate reference system, allowing the generation of an interferometric product by simply multiplying the two images forming the interferometric pair, without requiring additional operations.
 
-The following figure shows a schematic overview of this process:
-
-.. figure:: images/Phase_flattening_diagram_v1.png
-   :name: coreg_phase_flattening
-   :align: center
-   :width: 600
-
-   Diagram of the SLC image phase flattening step.
-
 Inputs
 ------
 The *Phase Flattening* tool requires the following inputs:

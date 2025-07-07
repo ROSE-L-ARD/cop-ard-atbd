@@ -52,7 +52,7 @@ The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is sho
 
    Linear variation of the Doppler frequency across azimuth time within a burst (in red).  
    The representation assumes a Doppler centroid frequency :math:`f_{\eta c}` of 0 Hz for simplicity.  
-   Credits: :ref:`[AD-ATBD-S1L1] <[AD-ATBD-S1L1]>`.
+   Credits: :cite:`RD-TOPS-DEMOD`.
 
 The Doppler centroid is provided in a Look-Up Table (LUT).  
 Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r )`.  

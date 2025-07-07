@@ -10,21 +10,18 @@ parts:
       - file: cslc/cslc_product
       - file: cslc/cslc_atbd
       - file: cslc/cslc_data_vis
-      - file: cslc/cslc_code
   - caption: NRB
     chapters: 
       - file: nrb/nrb_overview
       - file: nrb/nrb_product
       - file: nrb/nrb_atbd
       - file: nrb/nrb_data_vis
-      - file: nrb/nrb_code
   - caption: INT
     chapters: 
       - file: int_cohe/int_cohe_overview
       - file: int_cohe/int_cohe_product
       - file: int_cohe/int_cohe_atbd
       - file: int_cohe/int_cohe_data_vis
-      - file: int_cohe/int_cohe_code
   - caption: CMLC/GMLC
     chapters:
       - file: mlc/mlc_overview
@@ -38,7 +35,18 @@ parts:
       - file: pro_pao/pro_pao_product
       - file: pro_pao/pro_pao_atbd
       - file: pro_pao/pro_pao_data_vis
-      - file: pro_pao/pro_pao_code 
+  - caption: STRIP_EQ
+    chapters:
+      - file: strip_eq/strip_eq_overview
+      - file: strip_eq/strip_eq_product
+      - file: strip_eq/strip_eq_atbd
+      - file: strip_eq/strip_eq_data_vis
+  - caption: GGM
+    chapters:
+      - file: ggm/ggm_overview
+      - file: ggm/ggm_product
+      - file: ggm/ggm_atbd
+      - file: ggm/ggm_data_vis
   - caption: Common Algorithms
     chapters:
       - file: common/tools

@@ -101,12 +101,12 @@ Step3
 
 Geocoding
 ---------
-* :ref:`GEOCODING <common_geocoding_label>`
+* :ref:`GEOCODING <geocoding>`
 
 
 Mosaicking
 ----------
-* :ref:`MOSAIC <common_mosaic_label>`
+* :ref:`MOSAIC <mosaicking>`
 
 
 Data visualization
