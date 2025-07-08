@@ -5,7 +5,7 @@ Ocean Radar Backscatter (ORB) product overview
 ----------------------------------------------
 
 The ORB product, either as defined in
-:raw-latex:`\cite{CEOS-ARD_PFS_ORB}` or in the variants outlined in the
+:cite:`CEOS-ARD_PFS_ORB` or in the variants outlined in the
 proposal for this study, can be relatively straightforwardly derived
 from the NRB. This derivation provides both the necessary full
 resolution and spatially averaged Sigma-Nought (:math:`\sigma_0`) values

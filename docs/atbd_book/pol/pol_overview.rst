@@ -1,4 +1,4 @@
-.. _POL_overview:
+.. _pol_overview:
 
 ==========================================
 Overview
