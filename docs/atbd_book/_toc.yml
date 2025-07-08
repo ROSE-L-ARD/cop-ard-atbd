@@ -16,6 +16,18 @@ parts:
       - file: nrb/nrb_product
       - file: nrb/nrb_atbd
       - file: nrb/nrb_data_vis
+  - caption: POL
+    chapters: 
+      - file: pol/pol_overview
+      - file: pol/pol_product
+      - file: pol/pol_atbd
+      - file: pol/pol_data_vis
+  - caption: ORB
+    chapters: 
+      - file: orb/orb_overview
+      - file: orb/orb_product
+      - file: orb/orb_atbd
+      - file: orb/orb_data_vis
   - caption: INT
     chapters: 
       - file: int_cohe/int_cohe_overview

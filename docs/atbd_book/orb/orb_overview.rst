@@ -1,3 +1,6 @@
+
+.. _orb_overview:
+
 Overview
 ========
 
@@ -11,10 +14,13 @@ questionable given that the azimuth resolution of a SAR image is limited
 not by the radar characteristics or the processed Doppler bandwidth, as
 over land, but by the coherence time of the surface as observed by the
 radar. This results in the so-called azimuth cut-off,
-:raw-latex:`\begin{equation}
-        \lambda_c \approx \frac{R\cdot \sigma_v}{v_\mathrm{orb}},
-    \end{equation}` with :math:`R` the slant-range to the surface and
-:math:`v_\mathrm{orb}` the orbital velocity of the satellite. The result
+
+.. math::
+    :label: eq:lambda_c
+    
+    \lambda_c \approx \frac{R\cdot \sigma_v}{v_\mathrm{orb}},
+        
+with :math:`R` the slant-range to the surface and :math:`v_\mathrm{orb}` the orbital velocity of the satellite. The result
 is that the effective azimuth resolution of the intensity image is
 limited to 50 - 400 meters, depending on the sea state, which, in turn,
 is mostly wind-driven. Most notably, this effective resolution is
