@@ -311,12 +311,6 @@ achived by scaling the downsampled product using the model output as
 
 .. parsed-literal::
 
-    /data1/yyuan6/projects/hard/HARD/Processing/GRD_processing/subsample.py:47: UserWarning: dims values is not odd resulting in off-centre subsampling.
-      warnings.warn("dims values is not odd resulting in off-centre subsampling.", UserWarning)
-
-
-.. parsed-literal::
-
     File already exists!
     There is some water
 
