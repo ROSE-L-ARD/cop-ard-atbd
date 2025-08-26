@@ -28,7 +28,7 @@ parts:
       - file: orb/orb_product
       - file: orb/orb_atbd
       - file: orb/orb_data_vis
-  - caption: INT
+  - caption: INT/COHE/UNW/GINT/GCOHE/GUNW
     chapters: 
       - file: int_cohe/int_cohe_overview
       - file: int_cohe/int_cohe_product
@@ -40,8 +40,13 @@ parts:
       - file: mlc/mlc_product
       - file: mlc/mlc_atbd
       - file: mlc/mlc_data_vis
-      - file: mlc/mlc_code 
-  - caption: PRO/PAO
+      - file: mlc/mlc_SENTINEL1
+        title: MLC Sentinel-1 demo
+      - file: mlc/mlc_SAOCOM
+        title: MLC SAOCOM demo
+      - file: mlc/mlc_comparisons
+        title: MLC Comparisons
+  - caption: PRO/PAO/GPRO/GPAO
     chapters:
       - file: pro_pao/pro_pao_overview
       - file: pro_pao/pro_pao_product
