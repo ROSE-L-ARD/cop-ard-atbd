@@ -24,11 +24,15 @@ parts:
       - file: nrb/nrb_product
       - file: nrb/nrb_atbd
       - file: nrb/nrb_data_vis
+      - file: nrb/cslc_nrb_gslc_sentinel_1
+        title: CSLC-GSLC-NRB Sentinel-1 demo
+      - file: nrb/cslc_nrb_saocom.ipynb
+        title: CSLC-NRB SAOCOM demo
       - file: nrb/compare_lat_lon.ipynb
         title: Comparison of different SW for NRB generation 
       - file: nrb/compare_anf_baseline.ipynb
         title: Analysis of Area Normalization Factor (ANF)
-      - file: correlation_analysis_flattening.ipynb
+      - file: nrb/correlation_analysis_flattening.ipynb
         title: Correlation analysis between terrain slope and RCS
   - caption: POL
     chapters: 
