@@ -22,7 +22,6 @@ It includes the algorithms for the following tools:
 
 - :ref:`Calibration`:
   
-  - :ref:`Noise removal <noise_removal>`: modify the amplitude of the complex SLC data in order to compensate for estimated noise power.
   - :ref:`Amplitude calibration <amplitude_calibration>`: derive the radar cross-section beta naught or sigma nought according to the input metadata.
   - :ref:`Phase deramping <phase_deramping>`: remove the linear frequency modulation (also called deramping), which is necessary for performing basic operations like interpolation/resampling of the data, often used in interferometric processing chains. In addition, the deramping procedure demodulates the signal to report its spectrum in baseband.
   - :ref:`Phase reramping <phase_reramping>`: restore the original linear frequency modulation after the image resampling step. This procedure modulates the signal to restore the original image spectrum.
@@ -39,8 +38,9 @@ It includes the algorithms for the following tools:
 
 - :ref:`Flattening <flattening>`:
 
+  - :ref:`Noise removal <noise_removal>`: Modifies the amplitude of the complex SLC data in order to compensate for estimated noise power.
+  - :ref:`Gamma flattening <gamma_flattening>`: Modifies the amplitute of complex SLC data to apply terrain slope correction.
   - :ref:`Phase flattening <phase_flattening>`: Modifies the phase of complex SLC data to remove the topographic phase signature.
-  - :ref:`Phase flattening <gamma_flattening>`: Modifies the amplitute of complex SLC data to apply terrain slope correction.
 
 - :ref:`Reference DEM <reference_DEM>`: 
   

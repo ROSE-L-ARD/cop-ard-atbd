@@ -132,8 +132,6 @@ The sum of the elements of :math:`w_{i,x}` over all the radar resolution cells :
    
    nlook_{x} = \sum_{i \in M_x} w_{i,x}, \forall{x \in D}
 
-:eq:`eq_nlooks_1`
-
 Let :math:`layover_{i}` be the layover mask associated with the radar cell :math:`i \in P`.  
 Let :math:`\omega_{i,x}^{j}` for :math:`j \in [1,2]`, and :math:`w_{i,x}^{j}` for :math:`j \in [3,4]` be the weights associated with the two triangulations.  
 If the sum of the elements of :math:`w_{i,x}^{j}` over all triangle indices of one of the two triangulations is greater than 1, the corresponding radar resolution cell :math:`i \in P` is in layover.
@@ -142,8 +140,6 @@ If the sum of the elements of :math:`w_{i,x}^{j}` over all triangle indices of o
    :label: eq_layover_1
    
    layover_{i} = \left( \sum_{j \in [1,2]} \sum_{x \in D} \omega_{i,x}^{j} > 1 \right) \,\text{OR}\, \left( \sum_{j \in [3,4]}\sum_{x \in D} \omega_{i,x}^{j} > 1 \right), \forall{ i \in P}
-
-:eq:`eq_layover_1`
 
 .. _local_incidence_angle_and_contributing_area:
 
@@ -167,35 +163,36 @@ the local contributing area for the derivation of the :math:`\gamma^0`.
 
 The computation of the local contributing area requires the following steps:
 
-   - Compute the cosine of the local-incidence angle :math:`\cos{\theta_{i_x}}` (see :numref:`bck_coefficients_representation`) as the average of the cosine of the local-incidence angle  
-     over all triangles :math:`j \in J` associated with the cell :math:`x \in D`:
+- Compute the cosine of the local-incidence angle :math:`\cos{\theta_{i_x}}` (see :numref:`bck_coefficients_representation`) as the average of the cosine of the local-incidence angle over all triangles :math:`j \in J` associated with the cell :math:`x \in D`:
 
 .. math::
     :label: eq_cosine
 
     \cos(\theta_{i_{x}})=\frac{1}{4} \sum_{j \in J} \vec{r}_x^j\cdot\vec{n}_x^j, \forall{x \in D}
 
-:eq:`eq_cosine`
-
-   - Measure the facet ground surface area as:
+- Measure the facet ground surface area as:
 
 .. math::
     :label: eq_Asigma
    
     A_{\sigma_x} = \frac{1}{4} \sum_{j \in J} \lVert \vec{e}_{1_x}^j \times \vec{e}_{2_x}^j \rVert, \forall{x \in D}
 
-:eq:`eq_Asigma`
-
 where :math:`\vec{e}_1` and :math:`\vec{e}_2` are vectors representing two of the facet’s edges.
 
-   - Scale the facet ground surface area :math:`A_{\sigma_x}` to the facet gamma-naught area :math:`A_{\gamma_x}` to obtain the local contributing area in ground geometry (see :numref:`bck_coefficients_representation`):
+- Scale the facet ground surface area :math:`A_{\sigma_x}` to the facet gamma-naught area :math:`A_{\gamma_x}` to obtain the local contributing area in ground geometry (see :numref:`bck_coefficients_representation`):
 
 .. math::
     :label: eq_Asigma_scaled
    
     A_{\gamma_x} = A_{\sigma_x} \cos{\theta_{i_x}}, \forall{x \in D}
 
-:eq:`eq_Asigma_scaled`
+The local contributing area :math:`A_{\gamma_x}` is computed in correspondence of the reference geometry. In order to take into account the difference in the observation geometry, the area in :eq:`eq_Asigma_scaled` could be opportunely rescaled expanding in Taylor series up to the first order as a function of the difference in the incidence angle :math:`\delta \theta = B_{\perp} / R`.
+
+.. math::
+    :label: eq_Asigma_scaled_taylor
+   
+    A_{\gamma_x} = A_{\sigma_x} \cos{\theta_{i_x}} \left( 1 - \frac{B_{\perp}}{R} \tan{\theta_{i_x}} \right), \forall{x \in D}
+
 
 .. _ANF_computation:
 
@@ -204,22 +201,18 @@ ANF computation
 
 The computation of the ANF is based on the following two steps:
 
-   - Project and accumulate the gamma-naught area :math:`A_{\gamma_x}` over the radar grid using the association weights :math:`w_{i,x}`:
+- Project and accumulate the gamma-naught area :math:`A_{\gamma_x}` over the radar grid using the association weights :math:`w_{i,x}`:
 
 .. math::
     :label: eq_Agamma_radar
 
     A_{\Gamma_i} = \cfrac{\sum_{x \in D}  w_{i,x} A_{\gamma_x}} {\sum_{x \in D} w_{i,x} }, \forall{i \in P}
 
-:eq:`eq_Agamma_radar`
-
-   - For each radar-grid element, the accumulated gamma-naught area :math:`A_{\Gamma_i}` is divided by the reference-unit area, in this case the :math:`A_{\beta}` (i.e., the radar grid pixel area from the beta-naught LUT table), and the resulting ratio is referred to as the :math:`ANF_i`:
+- For each radar-grid element, the accumulated gamma-naught area :math:`A_{\Gamma_i}` is divided by the reference-unit area, in this case the :math:`A_{\beta}` (i.e., the radar grid pixel area from the beta-naught LUT table), and the resulting ratio is referred to as the :math:`ANF_i`:
 
 .. math::
    :label: eq_ANF
    
    ANF_i= \cfrac{A_{\Gamma_i} } {A_{\beta}}, \forall{i \in P}
-
-:eq:`eq_ANF`
 
 The :math:`ANF` can then be used to scale the radar :math:`\beta^0` to the backscatter coefficient :math:`\gamma^0`.

@@ -1,10 +1,22 @@
 
-title: ATBD for ARD Generation
-author: Federico Minati (B-Open Solutions), Francesco De Zan (Delta-Phi Gmbh), Juan M Lopez-Sanchez (Universidad de Alicante), P. Lopez Dekker (TU-Delft)
+title: Algorithm Theoretical Baseline Document (ATBD) V1
+
+author: ROSE-L-ARD Team
+
+version: "1.1"
+
+date: "31/08/2025"
+
+project: PROTOTYPE PROCESSOR FOR ANALYSIS READY DATA OF COPERNICUS SAR MISSIONS
+
+# - Federico Minati (B-Open Solutions)
+# - Francesco De Zan (Delta-Phi Gmbh)
+# - Juan M Lopez-Sanchez (Universidad de Alicante)
+# - P. Lopez Dekker (TU-Delft)
 
 # logo: logo.png
 execute:
-  execute_notebooks: cache
+  execute_notebooks: off
 
 # Citations and bibliography
 bibtex_bibfiles:
@@ -26,6 +38,12 @@ sphinx:
 # LaTeX settings for PDF export (optional)
 latex:
   use_jupyterbook_latex: true
+  latex_elements:
+    papersize: a4paper # or 'letterpaper'
+    pointsize: 11pt    # or '10pt', '12pt'
+    preamble: |
+      \usepackage{fancyhdr}
+      \input{preamble.tex} % Include custom preamble from an external file
 
 repository:
   url: https://github.com/bopen/rose-l-ard 

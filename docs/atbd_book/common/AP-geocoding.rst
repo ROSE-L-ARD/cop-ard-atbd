@@ -28,7 +28,7 @@ Inputs
 Outputs
 --------
 
-- :math:`img_g`: Geocoded image
+- :math:`img_g`: Geocoded image (e.g. radar cross-section :math:`gamma^0_g`, generic complex variable :math:`cpx_g`)
 
 Algorithm
 ----------
@@ -63,7 +63,7 @@ This formulation is equivalent to a weighted multilooking operation and produces
 
    *Area based geocoding* nlook image corresponding to a SAOCOM acquisition over Salamanca (ES) in ascending geometry, beam S4.
 
-The :math:`\gamma^0_r` represents the flattened CSLC intensity in radar geometry, and it is obtained from CSLC product by applying the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`.
+The :math:`\gamma^0_r` represents the flattened CSLC intensity in radar geometry, and it is obtained from CSLC product by applying the noise calibration as described :ref:`noise-removal <noise_removal>` and the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`. 
 
 **Layover and shadow masks** are projected using the same matrix, but since masks are expected to be boolean, the floating-point result of the matrix multiplication is thresholded to restore a binary format.
 
@@ -115,3 +115,157 @@ Additionally, output cells can be grouped and averaged by summing projection wei
    :label: eq_output_averaging
 
    \hat{w}_{i,l} = \sum_{x \in I_{g_l}} w_{i,x}
+
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`img_r`
+   * - Description
+     - Input real or complex image to be projected
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float/complex matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`ANF`
+   * - Description
+     - Area normalization factor in radar geometry
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`{w}_{i,x}`
+   * - Description
+     - Weigths to be applied the full-resolution input image to project it to the output grid.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix (sparse)
+   * - Dimensionality
+     - (ground cell, radar cell)
+   * - Range of values
+     - [0, 1]
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\bar{w}_{i,x}`
+   * - Description
+     - Weigths to be applied the multilooked input image to project it to the output grid.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix (sparse)
+   * - Dimensionality
+     - (ground cell, radar cell)
+   * - Range of values
+     - [0, 1]
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`(m_r, m_a)`
+   * - Description
+     - Multilook factor in range and azimuth direction.
+   * - Purpose
+     - Internal
+   * - Units
+     - pixels
+   * - Type
+     - float
+   * - Dimensionality
+     - (1,1)
+   * - Range of values
+     - >= 0
+   * - Initial/default values
+     - (1,1)
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\gamma^0_{r}`
+   * - Description
+     - Radar cross-section gamma-nought in radar geometry
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\gamma^0_{g}`
+   * - Description
+     - Radar cross-section gamma-nought in ground geometry
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+
+
+

@@ -20,7 +20,6 @@ The calibration unit provides functionalities for removing thermal noise, calibr
 
 The algorithm can be divided into three steps, executed in the following sequence:  
 
-- :ref:`Noise removal <noise_removal>`
 - :ref:`Amplitude calibration <amplitude_calibration>`  
 - :ref:`Phase deramping <phase_deramping>`  
 
@@ -28,7 +27,7 @@ The :numref:`calibration_unit_schema` shows a simplified schema of this function
 with the necessary inputs and provided outputs.  
 
 .. _calibration_unit_schema_figure:  
-.. figure:: images/ARD_Calibration.drawio.png  
+.. figure:: images/ARD_Calibration.nonoise.drawio.png  
    :name: calibration_unit_schema  
    :width: 300  
    :align: center  
@@ -36,11 +35,11 @@ with the necessary inputs and provided outputs.
    Diagram of *Calibration Unit*.  
 
 Specifically, the amplitude signal can be extracted from the input digital number (:math:`DN`)  
-and converted to beta-nought (:math:`\beta^0`). Optionally, noise removal can be applied.  
+and converted to beta-nought (:math:`\beta^0`). 
 
 The purpose of phase deramping is to compensate for phase modulation caused by the acquisition  
 mode and geometry, ensuring the signal is reported in baseband. The demodulation process  
-should account for both Doppler components: one due to the acquisition mode (in the case of TOPSAR)  
+should account for both Doppler components: one due to the acquisition mode (in the case of TOPSAR or ScanSAR)  
 and the other due to the squint angle.  
 
 At this stage, the calibrated SLC image is independent of the specific acquisition mode.  

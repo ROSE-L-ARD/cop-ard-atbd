@@ -31,7 +31,7 @@ None
 Algorithm
 ----------
 
-Let  :math:`DN(t_a,t_r)` be the amplitude of the original SLC image associated with the azimuth :math:`t_a`  and range :math:`t_r` coordinates.  Let :math:`noise(t_a,t_r)` represent the noise corresponding to the image coordinates of interest.
+Let  :math:`|slc(t_a,t_r)|` be the amplitude of the original SLC image associated with the azimuth :math:`t_a`  and range :math:`t_r` coordinates.  Let :math:`noise(t_a,t_r)` represent the noise corresponding to the image coordinates of interest.
 
 The noise reconstruction can be achieved using polynomial interpolation of the elements in the LUT associated with the image.
 
@@ -40,20 +40,16 @@ The corrected image is obtained by subtracting the noise power from the original
 .. math::
    :label: eq_noise_removal
 
-   DN_{nc} (t_a,t_r )= \begin{cases}
-   \sqrt{DN^2 (t_a,t_r )- noise(t_a,t_r )}, & \text{if } DN^2 (t_a,t_r )- noise(t_a,t_r ) \geq 0 \\
+   amp_{nc} (t_a,t_r )= \begin{cases}
+   \sqrt{|slc(t_a,t_r )|^2 - noise(t_a,t_r )}, & \text{if } |slc(t_a,t_r )|^2 - noise(t_a,t_r ) \geq 0 \\
    0, & \text{otherwise}
    \end{cases}
-
-:eq:`eq_noise_removal`
 
 The corrected SLC :math:`slc_{nc} (t_a,t_r )` is obtained as follows:
 
 .. math::
    :label: eq_noise_removal_slc
 
-   slc_{nc} (t_a,t_r )= DN_{nc} (t_a,t_r ) e^{j\angle slc(t_a,t_r )}
-
-:eq:`eq_noise_removal_slc`
+   slc_{nc} (t_a,t_r )= amp_{nc} (t_a,t_r ) e^{j\angle slc(t_a,t_r )}
 
 where :math:`\angle slc(t_a,t_r )` is the phase of the original SLC image.

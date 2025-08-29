@@ -1,0 +1,39 @@
+% ---------------------------------------------------------------------------------------------------------------------
+% _static/latex.tex – LaTeX customization for ATBD v1
+% ---------------------------------------------------------------------------------------------------------------------
+
+% Load required packages
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Set up header/footer style
+\pagestyle{fancy}
+\fancyhf{}  % Clear all header and footer fields
+
+% Left header: logo
+\fancyhead[L]{%
+  \includegraphics[height=1.2cm]{_static/logo.png}%
+}
+
+% Center header: document title
+\fancyhead[C]{\textbf{Algorithm Theoretical Baseline Document (ATBD) v1}}
+
+% Right header: metadata block
+\fancyhead[R]{%
+  \begin{tabular}{r}
+    \textbf{Contract Nº:} 4000144699/24/I-NS \\
+    \textbf{Reference:} esa-rose-l-004-D4 \\
+    \textbf{Issue/Revision:} 1.1 \\
+    \textbf{Date of Issue:} 31/08/2025
+  \end{tabular}
+}
+
+% Footer: page number and author line
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\textit{Federico Minati et al.}}
+
+% Ensure enough space for header
+\setlength{\headheight}{40pt}

@@ -31,4 +31,5 @@ Two different and complementary approaches can be used to align SLC images:
 
   - :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
   - :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
+  - :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.  
   - :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary image warping functions, merging the information with the outcomes of the model-based co-registration. 

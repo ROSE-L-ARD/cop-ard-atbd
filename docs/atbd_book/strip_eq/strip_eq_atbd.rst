@@ -21,7 +21,7 @@ Algorithm Theoretical Basis Document (ATBD)
 The generation of STRIPEQ products involves the same steps of the :ref:`CSLC/GSLC <cslc_label>` products with some particularities and additional post-processing.
 In particular, it is requested:
 
-- :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: the application of the data-driven approach for co-registration refinement with Enhanced Spectral Diversity (ESD) technique to achieve sub-pixel azimuth alignment of burst-mode SAR acquisitions
+- :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: if not applied during the CSLC product generation, the application of the data-driven approach for co-registration refinement with Enhanced Spectral Diversity (ESD) technique is requested to achieve sub-pixel azimuth alignment of burst-mode SAR acquisitions.
 - :ref:`Phase deramping <phase_deramping>` (CSLC/GSLC post-processing): remove the common signal modulation, in order to make easier the geocoding or the resampling of the data. If the only application of interest is SAR interferometry this operation is not strictly necessary, because the common modulation cancel out in the interferogram formulation.
 - :ref:`Burst merging <burst_merge>` (CSLC/GSLC post-processing): the mosaicking of the bursts complex valued data. The same procedure followed for NRB product can be adopted. It is assumed that phase discontinuities are already solved at level of co-registration.
 

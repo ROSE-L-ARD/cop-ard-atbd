@@ -112,3 +112,234 @@ Finally, the mosaicked data are tiled according to the modified Sentinel-2 MGRS 
 
 .. note::
    The mosaicking procedure described for real valued data (NRB) can be also applied to complex valued data, such as CSLC in radar geometry, or GSLC in projected geometry.
+
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`\gamma^0`
+   * - Description
+     - Input Radar cross-section gamma-nought
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\theta`
+   * - Description
+     - Input local incidence angle
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`n`
+   * - Description
+     - Input estimated number of looks
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - > 0
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`m^l`
+   * - Description
+     - Input layover mask
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`m^s`
+   * - Description
+     - Input shadow mask
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\gamma^0_{mosaic}`
+   * - Description
+     - Mosaicked Radar cross-section gamma-nought
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\theta_{mosaic}`
+   * - Description
+     - Mosaicked local incidence angle
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`n_{mosaic}`
+   * - Description
+     - Mosaicked estimated number of looks
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - > 0
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`m^l_{mosaic}`
+   * - Description
+     - Mosaicked layover mask
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`m^s_{mosaic}`
+   * - Description
+     - Mosaicked shadow mask
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`id_{mosaic}`
+   * - Description
+     - Burst identifier
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - int matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
