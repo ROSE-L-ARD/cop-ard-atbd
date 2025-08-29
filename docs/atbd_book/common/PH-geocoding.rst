@@ -25,7 +25,7 @@ Algorithm
 ---------
 
 Point projection geocoding allows obtaining the CSLC map corresponding to the output geographic grid.  
-The phase of the GSLC is flattened with respect to the topographic phase, and its intensity may be flattened using the Area Normalization Factor (ANF).  
+The phase of the GSLC is flattened with respect to the topographic phase, and its intensity may be optionally flattened using the Area Normalization Factor (ANF).  
 The spectral content of the CSLC image is preserved, meaning that the GSLC presents the same Doppler centroid and TOPSAR modulation (if present) as the input CSLC product.
 
 The following diagram illustrates the flow of the point projection geocoding algorithm:

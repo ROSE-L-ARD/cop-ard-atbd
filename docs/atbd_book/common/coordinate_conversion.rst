@@ -91,3 +91,154 @@ The :numref:`coordinate_conversion_schema` shows a simplified schema of this fun
 The method stops when the absolute value of :math:`|\Delta t_i| <= \Delta t_{min}`, or when the maximum number of iterations is reached.
 
 The Coordinates Conversion tool is used in the *Reference Geometry Unit* and in *Coregistration Unit* to compute the association between the Reference DEM and the radar grid.
+
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`\vec{p}`
+   * - Description
+     - Satellite position
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{v}`
+   * - Description
+     - Satellite velocity
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{a}`
+   * - Description
+     - Satellite acceleration
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{T}`
+   * - Description
+     - Target on the ground
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`t_a`
+   * - Description
+     - Zero-Doppler oservation time
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{r}`
+   * - Description
+     - Range vector connecting the satellite and the target on the ground
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`h`
+   * - Description
+     - Height of the target on the ground
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
