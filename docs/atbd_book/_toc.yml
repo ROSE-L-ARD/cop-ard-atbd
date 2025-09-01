@@ -40,6 +40,14 @@ parts:
       - file: pol/pol_product
       - file: pol/pol_atbd
       - file: pol/pol_data_vis
+      - file: pol/pol_saocom.ipynb
+        title: POL SAOCOM demo
+      - file: pol/pol_entropy_image_saocom.ipynb
+        title: POL entropy analysis
+      - file: pol/pol_simulate_FR_image_saocom.ipynb
+        title: Simulation of Faraday rotation SAOCOM
+      - file: pol/pol_simulate_FR_per_landcover.ipynb
+        title: Simulation of Faraday rotation per landcover
   - caption: ORB
     chapters: 
       - file: orb/orb_overview
