@@ -7,7 +7,7 @@ version: "1.1"
 
 date: "31/08/2025"
 
-project: PROTOTYPE PROCESSOR FOR ANALYSIS READY DATA OF COPERNICUS SAR MISSIONS
+# project: PROTOTYPE PROCESSOR FOR ANALYSIS READY DATA OF COPERNICUS SAR MISSIONS
 
 # - Federico Minati (B-Open Solutions)
 # - Francesco De Zan (Delta-Phi Gmbh)
@@ -34,16 +34,32 @@ sphinx:
   config:
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  # Enable MathJax for LaTeX rendering
     autosectionlabel_prefix_document: true # Optional: Add document name to section labels
-
-# LaTeX settings for PDF export (optional)
-latex:
-  use_jupyterbook_latex: true
   latex_elements:
     papersize: a4paper # or 'letterpaper'
     pointsize: 11pt    # or '10pt', '12pt'
     preamble: |
-      \usepackage{fancyhdr}
-      \input{preamble.tex} % Include custom preamble from an external file
+      \usepackage{pdfpages}
+      \usepackage[pdftex,
+        bookmarks=true,
+        bookmarksopen=true,
+        colorlinks=true,
+        linkcolor=blue,
+        urlcolor=blue,
+        citecolor=blue]{hyperref}
+      \pgfplotsset{compat=1.18}
+    maketitle: |
+      \includepdf[pages={1,2}]{esa-rose-l-004-D4_cover_page.pdf}
+      \newpage
+      \tableofcontents
+      \newpage
+
+# LaTeX settings for PDF export (optional)
+latex:
+  latex_documents:
+    targetname: esa-rose-l-004-D4_Algorithm_Theoretical_Baseline_Document_ATBD.tex
+  latex_engine: pdflatex
+  template_path: _latex
+  # use_jupyterbook_latex: true
 
 repository:
   url: https://github.com/bopen/rose-l-ard 
