@@ -1,0 +1,94 @@
+\section{Overview of Candidate ARD Products}
+
+\subsection{Summary of ARD Products}
+The \acs{ard} products considered in this document are:
+    \begin{itemize}
+        \item Co-registered \acs{slc} (\acs{cslc}) and geocoded equivalent (\acs{gslc});
+        \item Normalized radar backscatter (\acs{nrb});
+        \item Polarimetric covariance matrix (\acs{cov}) and geocoded equivalent (\acs{gcov});
+        \item Ocean radar backscatter (\acs{orb});
+        \item Co-registered Multilooked Complex (\acs{cmlc}) and geocoded equivalent (\acs{gmlc});
+        \item Interferometric products (\acs{int} / \acs{cohe} / \acs{unw}) and geocoded equivalent (\acs{gint} / \acs{gcohe} / \acs{gunw});
+        \item Precise Range / Azimuth Offsets (\acs{pro} / \acs{pao}) and geocoded equivalent (\acs{gpro} / \acs{gpao});
+        \item Enhanced \acs{nrb} (\acs{enrb}) and Enhanced \acs{orb} (\acs{eorb});
+        \item Stripmap equivalent (\acs{stripeq}) \acs{cslc};
+        \item Geo-projected Ground Motion (\acs{ggm}).
+    \end{itemize}
+\pagebreak
+
+\subsection{Summary of Use Cases}
+Table~\ref{tab:rosel_primary_objectives} gives a view of some of the key use cases for ROSE-L primary objectives and the associated most relevant variables.
+
+\begin{longtblr}[
+  label = tab:rosel_primary_objectives,
+  entry = none,
+  caption = {ROSE-L primary objectives and examples of relevant use cases, associated key variables and anticipated \acs{ard} products required},
+]{
+  width = \linewidth,
+  colspec = {Q[l,20]Q[l,25]Q[l,55]},
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+\SetCell[c=3]{c} \textbf{Monitoring European and global geohazards} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+Subsidence (mining/aquifer exploitation, bradyseism) & Surface deformation, velocity maps, displacement dynamic & \SetCell[r=6]{l}  The use of interferometric stacks of images to monitor ground movements and deformations in active seismic zones, volcanoes, the subsidence of land and assets (buildings, infrastructure) and landslides due to natural and anthropogenic influences, is well consolidated and, with  \acs{s1}, is applied to continental scale in the European Ground Motion Service. ROSE-L will greatly enhance these capabilities especially in vegetated areas, but also being able to measure larger displacements not observable at C-band (or X-band). The sub-pixel offset tracking technique can be used to complement interferometric measurements in particular in area affected by strong and abrupt displacements, e.g. in correspondence of earthquakes or glaciers. Another important observable phenomenon is floods. L-band could bring significant improvements, increasing the capability to detect floods under vegetation and the resilience with respect to wind disturbances. 
+\acs{cslc} / \acs{cmlc} for \acs{sar} interferometry, \acs{pro} / \acs{pao} for sub-pixel offset tracking, \acs{nrb} and \acs{cov} for flood detection could be considered to perform the analysis, including their geocoded versions.
+\\  
+Landslide &
+Surface deformation, velocity maps, displacement dynamic &  \\ 
+\SetCell[r=2]{l} Tectonic movements, earthquakes, volcanoes &  Co-seismic deformation maps  & \\ 
+ & Inter-seismic monitoring & \\
+Infrastructure monitoring & Persistent scatterers velocity, stability analysis & \\  
+Flood detection & Flood detection and extent assessment & \\  
+\pagebreak
+\SetCell[c=3]{c} \textbf{Land use, Land use change, forestry and agriculture} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+Forest (boreal, tropical, Mediterranean, etc.) & 
+Forest height, Forest biomass, Sub-canopy terrain elevation, 3D Tomography forest. & \SetCell[r=4]{l}
+The state-of-the-art methodology in classification corresponds to supervised machine learning methods, for which the \acs{ard} products are used as input features. In order to exploit the whole dimensionality of the time series of ROSE-L images, backscatter, polarimetric and interferometric \acs{ard} products are considered (especially in their geocoded versions), i.e. 
+\acs{nrb}, \acs{cov}, \acs{gcov} and \acs{gcohe}. In addition, L-band data and C-band data from \acs{s1} can be jointly used.  \\
+
+Land use classification & Land cover map & \\
+Land use change & Land cover change map & \\
+Crops & Plant water content, cultivated area and crop type, biophysical variables, crop health & \\
+
+\SetCell[c=3]{c} \textbf{Soil moisture} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+\SetCell[r=2]{l} Soil moisture content & Soil moisture content
+ & \SetCell[r=2]{l} The state-of-the art methods are based on backscatter change and are applied today in a Copernicus service based on \acs{s1} data. The extension to L-band will allow retaining some sensitivity also over vegetated areas. An additional technique based on InSAR can complement backscatter measurements over arid and semi-arid regions, where the backscatter response is often plagued by erratic behaviour as a function of the moisture state. Suitable \acs{ard} are \acs{nrb}, \acs{cov} and \acs{gcov} for backscatter-based retrieval and \acs{cslc} for InSAR-based retrieval.\\
+ 
+& Soil roughness & \\
+\pagebreak
+\SetCell[c=3]{c} \textbf{Cryosphere and Arctic observations (land, ocean and marine)} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+
+\SetCell[r=3]{l} Ice charting & Sea ice charting and sea ice motion  & \SetCell[r=10]{l} There are key elements in the cryosphere in which ROSE-L can contribute significantly thanks to the specific properties of L-band (more penetration, less temporal decorrelation, etc.). They include, among others: 1) surface velocity of glaciers and ice sheets, measured by interferometry and offset tracking, 2) grounding line detection by interferometry (double differencing), 3) snow water equivalent (SWE) estimation by repeat-pass interferometry, and 4) ice/firn internal structure and subsurface mapping, by polarimetry. For all these techniques, the required \acs{ard} products are \acs{pro} / \acs{pao}, \acs{cslc}, and \acs{cov}, and their geocoded versions.\\
+& Slow ice tracking (glacier movements) & \\
+& Ice thickness & \\
+\SetCell[r=3]{l} Ice subsurface & Ice surface elevation & \\ & Ice extinction coefficient & \\
+& 3D Tomography - ice bodies & \\
+\SetCell[r=2]{l} Permafrost & Freeze/Thaw & \\
+ & Surface Deformation  & \\
+\SetCell[r=2]{l} Snow & Snow water equivalent & \\
+ & Snow depth  & \\
+\pagebreak
+ \SetCell[c=3]{c} \textbf{Marine} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+\SetCell[r=2]{l} Wave and Wind fields & Wave/swell fields, wave height, propagation directions, wavelength  & \SetCell[r=6]{l} The envisioned user of the ORB product lacks the expertise or the computational resources to easily pre-process SLCs or GRD, and is typically interested in combining \acs{sar} data from different sensors (e.g. \acs{s1} and ROSE-L) or \acs{sar} data with others from a different nature (such as geostationary optical data, NWP model outputs, etc.). Sea state measurements based on \acs{sar} data range from wind field retrieval, in which L-band complements C-band products being resilient with respect to saturation effects for high velocity winds, to wave fields retrieval, shallow water bathymetry and currents. More advanced use cases are related to the characterization of the Marine Atmospheric Boundary Layer (MABL). As for other domains and \acs{ard} products, ORB products should facilitate the application of Machine Learning (ML) approaches in maritime applications of \acs{sar} data by lowering the entry barrier to ML practitioners, while \acs{slc} based \acs{ard} could make feasible advanced processing for wave field estimation and current (radial velocity) retrieval. \\
+& Wind fields, wind velocity and direction & \\
+Shallow water Bathymetry &  Bathymetric Map & \\
+\SetCell[r=2]{l} Surface Current Fronts & Surface current boundary fronts & \\ 
+ & Sea surface radial velocity & \\
+Internal Waves & 
+Feature on the \acs{sar} image, dynamic and direction of propagation & \\
+\pagebreak
+ \SetCell[c=3]{c} \textbf{Safety \& Security (Maritime and land surveillance)} & & \\
+\textbf{Use case} & \textbf{Variable} & \textbf{Description}\\
+\SetCell[r=2]{l} Maritime traffic monitoring & Ship detection/classification  & \SetCell[r=4]{l} Applications ranging from ship detection to oil spill detection and to classification problems (e.g. detection of sea ice and icebergs) could benefit of ORB \acs{ard} products facilitating the application of Machine Learning (ML) approaches in maritime applications based on \acs{sar} data by lowering the entry barrier to ML practitioners.
+On the other hand, temporal change detection based on amplitude and/or coherence, relevant for security applications in land domain, can benefit of \acs{cslc} \acs{ard} products. \\
+ & Ship moving parameter estimation & \\
+Sea health monitoring & Oil spill detection & \\
+Security Monitoring Mapping & Temporal change detection & \\
+\end{longtblr}
+
+%\subsection{Summary on Algorithms and Preliminary Performance}

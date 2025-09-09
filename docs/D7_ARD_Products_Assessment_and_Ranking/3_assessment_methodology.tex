@@ -1,0 +1,103 @@
+\section{Assessment Methodology}
+
+\subsection{Criteria for Evaluation}
+
+The selected criteria for product evaluation are listed in~\autoref{tab:products_evaluation_criteria}.
+
+\begin{longtblr}[
+  label = tab:products_evaluation_criteria,
+  entry = none,
+  caption = {Products Evaluation Criteria},
+]{
+  width = \linewidth,
+  colspec = {Q[l,25]Q[l,75]},
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+\textbf{Criterion} & \textbf{Description} \\
+Relevance to ROSE-L Objectives and 
+Use Case Coverage & How well the product supports the mission’s scientific and application goals, number and diversity of use cases where the product is applicable. \\
+Algorithm Robustness and Reliability & Algorithm’s ability to produce consistent, accurate outputs under a wide range of input conditions. It also evaluates the algorithm’s stability across different configurations, datasets and operational scenarios. \\
+Precision and Accuracy & Precision and Accuracy of main product variables. \\	
+Interoperability & Compatibility with Sentinel-1, other SAR missions, and integration into data cubes or time series analyses. \\
+Timeliness and Computational Efficiency	& Expected latency and computational load; feasibility for operational or near-real-time use. \\	
+Compliance to Standards	& Adherence to CEOS-ARD PFS or other applicable standards. \\	
+Software Availability and Reusability & Availability of open-source tools, modules, and potential for code reuse from Phase 1 demonstrators. \\	
+Data Requirements and Constraints & Availability and accessibility of input/auxiliary data (e.g., DEMs, external calibration sources, atmospheric corrections).	\\
+Implementation Risk & Risk associated with developing the prototype processor (e.g., novel algorithms, uncertain input, processing complexity).	\\
+Known Limitations & List of limitations in terms of product characteristics and processing algorithm.\\		
+\end{longtblr}
+\pagebreak
+
+\subsection{Metrics and Scoring Approach}
+
+\autoref{tab:products_evaluation_criteria_score}  explains the mechanism and rationale for associating a score with each of the criteria under analysis.
+
+\begin{longtblr}[
+  label = tab:products_evaluation_criteria_score,
+  entry = none,
+  caption = {Score mechanism associated to the product evaluation criteria},
+]{
+  width = \linewidth,
+  colspec = {Q[l,25]Q[c,7]Q[l,68]},
+  rowhead = 1,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+\textbf{Criterion} & \textbf{Score} & \textbf{Description}\\
+\SetCell[r=5]{l} Relevance to ROSE-L Objectives 
+
+Use case coverage & 1 & The product is an intermediate output required by the processing workflow(s) for generating \acs{ard}s that cover less than 50\% of the use cases defined in \cite{ROSEL-MRD}\\
+& 2 & The product covers less than 50\% of use cases defined in \cite{ROSEL-MRD}\\
+& 3 & The product is an intermediate output required by the processing workflow(s) for generating \acs{ard}s that cover more than 50\% of use cases defined in \cite{ROSEL-MRD}\\
+& 4 & The product covers more than 50\% of use cases defined in \cite{ROSEL-MRD}\\
+& 5 & The product covers 100\% of use cases defined in \cite{ROSEL-MRD}\\
+
+\SetCell[r=5]{l} Algorithm Robustness and Reliability & 1 & Initial scientific idea\\
+& 2 & Algorithm implemented and tested on simulated data\\
+& 3 & Algorithm implemented and tested on real data\\
+& 4 & Algorithm used for generation of standard products in operational context with reliability guaranteed only for specific scenarios. \\
+& 5 & Algorithm used for generation of standard products in operational context, stable and able to guarantee a reliable results across all possible scenarios. \\
+
+\SetCell[r=3]{l} Precision and accuracy & 1 & Non-compliance to the requirements for the final application\\
+& 2 & Partial compliance to the requirements for the final application\\
+& 3 & Full compliance to the requirements for the final application\\
+
+\SetCell[r=4]{l} Interoperability & 1 & Only data acquired from the same sensor\\
+& 2 & \acs{s1} and \acs{rosel} data can be jointly used\\
+& 3 & Data acquired from different SAR sensors\\
+& 4 & Data acquired from different sensors (SAR, optical, hyperspectral, etc.)\\
+
+\pagebreak
+\SetCell[r=4]{l} Timeliness and Computational Efficiency & 1 & High latency and computational load\\
+& 2 & High computational load for data-driven approach, low latency\\
+& 3 & High latency for model-driven approach, low computational load\\
+& 4 & Low latency and low computational load\\
+
+\SetCell[r=4]{l} Compliance to Standards & 1 & Product defined in CEOS-ARD PFS and no compliance\\
+& 2 & Product not defined in CEOS-ARD PFS\\
+& 3 & Product defined in CEOS-ARD PFS and partial compliance\\
+& 4 & Product defined in CEOS-ARD PFS and fully compliance\\
+
+\SetCell[r=3]{l} Software Availability and Reusability & 1 & No open source SW available\\
+& 2 & Few open-source SW available\\
+& 3 & Adequate number of open-source SW available\\
+
+\SetCell[r=4]{l} Data Requirements and Constraints & 1 & Need for external models not public available\\
+& 2 & Need for external models public available\\
+& 3 & Need only for DEM and orbital data\\
+& 4 & Non need for external data\\
+
+\SetCell[r=4]{l} Implementation Risk & 1 & Uncertain input source, Novel algorithm, Complex algorithm\\
+& 2 & Defined input source, Novel algorithm, Complex algorithm\\
+& 3 & Defined input source, Consolidated algorithm, Complex algorithm\\
+& 4 & Defined input source, Consolidated algorithm, Simple algorithm\\
+
+\SetCell[r=3]{l} Known Limitations & 1 & More than 1 known limitation\\
+& 2 & Only 1 known limitation\\
+& 3 & No known limitations\\
+
+\end{longtblr}
+%INDICATION
+%Describe the ranking range for each previous criterion and describe how it is estimated.
+but\acs{rosel}e\acs{rosel}\acs{rosel}
