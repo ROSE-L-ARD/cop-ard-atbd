@@ -1,0 +1,380 @@
+\section{Normalized Radar Backscatter (NRB)}
+\label{s:nrb}
+
+\subsection{Product Description}
+\label{sec:nrb_prod_description}
+
+%\begin{comment}
+This product exclusively contains backscatter values and undergoes Radiometric Terrain Correction (\acs{rtc}), providing Gamma-Nought as defined in \cite{Small2011}, which mitigates the impact of different observation geometries. It is the most readily comprehensible product, enabling direct visualisation for visual interpretation, as well as deeper analysis. Indeed, analysing backscatter time series can yield information regarding the observed object's type for classification purposes (land use, land cover), as well as its temporal variations, enabling applications such as change detection, security applications, and vegetation growth monitoring.
+
+\acs{nrb} products have gained significant advancements in recent years, driven by both technological innovation and increasing demand for high-quality, precise data.
+
+The Normalized Radar Backscatter (\acs{nrb}) product is foreseen and provided in several projects and it is the main \acs{ard} product in the portfolio of different operative and programmed missions.
+
+The \acs{nrb} can be obtained through two possible alternative processing flows:
+   
+   1. Starting from \acs{slc} \acs{s1} data with the same Data Take ID, subject to the co-registration procedure (\acs{cslc}); \\
+   2. Starting from \acs{slc} \acs{s1} data with the same Data Take ID, without applying the co-registration procedure.
+
+The dataset is formatted as a ZARR file. This format supports the inclusion of both the processed measurement data and the associated metadata within the same file, making the product self-contained and self-describing, with no need for additional annotations or supporting files.
+
+\subsubsection{Input and Auxiliary Data}
+The following input and auxiliary data are considered for product generation:
+
+\begin{longtblr}[
+    label = tab:in_aux_nrb_products,
+    entry = none,
+    caption = {\acs{nrb} input and auxiliary data},
+    ]{
+        width = \linewidth,
+        colspec = {Q[l,20]Q[l,60]Q[c,20]},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+    }
+    \textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
+    \acs{slc} or \acs{cslc} & L1 Single Look Complex image or co-registered L1 Single Look Complex image & M \\
+    \acs{slc} annotation & L1 Single Look Complex image annotations or reference geometry annotations & M \\
+    \acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & M \\
+    Orbits & \acs{slc} Standard, restituted or precise orbits & M \\
+    \acs{etad} & \acs{etad}-like products for atmospheric delay correction & O \\
+    \acs{tec} & External \acs{tec} data for delay correction & O \\
+\end{longtblr}
+
+\subsubsection{Main Variables}
+\label{sec:variables_nrb}
+The following tables list the main variables associated with the \acs{nrb} product.
+
+\begin{longtblr}[
+    label = tab:var_nrb_products,
+    entry = none,
+    caption = {\acs{nrb} main variables},
+    ]{
+        width = \linewidth,
+        colspec = {Q[l,25]Q[l,52]Q[l,20]Q[l,13]},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+    }
+    \textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
+    gamma0 & Radiometric Terrain Correction Gamma-Nought backscatter linear scaling image & polarisation, acquisition\_date, x, y & float32 \\
+    local\_inc\_angle & DEM-based local Incidence angle image [deg]. This variable is present only if the \acs{nrb} is generated from \acs{slc}s. If the \acs{nrb} is derived from \acs{cslc}s, this variable will be null, and the reference\_inc\_angle metadata will be present & x, y & float32 \\
+    anf & Optional variable: area normalization factor or local contributing area, used to obtain the gamma0 coefficient. This variable is present only if the \acs{nrb} is generated from \acs{slc}s. If the \acs{nrb} is derived from \acs{cslc}, this variable will be null, and the reference\_anf metadata will be present & x, y & float32 \\
+\end{longtblr}
+
+The table below describes the dimensions/coordinates associated with the \acs{nrb} main variables.
+
+\begin{longtblr}[
+    label = tab:var_nrb_coordinates,
+    entry = none,
+    caption = {\acs{nrb} main variables coordinates/dimensions},
+    ]{
+        width = \linewidth,
+        colspec = {Q[l,20]Q[l,62]Q[l,18]},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+    }
+    \textbf{Name} & \textbf{Description} & \textbf{Data Type} \\
+    polarisation & Acquired polarisations & string \\
+    acquisition\_date & Image acquisition dates, formatted as YYYY-MM-DD & string \\
+    x & UTM/UPS x (East) coordinates [m] & float64 \\
+    y & UTM/UPS y (North) coordinates [m] & float64 \\
+\end{longtblr}
+
+\subsubsection{Main Metadata}
+\label{sec:nrb_product_metadata}
+The following table lists the main metadata and per-pixel metadata associated with the \acs{nrb} product.
+
+\begin{longtblr}[
+    label = tab:meta_nrb_products,
+    entry = none,
+    caption = {\acs{nrb} main metadata and per-pixel metadata},
+    ]{
+        width = \linewidth,
+        colspec = {Q[l,25]Q[l,38]Q[l,10]Q[l,10]Q[c,12]},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+    }
+    \textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} & \textbf{Per-pixel Metadata}\\
+    reference\_slc / reference\_cslc & List of links to input reference \acs{slc} or \acs{cslc} & - & list of string & \\
+    reference\_dem & Link to reference DEM & - & string & \\
+    etad\_file & ETAD file used for each image belonging to the \acs{cslc}/\acs{slc} stack. This is optional: it is included only if used; otherwise, it is null & - & string & \\ 
+    tec & Link to external \acs{tec} data, if used & - & string & \\ 
+    reference\_inc\_angle & Optional attribute: list of link to reference DEM-based local incidence angle maps. It is present only if the \acs{nrb} is generated from \acs{cslc}s. & - & string & \ding{51} \\
+    reference\_anf & Optional attribute: list of links to reference area normalization factor or local contributing area. It is present only if the \acs{nrb} is generated from \acs{cslc}s. & - & string & \\
+    orig\_data\_id & Per pixel metadata reporting an index describing the bursts contributing to the output mosaicked pixel & x, y & int32 & \ding{51} \\
+    mask & Mask containing, for each ground cell, the following information:
+    
+     - 0: no distortions
+    
+     - 1: layover
+    
+     - 2: shadow
+    
+     - 3: undefined & x, y & byte & \ding{51} \\
+    nlooks & Number of equivalent looks for the gamma flattening & x, y & float32 & \ding{51} \\
+    \_geometric\_accuracy & Measured geometric accuracy, including eastern and northern geometric accuracy bias and standard deviation & - & dictionary & \\ 
+    east\_geom\_bias & Measured eastern geometric bias & - & float32 & \\
+    east\_geom\_std & Measured eastern geometric standard deviation & - & float32 & \\
+    north\_geom\_bias & Measured northern geometric bias & - & float32 & \\
+    north\_geom\_std & Measured northern geometric standard deviation & - & float32 & \\
+    geometric\_accuracy
+    \_radial\_rmse& Measured radial RMSE of geometric accuracy & - & float32 & \\
+    x\_sample & Pixel spacing in x direction & - & float32 & \\
+    y\_sample & Pixel spacing in y direction & - & float32 & \\
+\end{longtblr}
+
+The table below describes the dimensions/coordinates associated with the \acs{nrb} main metadata.
+
+\begin{longtblr}[
+    label = tab:var_nrb_metadata_coordinates,
+    entry = none,
+    caption = {\acs{nrb} main metadata coordinates/dimensions},
+    ]{
+        width = \linewidth,
+        colspec = {Q[l,20]Q[l,62]Q[l,18]},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+    }
+    \textbf{Name} & \textbf{Description} & \textbf{Data Type} \\
+    x & UTM/UPS x (East) coordinates [m] & float64 \\
+    y & UTM/UPS y (North) coordinates [m] & float64 \\
+\end{longtblr}
+
+
+\subsubsection{Reference System Tiling and Slicing}
+\label{sec:nrb_reference_system_tiling}
+\autoref{tab:nrb_ref_system_slicing} reports the reference system, the slicing, and grid for \acs{nrb} products.
+
+\begin{longtblr}[
+    label=tab:nrb_ref_system_slicing,
+    entry = none,
+    caption = {Reference system and Slicing for \acs{nrb}},
+    ]{
+        width=\linewidth,
+        colspec = {Q[l,15]Q[l,35]Q[l,35]Q[l,15]},
+        %vline{2-5} = {-}{},
+        %vline{5-5} = {-}{},
+        hlines,
+        hline{1-Z} = {-}{0.05em},
+        rowhead=2
+    }
+    \textbf{Product} & \textbf{Reference System} & \textbf{Slicing} & \textbf{Spacing}\\
+    \textbf{\acs{nrb}} (default) & Cartographic: UTM/UPS & US-\acs{mgrs} 100 km x 100 km & 10 m\\
+    \textbf{\acs{nrb}} (optional) & Cartographic: UTM/UPS & US-\acs{mgrs} 100 km x 100 km & 30 m\\
+\end{longtblr}
+
+\subsection{Product Requirements}
+\label{sec:impacts_nrb}
+
+The main quality parameters for evaluating an \acs{nrb} product are radiometric and geometric accuracies. The former is determined by the ability to compensate for local slope due to topography and obtain an estimate of the radar cross-section that is independent of the observation geometry. The objective is to reconstruct the intrinsic characteristics of the observed scene. Additionally, proper filtering could be applied to reduce speckle noise and other sources of error while maintaining the desired output resolution. The latter refers to the capability to accurately relocate points from the radar to a geographic reference system, compensating for distortion effects due to the acquisition mode and artifacts related to the propagation of the signal through the atmosphere.
+
+\subsubsection{Accuracy}
+
+\begin{longtblr}[
+	label = tab:nrb_accuracy_cband,
+	entry = none,
+	caption = {Accuracy Requirements for \acs{nrb} product (C-Band)},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,30] Q[l,60] Q[c,20]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+		rowhead = 1,
+	}
+	
+	\textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
+	
+	\SetCell[r=2]{l} Range Accuracy (\%) 
+	& Model-Driven (only orbit and \acs{dem}) & $\leq 5\%$\\
+	& Model-Driven + atmospheric correction & $\leq 2\%$ \\
+	
+	\SetCell[r=2]{l} Azimuth Accuracy (\%) 
+	& Model-Driven (only orbit and \acs{dem}) & $\leq 2\%$\\
+	& Data-Driven (\acs{esd}) & $\leq 0.5\%$ \\
+	
+	\acs{rcs} difference (dB) & Stability of the \acs{rcs} comparing different acquisition geometries over the same area considering a resolution of 30m & $\leq 5$~dB \\
+	
+\end{longtblr}
+
+\begin{longtblr}[
+	label = tab:nrb_accuracy_lband,
+	entry = none,
+	caption = {Accuracy Requirements for \acs{nrb} product (L-Band)},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,30] Q[l,60] Q[c,20]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+		rowhead = 1,
+	}
+	
+	\textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
+	
+	\SetCell[r=3]{l} Range Accuracy (\%) 
+	& Model-Driven (only orbit and \acs{dem}) & $\leq 60\%$\\
+	& Model-Driven + atmospheric correction & $\leq 25\%$ \\
+	& Model-Driven + atmospheric correction + Data-Driven (\acs{icc}) & $\leq 10\%$ \\
+	
+	\SetCell[r=3]{l} Azimuth Accuracy (\%) 
+	& Model-Driven (only orbit and \acs{dem}) & $\leq 150\%$ \\
+    & Model-Driven + atmospheric correction & $\leq 50\%$ \\
+	& Data-Driven (\acs{icc}) & $\leq 10\%$ \\
+	
+	\acs{rcs} difference (dB) & Stability of the \acs{rcs} comparing different acquisition geometries over the same area considering a resolution of 30m & $\leq 5$~dB \\
+	
+\end{longtblr}
+
+\subsubsection{Timeliness}
+\label{sec:nrb_timeliness}
+
+The \acs{nrb} product can be generated as soon as L1 data is available for each \acs{slc} image independently or starting from \acs{cslc} products. Besides choosing between \acs{slc} or \acs{cslc} products, the main factor impacting the timeline is the availability of external data or reference images, which are required to refine geolocation and mitigate atmospheric effects, particularly ionospheric effects. \autoref{fig:nrb_single} shows the flowchart of generating the \acs{nrb} product using a single \acs{slc} image.
+
+In addition, the timeline provided indicates the time required to collect the input data and complete the main processing steps. The processing time refers to a standard \acs{s1} dataset and is approximated considering that the latency in obtaining the input data is the dominant factor.
+
+\begin{figure}[H]
+		\centering
+		\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[node distance=0.5cm and 2cm]
+%			
+%			% Define the style for the nodes
+%			% \tikzstyle{node} = [circle, draw, fill=blue!20, text centered, minimum size=1.5cm]
+%			
+%			% Draw nodes
+			\node[rectin] (init) {\acs{slc}};
+			\node[block, right=of init] (g2r) {Geo-to-Radar};
+			\node[block, right=of g2r] (rtc) {\acs{rtc}};
+			\node[block, right=of rtc] (geocoding) {Geocoding};
+			\node[rectaux, below=of init] (dem) {\acs{dem}};
+			\node[empty, below=of g2r] (empty0) {};
+			%\node[empty, below=of empty0] (empty1) {};
+			\node[rectaux, below=of empty0] (orbit) {Orbital data};
+			\node[rectauxd, below=of orbit] (models) {External models};
+%			\node[rectind, below=of models] (ref_stack) {Reference SLC stack};
+			\node[rectout, right=of geocoding] (nrb) {\acs{nrb}};
+			
+%			% Draw edges with arrows
+			\draw[->, thick] (init) -- (g2r);
+			\draw[->, thick] (g2r) -- (rtc);
+			\draw[->, thick] (rtc) -- (geocoding);
+			\draw[->, thick] (dem) -| (g2r);
+			\draw[->, thick] (orbit) -- (g2r);
+			\draw[dotted, thick] (models) -- (orbit);
+%			\draw[->, thick] (ref_stack) -| (g2r);
+			\draw[->, thick] (geocoding) -- (nrb);
+%			% Timeline with linked markers and adaptive length
+			\def\timelineStart{init}
+			\def\timelineEnd{nrb}
+			\draw[thick, ->] (\timelineStart.west |- 0,-6) -- (\timelineEnd.east |- 0,-6) node[right] {Time};
+			\foreach \node/\label in {dem/Start, models/\textbf{1-30d}, nrb/<1h} {
+				\draw (\node.south |- 0,-6) -- (\node.south |- 0,-6.5) node[below] {\label};
+				\draw[dotted, thick] (\node.south) -- (\node.south |- 0, -6.25); % Connects the node to the timeline
+			}
+				
+		\end{tikzpicture}
+		}
+		\caption{Sample workflow for generation of \acs{nrb} considering each \acs{slc} image separately.}
+		\label{fig:nrb_single}
+\end{figure}
+	
+In the framework of this project, the \acs{cslc} procedure includes geometric correctness, even in case of parameter compensation that does not introduce differential errors between reference and secondary images. Taking into account this characteristic, if the \acs{nrb} is generated from the \acs{cslc} then all the calibrations have already been performed during the \acs{cslc} processing, and the reference geometry is computed only once for the reference orbit. Therefore, the schema simplifies as reported in \autoref{fig:nrb_from_cslc}, but the timeline does not change depending on the information needed to perform the Geo-to-Radar conversion or to generate the \acs{cslc} product.
+\begin{figure}[H]
+		\centering
+		\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[node distance=0.5cm and 2cm]
+			
+			% Define the style for the nodes
+			% \tikzstyle{node} = [circle, draw, fill=blue!20, text centered, minimum size=1.5cm]
+			
+			% Draw nodes
+			\node[rectin] (init) {\acs{slc}};
+			\node[block, right=of init] (coreg) {Co-registration};
+			\node[rectout, right=of coreg] (cslc) {\acs{cslc}};
+			\node[block, right=of cslc] (rtc) {\acs{rtc}};
+			\node[block, right=of rtc] (geocoding) {Geocoding};
+			\node[rectout, right=of geocoding] (nrb) {\acs{nrb}};
+			
+			\node[rectaux, below=of init] (dem) {\acs{dem}};
+			\node[empty, below=of coreg] (empty0) {};
+			%\node[empty, below=of empty0] (empty1) {};
+			\node[empty, below=of empty0] (empty2) {};
+			\node[rectaux, below=of empty2] (orbit) {Orbital data};
+			\node[rectauxd, below=of orbit] (models) {External models};
+			\node[rectind, below=of dem] (ref_stack) {Reference SLC stack};
+			\node[rectout, right=of geocoding] (nrb) {\acs{nrb}};
+			
+			% Draw edges with arrows
+			\draw[->, thick] (init) -- (coreg);
+			\draw[->, thick] (coreg) -- (cslc);
+			\draw[->, thick] (cslc) -- (rtc);
+			\draw[->, thick] (rtc) -- (geocoding);
+			\draw[->, thick] (geocoding) -- (nrb);
+			
+			% Draw edges with arrows
+			\draw[->, thick] (dem) -| (coreg);
+			\draw[->, thick] (orbit) -- (coreg);
+			\draw[dotted, thick] (models) -- (orbit);
+			\draw[->, thick] (ref_stack) -| (coreg);
+			\draw[->, thick] (geocoding) -- (nrb);
+			%			% Timeline with linked markers and adaptive length
+			\def\timelineStart{init}
+			\def\timelineEnd{nrb}
+			\draw[thick, ->] (\timelineStart.west |- 0,-8) -- (\timelineEnd.east |- 0,-8) node[right] {Time};
+			\foreach \node/\label in {ref_stack/Start, models/\textbf{1-30d}, nrb/<1h} {
+				\draw (\node.south |- 0,-8) -- (\node.south |- 0,-8.5) node[below] {\label};
+				\draw[dotted, thick] (\node.south) -- (\node.south |- 0, -8.25); % Connects the node to the timeline
+			}
+			
+		\end{tikzpicture}
+		}
+		\caption{Sample workflow for generation of \acs{nrb} starting from \acs{cslc} products.}
+		\label{fig:nrb_from_cslc}
+\end{figure}
+%(required? look at applications? where? ROSE-L MRD? NISAR?)
+
+
+\subsection {Usability, Integrability and Interoperability}
+\label{sec:nrb_usability_integrability}
+The characteristics of the \acs{nrb} products in terms of usability, integrability and interoperability are in the following table.
+
+\begin{longtblr}[
+  caption = {Usability, Integrability, and Interoperability of \acs{nrb} product},
+  label = {tab:nrb_usability_integrability_interoperability},
+]{
+  colspec = {Q[2cm] Q[12cm]},
+  rowhead = 1,
+  width = \linewidth
+}
+\hline
+\textbf{Aspect} & \textbf{Description} \\
+\hline
+Usability &
+\begin{itemize}
+  \item Radiometric calibration eliminates the need for users to correct backscatter manually.
+  \item $\gamma^0$ convention enables direct comparison across sensors, acquisition times, and geometries.
+  \item Orthorectified and georeferenced product makes data easier to use in mapping applications without terrain distortions.
+  \item Provided in standard formats like ZARR ensures wide compatibility.
+  \item The product can directly be used in classification and/or segmentation procedures.
+  \item The product can be provided by using multi-polarisation: availability of VV, VH (or other) polarisations improves surface characterization.
+  \item Note: Usability depends on the spatial and temporal resolution, as well as whether speckle filtering has been applied. A 10 m resolution is suitable for most applications that require radiometrically terrain-corrected backscatter maps.
+\end{itemize}
+\\
+Integrability &
+\begin{itemize}
+  \item GIS Compatibility: Easily used within \acs{gis} platforms, due to geographic referencing and data format.
+  \item Multi-Sensor Fusion: Can easily be integrated with optical or other SAR projected products for land cover, surface change, or hazard mapping.
+  \item Environmental Monitoring: It supports use in models or indicators for forest cover, crop health or hydrology.
+\end{itemize}
+\\
+Interoperability &
+\begin{itemize}
+  \item Cross-Mission Compatibility: Normalized $\gamma^0$ allows for comparison between satellites.
+  \item Interdisciplinary Applications: Usable in hydrology, agriculture, forestry, urban studies, etc., enhancing cross-domain use.
+  \item Compatible with common \acs{eo} frameworks and pipelines using georeferenced data
+  \item High interoperability due to standard geographic referencing and pixel alignment across scenes
+  \item Adheres to ARD principles, enhancing integration with downstream services and platforms
+  \item Facilitates cross-mission usage through harmonized ground projection
+\end{itemize}
+\\
+\hline
+\end{longtblr}
+
+

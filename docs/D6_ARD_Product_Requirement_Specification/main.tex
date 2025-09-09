@@ -1,0 +1,139 @@
+%   _____ ____    _      _         _____   __  __  _____                    _       _       
+%  | ____/ ___|  / \    | |    __ |_   _|__\ \/ / |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
+%  |  _| \___ \ / _ \   | |   / _` || |/ _ \\  /    | |/ _ \ '_ ` _ \| '_ \| |/ _` | __/ _ \
+%  | |___ ___) / ___ \  | |__| (_| || |  __//  \    | |  __/ | | | | | |_) | | (_| | ||  __/
+%  |_____|____/_/   \_\ |_____\__,_||_|\___/_/\_\   |_|\___|_| |_| |_| .__/|_|\__,_|\__\___|
+%                                                                    |_|                   
+%  by Jeroen Van den Eynde et al., 2015-2021
+%     jeroen.van.den.eynde@esa.int
+%
+\documentclass[deltaphi]{deltaphi-report}
+\usepackage{titlesec}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage[numbers]{natbib}
+\usepackage{tabularray}
+\usepackage{letltxmacro}
+\usepackage[sfdefault]{arimo}
+
+\usepackage{soul}
+\usepackage{xcolor}
+\usepackage{acro}[=v2]
+\ExplSyntaxOn
+\prop_new:N \l__acro_foreign_format_prop
+\ExplSyntaxOff
+
+\usepackage{pifont}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{pdflscape}
+
+\LetLtxMacro\Oldfootnote\footnote
+
+%\newcommand{\acs}[1]{#1}
+
+\newcommand{\EnableFootNotes}{%
+  \LetLtxMacro\footnote\Oldfootnote%
+}
+
+\newcommand{\DisableFootNotes}{%
+  \renewcommand{\footnote}[2][]{\relax}
+}
+
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%==========================================================
+
+% ---------------------------------------------------------
+% TITLE AND AUTHOR
+% ---------------------------------------------------------
+\project{PROTOTYPE PROCESSOR FOR ARD OF COPERNICUS SAR MISSIONS}
+
+\title{ARD Products Requirements Specification}
+
+\author{F. Minati (B-Open), F. Trillo (B-Open), F. De Zan (Delta Phi), J.M. Lopez-Sanchez (Universidad de Alicante), P. Lopez Dekker (TU-Delft)}
+
+% ---------------------------------------------------------
+% DOCUMENT TYPE
+% ---------------------------------------------------------
+\doctype{Technical Note}%		Document Type [optional]
+
+\securitymarking{Public Distribution}
+
+% ---------------------------------------------------------
+% DOCUMENT NUMBER, ISSUE, REVISION, DATE AND STATUS
+% ---------------------------------------------------------
+\contract{4000144699/24/I-NS} % Contract Number
+\refnumber{esa-rose-l-006-D6} % Reference Number
+\issue{1}                     % Issue Number
+\revision{0}                  % Revision Number
+\issuedate{15/05/2025}        %	Issue Date
+\organisationalentity{}       % Organisational Entity
+\status{Approved}                % Document status (Draft [default], Under Review, Approved...)
+
+% ---------------------------------------------------------
+% CHANGE LOG AND RECORD
+% ---------------------------------------------------------
+% List each change log entry separately. The arguments are:
+% \changelog{ Reason }{ Issue }{ Revision }{ Date }
+\changelog{First issue}{1}{0}{15/05/2025}
+
+% List each change record entry separately. The arguments are:
+% \changerecord{ Reason }{ Date }{ Pages }{ Paragraph(s) }
+\changerecord{First version}{15/05/2025}{All}{All}
+%{sec:eorb_ICSM}
+%{sec:ocn_faraday}
+% ---------------------------------------------------------
+% APPROVAL
+% ---------------------------------------------------------
+% List each approval entry separately. The arguments are:
+\approved{ F. Minati }{ 15/05/2025 }
+%\approved{}{}
+
+% ---------------------------------------------------------
+% DISTRIBUTION
+% ---------------------------------------------------------
+% \distribution{Feel Free To Distribute (ESA)}
+
+%==========================================================
+
+% ---------------------------------------------------------
+% LOAD USER-SPECIFIC PACKAGES
+% ---------------------------------------------------------
+
+%==========================================================
+\input{acronyms}
+
+\begin{document}
+
+% Generate title page
+\maketitle
+% Generate frontmatter (approval, change, distribution)
+\makelog
+
+% Generate ToC, LoF [optional], LoT [optional]
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+%\input{intro_esa}
+%\DisableFootNotes
+\printacronyms
+\clearpage
+\input{content}
+%\input{ProductSpecification}
+\clearpage
+%\EnableFootNotes
+%\input{PSD_test_BR}
+%\clearpage
+%\input{psd_land}
+\clearpage
+%\bibliographystyle{apalike}
+%\bibliography{strings, references_paco}
+\end{document}
