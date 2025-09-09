@@ -164,14 +164,92 @@ Regarding the computation of the output layers (entries of the covariance matrix
 
 
 \subsection{Criticalities and weaknesses}
+\label{sec:pol_criticalities}
 
 Any test of the polarimetric quality of the \acs{pol} products depends on the quality of the \acs{slc} data, especially regarding the radiometric calibration and other phase-related effects, such as Faraday rotation. 
 Consequently, any analysis of the quality of the products (from the polarimetric point of view) relies on the input data, and not on the generation algorithm itself.
 
 In this sense, there exists some basic tests of the polarimetric calibration of the data that could be applied, but all of them are designed for quad-pol data, not for dual-pol data.
 
-%Lack of series of full-pol L-band data. Only ALOS-1/2, and not in stacks. 
+% Preliminary analysis on FR
 
-%Next: BIOMASS.
+Regarding Faraday rotation (\acs{fr}), a preliminary analysis on the impact it will have on the \acs{pol} products derived from \acs{rosel} is included in the following section.
 
-\label{sec:pol_criticalities}
+\subsubsection{Impact of Faraday Rotation on POL products}
+\label{sec:pol_fr}
+
+%Considering that in ROSE-L it will not be possible to correct for the Faraday rotation it is kindly requested to elaborate a little bit more this point to provide some practical indicatioon about  what is the amount of residual faraday rotation that can be afforded without impairing completely the product 
+
+The impact of \acs{fr} on the polarisation of the electromagnetic waves is well-known and is properly described in the literature~\citep{Wright2003,Freeman2004a,Freeman2004b}, as there exists a sound physical model to analyse it. \acs{fr} depends on the value of \acs{tec}, and hence its influence changes as a function of time (within the day and along the year) and space (geographical coordinates, especially latitude). 
+
+The parameter that represents the impact on the wave is the \emph{one-way rotation angle}, whose absolute value ranges from very low values, close to zero, to more than 20 degrees in very extreme cases at L-band~\citep{Meyer2008}. 
+
+The effect of \acs{fr} is conceptually similar to cross-talk, i.e. polarimetric channels interfere (are partially added) to each other.
+
+With quad-pol data, \acs{fr} can be estimated and fully corrected by exploiting reciprocity~\citep{Bickle1965,Wright2003,Freeman2004b,Meyer2008}.
+
+However, with dual-pol data, the correction requires: 1) the \acs{tec} value (which can be retrieved from auxiliary measures, as for \acs{etad}) and 2) the knowledge of the actual scattering matrix of the scene (which is not known). Consequently, the only way to try to correct \acs{fr} consists in assuming some scattering properties of the scene and using them (with the \acs{tec} external information) to apply the correction. As a result, the correction performance depends on the validity of the assumptions.
+
+The effect of \acs{fr} increases with increasing contrast between the scattering matrix elements. In other words, the more different are the backscattering coefficients at the co- and cross-polar channels (e.g., VV and VH), the stronger the effect of FR. For instance, at L-band, bare surfaces are characterised by a very low cross-pol component, so they are more impacted than forests (characterised by a high cross-pol return, close to the co-polar channel value).
+
+The co-polar (HH and VV) channels suffer only some tenths of dB of decrease with respect to their true value (less than 0.1~dB of decrease for 80\% of the expected \acs{fr} levels~\citep{Hajnsek2019}. The behavior of the cross-pol channels is more dynamic and changes depending on the scene and the \acs{fr} angle (it can reach a 4~dB increase in some situations). This means that the \acs{nrb} products (just backscattered intensity) are also affected by \acs{fr}, especially the cross-polar channel~\citep{Freeman2004a}.
+
+Regarding the complex correlation between the co- and the cross-polar channel (e.g. VV and VH) it is normally very low (null in theory) over reflection-symmetric scenes (in practice, all but urban areas, infrastructures, and slopes). However, in presence of \acs{fr}, the influence of one channel upon the other increases this correlation. Once again, it could be approximately corrected under the assumption of knowledge of the underlying correlation.
+
+\autoref{fig:pol_fr_dualpol_baresoil} and \autoref{fig:pol_fr_dualpol_forest} show the impact of \acs{fr} without any correction over ‘bare soil’ and ‘upland forest’ classes, for which the scene parameters defined in \citep{Freeman2004b}) are used.
+
+\begin{figure}[h!]
+\centering
+\begin{tabular}{ccc}
+\includegraphics[width=0.32\textwidth]{Figures/pol/FR_bacskcatter_Bare soil.png}
+ & \includegraphics[width=0.32\textwidth]{Figures/pol/FR_VV-VH_Correlation_Bare soil.png}
+ &
+\includegraphics[width=0.32\textwidth]{Figures/pol/FR_VV-VH_Phase_Bare soil.png} \\
+(a) & (b) &
+(c) 
+\end{tabular}
+\caption{Effect of \acs{fr} upon the dual-pol response of bare soil. (a) Backscattering coefficients, (b) Correlation between channels, (c) Phase between channels.}
+\label{fig:pol_fr_dualpol_baresoil}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\begin{tabular}{ccc}
+\includegraphics[width=0.32\textwidth]{Figures/pol/FR_bacskcatter_Upland Forest.png}
+ & \includegraphics[width=0.32\textwidth]{Figures/pol/FR_VV-VH_Correlation_Bare soil.png}
+ &
+\includegraphics[width=0.32\textwidth]{Figures/pol/FR_VV-VH_Phase_Bare soil.png} \\
+(a) & (b) &
+(c) 
+\end{tabular}
+\caption{Effect of \acs{fr} upon the dual-pol response of forest. (a) Backscattering coefficients, (b) Correlation between channels, (c) Phase between channels.}
+\label{fig:pol_fr_dualpol_forest}
+\end{figure}
+
+The backscattering coefficient at the copolar channel (VV) decreases as the rotation angle increases. This decrease is almost negligible for angles lower than 5~degrees, and reaches 1 to 2~dB at the extreme cases (rotation angle equal to 20~degrees). At the cross-polar channel (VH), the backscattering coefficient increases proportionally to the \acs{fr} angle, reaching a bias of 7~dB for bare soil (\autoref{fig:pol_fr_dualpol_baresoil}a) and 3~dB for forest (\autoref{fig:pol_fr_dualpol_forest}a). 
+
+Due to the cross-talk induced by \acs{fr}, the most severely affected polarimetric variable is the correlation between channels. A scene characterised by null correlation exhibits a rapidly increasing correlation as a consequence of \acs{fr}. For instance, it reaches 0.5 at a rotation angle of 5~degrees, and saturates at around 0.8 for rotation angles above 15~degrees.
+
+The phase difference between the two channels is not defined when the correlation between channels is null. However, it takes a value close to 180~degrees as soon as the  \acs{fr} make the correlation depart from zero.
+
+In the same vein, Figure 3 shows the false colour RGB composites of a SAOCOM scene over Naples when \acs{fr} is injected into the data and no correction is applied. For this purpose, the backscattering level of HH is assumed equal to VV and the correlation between HH and VV is assumed to be 0.5 with zero phase. This has been applied as a constant for the whole scene, but these values could be changed in a more sophisticated way, e.g. as a function of the land cover type.
+
+\begin{figure}[ht!]
+\centering
+\begin{tabular}{cc}
+No FR & 5 degrees \\
+\includegraphics[width=0.45\textwidth]{Figures/pol/SAOCOM_RGB_noFR.png}
+ & \includegraphics[width=0.45\textwidth]{Figures/pol/SAOCOM_RGB_FR_5deg.png}
+ \\
+10 degrees & 20 degrees \\
+\includegraphics[width=0.45\textwidth]{Figures/pol/SAOCOM_RGB_FR_10deg.png}
+ & \includegraphics[width=0.45\textwidth]{Figures/pol/SAOCOM_RGB_FR_20deg.png}
+
+\end{tabular}
+\caption{RGB false colour composite of a SAOCOM dual-pol image over Naples (DSC/S4). Channels: R: VV, G: VH: B: VV/VH. The original image (top left) is compared with other three cases in which different \acs{fr} angles were injected (5, 10 and 20~degrees). The backscattering level of HH is assumed equal to VV and the correlation between HH and VV is assumed to be 0.5 with zero phase, and both are assumed constant over the whole scene.}
+\label{fig:pol_FR_RGB}
+\end{figure}
+
+The visual aspect of the RGB composite when the \acs{fr} angle  is 5~degrees is very similar to the case without \acs{fr}, as the VV backscattering coefficient is almost unaltered and the VH one is only increased by less than 2~dB. A \acs{fr} angle of 10~degrees is more noticeable in this image: the sea becomes purple instead of blue, and all areas originally represented in pink colour (corresponding to buildings and urban land cover) become yellowish. In the most extreme case (\acs{fr} angle equal to 20~degrees) the polarimetric information is lost, and the resulting image is all shown in the same green hue, with its brightness defined by the span (backscactered power).
+
+A summary of the results of a simple correction approach for dual-pol data, using real measurements of \acs{tec}, and the expected impact of \acs{fr} FR for ROSE-L were described in Chapter~6 of \citep{Hajnsek2019}.
+Assuming certain knowledge on the scene (land cover and scattering properties), which can be obtained from other quad-pol L-band images of other sensors (e.g. ALOS-PALSAR and NISAR), and by using an external measure of \acs{tec}, it is possible to approximately correct the effect of FR on dual-pol data. These approaches  could be readily implemented, and they could be tested using quad-pol data as a reference. If no correction is applied, external \acs{tec} values could be used to estimate the \acs{fr} rotation angle and produce an auxiliary map with the expected impact of \acs{fr} (or a mask map if binarized). 

@@ -35,7 +35,8 @@ These evaluations will be supported by the use of very bright and isolated point
 \subsection{Theoretical models}
 \label{sec:cslc_models}
 
-\subsubsection{Co-registration and Geolocation accuracy}
+\subsubsection{Co-registration accuracy}
+\label{sec:cslc_coreg_geoloc}
 
 Both the co-registration and geolocation processes rely on accurately identifying the radar image coordinates corresponding to known ground positions, typically derived from a Digital Elevation Model (\acs{dem}). In the case of co-registration, the points of DEM must be projected onto both the reference (master) and secondary (slave) \acs{sar} images. These projections are used to derive the spatial transformation required to resample the slave image onto the master image grid.
 
@@ -45,7 +46,17 @@ In both cases, the geometric accuracy of the final product is fundamentally dete
 
 Uncertainties in orbit and \acs{dem} data introduce positional errors in both slant-range and azimuth directions. These errors can be analytically expressed as a function of satellite geometry and viewing parameters.
 
-In particular, inaccuracies in orbit knowledge affect the ability to precisely reconstruct the slant-range and azimuth positions of each acquisition. The standard deviation of the error in the slant-range position identification, denoted $\sigma_{dr}$, can be formulated as follows:
+In particular, inaccuracies in orbit knowledge affect the ability to precisely reconstruct the slant-range and azimuth positions of each acquisition. 
+A simplified sketch of the acquisition geometry is reported in Figure~\ref{fig:drg_from_dh}.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/cslc/dr_graph.png}
+\caption{Simple sketch of the acquisition geometry. An error in the elevation of the target \(h\) implies an additional offset in range with respect to the difference in the satellite position in the line-of-sight of the reference image \(B_{\parallel}\).}
+\label{fig:drg_from_dh}
+\end{figure}
+
+The standard deviation of the error in the slant-range position identification, denoted $\sigma_{dr}$, can be formulated as follows:
 
 \begin{equation}
 \sigma_{dr}^2 = \left(\frac{h}{R \sin\theta} \right)^2 \sigma_{B_{\perp}}^2 + \sigma_{B_{\parallel}}^2
@@ -63,6 +74,15 @@ This behavior is illustrated in Figure~\ref{fig:sigma_slant_range}, which shows 
 \includegraphics[width=0.9\textwidth]{Figures/cslc/sigma_slant_range.png}
 \caption{Standard deviation in slant-range position $\sigma_{dr}$ (in meters) for each pair $(\sigma_{B_{\perp}}, \sigma_{B_{\parallel}}) \in \left[0, 0.25\right] \times \left[0, 0.25\right]$, assuming fixed parameters: $h = 1000$ m, $R = 600000$ m, and $\theta = 40^\circ$.}
 \label{fig:sigma_slant_range}
+\end{figure}
+
+The error in azimuth position is determined by the zero-Doppler identification, which depends on the accuracy of the velocity vector. A simple sketch of the acquisition geometry is reported in Figure~\ref{fig:da_from_dv}.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.4\textwidth]{Figures/cslc/da_graph.png}
+\caption{Simple sketch of the acquisition geometry. An error in the velocity direction \(dv\) implies an error in the zero-Doppler determination.}
+\label{fig:da_from_dv}
 \end{figure}
 
 The standard deviation of the error in azimuth position estimation, denoted $\sigma_{da}$, is given by:
@@ -87,7 +107,7 @@ An error in the input \acs{dem} primarily affects the slant-range positioning, w
 
 \begin{equation}
 \sigma_{dr}^2 = \left( \frac{B_{\perp}}{R \sin\theta} \right)^2 \sigma_{h}^2
-\label{eq:slant_range_error_dem}
+\label{eq:eq_slant_range_error_dem}
 \end{equation}
 
 Here, $\sigma_{h}$ represents the standard deviation of the elevation error in the input \acs{dem}, and $B_{\perp}$ is the perpendicular component of the baseline between acquisitions. This term is linearly dependent on the height uncertainty, and thus highlights the sensitivity of slant-range accuracy to DEM quality.
@@ -163,9 +183,37 @@ This confirms that—even at C-band—accounting for atmospheric delays improves
 \caption{Co-registration errors using orbital, DEM, and ETAD information. The systematic range bias visible in Figure~\ref{fig:delta_coreg_before_etad} is largely corrected. The azimuth alignment remains stable in both cases.}
 \label{fig:delta_coreg_after_etad}
 \end{figure}
+In the Co-registration, the following parameters have been used:
+\begin{itemize}
+    \item warp\_ov\_fact, number of samples used to generate the sinc function: 100000
+    \item warp\_kernel\_shape, shape of the interpolation kernel (height, width): [11,11]
+    \item warp\_kaiser\_beta, beta parameter for the Kaiser window used to weight the sinc function: 6
+\end{itemize}
 
+\subsubsection{Absolute geolocation accuracy}
+\label{sec:gslc_absolute_geolocation_accuracy}
+
+In order to evaluate the absolute geolocation accuracy of the projected product (\acs{gslc}), the following elements must be considered: the vertical and horizontal accuracy of the \acs{dem}, and the accuracy in determining the range and azimuth coordinates in the \acs{slc} images. The relationship linking geolocation accuracy with input data accuracy, in the zero-Doppler plane, can be explained starting from the acquisition geometry sketch shown in Figure~\ref{fig:gslc_geolocation_accuracy}.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/cslc/geolocation_accuracy.png}
+\caption{Simplified sketch of the acquisition geometry of a single SAR image in the zero-Doppler plane. The localization error of a ground point results from the combined uncertainty in the slant-range position and the \acs{dem} surface.}
+\label{fig:gslc_geolocation_accuracy}
+\end{figure}
+
+The area where the point can be geolocated is constrained by the error in slant-range position (red dashed lines) and the error in elevation (green dashed lines).  
+Let $\alpha$ be the local slope, $\theta_i$ the local incidence angle, $\sigma^{DEM}_x$ and $\sigma^{DEM}_h$ the horizontal and vertical accuracy of the input \acs{dem}, and $\sigma_{dr}$ the slant-range accuracy of the input \acs{slc}. The final error in the $x$ coordinate is given by:
+
+\begin{equation}
+\sigma_{dx}^2 = \frac{\sigma^2_h}{\tan^2 \theta_i} + \frac{\sigma^2_{dr}}{\sin^2 \theta_i} = \frac{\left(\sigma^{DEM^2}_x \tan^2 \alpha + \sigma^{DEM^2}_h\right)}{\tan^2 \theta_i} + \frac{\sigma^2_{dr}}{\sin^2 \theta_i}
+\label{eq:gslc_dx_accuracy}
+\end{equation}
+
+When ETAD corrections are applied, the error in slant-range position is reduced to a few centimeters, both in terms of bias and standard deviation. Therefore, the second term (slant-range) in Equation~\ref{eq:gslc_dx_accuracy} becomes negligible compared to the first term (\acs{dem}), which is typically one order of magnitude larger. Without ETAD corrections, both sources of error are comparable and typically on the order of few meters.
 
 \subsubsection{Radiometric quality}
+\label{sec:cslc_radiometric_quality}
 
 The evaluation of radiometric fidelity for the \acs{cslc} product is theoretically grounded in the analysis of key image quality indicators, namely Spatial Resolution, Peak Side-Lobe Ratio (\acs{pslr}), and Integrated Side-Lobe Ratio (\acs{islr}). These metrics are derived from the impulse response of point scatterers and provide insight into the integrity of the SAR signal following resampling.
 
@@ -173,7 +221,7 @@ In the generation of \acs{cslc} products, co-registration is achieved by interpo
 
 Theoretically, such an interpolation strategy is expected to introduce very limited radiometric degradation. Provided the interpolation kernel is sufficiently long and well-parameterized, the resulting \acs{cslc} product should retain the spatial and radiometric quality of the input \acs{slc} data with negligible impact.
 
-This expectation is supported by standard SAR signal processing literature, which demonstrates that sinc interpolation with appropriate windowing results in minimal loss of resolution and side-lobe performance \cite{Cumming2005, Moreira2013, Soumekh1999}. Accordingly, any deviations observed in practice are more likely attributable to implementation or data-specific effects rather than inherent limitations of the resampling approach. 
+This expectation is supported by standard SAR signal processing literature, which demonstrates that sinc interpolation with appropriate windowing results in minimal loss of resolution and side-lobe performance \cite{Cumming2005}, \cite{Moreira2013}, \cite{Soumekh1999}. Accordingly, any deviations observed in practice are more likely attributable to implementation or data-specific effects rather than inherent limitations of the resampling approach. 
 
 To assess the impact of the co-registration process on radiometric quality, the differences in Integrated Side-Lobe Ratio (\acs{islr}) and Peak Side-Lobe Ratio (\acs{pslr}) between co-registered \acs{slc} products (\acs{cslc}) and their original \acs{slc} counterparts were computed. These differences are visualized in Figures~\ref{fig:PSLR_comparison} and~\ref{fig:ISLR_comparison}, using a comprehensive set of Corner Reflectors (\acs{cr}s) with Radar Cross Sections exceeding 35 dBsm. 
 
@@ -206,6 +254,13 @@ The plots confirm that spatial resolution remains stable across all analyzed sce
 \includegraphics[width=0.9\textwidth]{Figures/cslc/spatial_resolution_comparison.png}
 \caption{Difference in spatial resolution (in metres) between the co-registered \acs{slc} product (\acs{cslc}) and the original \acs{slc}. The left panel shows the difference in slant-range resolution, and the right panel in azimuth resolution. The x-axes report the original spatial resolution of the \acs{slc} product in each direction. Each point corresponds to a Corner Reflector with \acs{rcs} greater than 35 dBsm. As in previous figures, dots of the same color indicate \acs{cr}s extracted from the same image, while color changes correspond to different input \acs{slc} scenes.}
 \label{fig:spatial_resolution_comparison}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{Figures/cslc/spatial_resolution_comparison_relative.png}
+\caption{Relative difference in spatial resolution (percentage with respect to the satellite resolution) between the co-registered \acs{slc} product (\acs{cslc}) and the original \acs{slc}. The left panel shows the difference in slant-range resolution, and the right panel in azimuth resolution. The x-axes report the original spatial resolution of the \acs{slc} product in each direction. Each point corresponds to a Corner Reflector with \acs{rcs} greater than 35 dBsm. As in previous figures, dots of the same color indicate \acs{cr}s extracted from the same image, while color changes correspond to different input \acs{slc} scenes.}
+\label{fig:spatial_resolution_comparison_relative}
 \end{figure}
 
 
@@ -283,7 +338,7 @@ Geocoding performance is highly sensitive to the chosen ground posting. For exam
 In operational production systems the co-registration and geocoding workflows are executed on the same high-performance nodes: the \acs{dem} projection is performed once and reused by both tasks, followed by either the slave-to-master warp (co-registration) or the direct ground resampling (geocoding).  This strategy maximizes cache reuse, minimizes repeated DEM access, and yields balanced throughput for large-scale \acs{ard} production.
 
 \noindent%
-A number of additional processing blocks—such as ingesting \acs{etad} timing layers, evaluating external ionospheric models, or applying solid-Earth-tide corrections—are also executed within the co-registration and geocoding chains; however, these tasks involve only per-pixel table look-ups or simple arithmetic and are computationally negligible compared with the DEM projection, mesh interpolation, and sinc–Kaiser resampling steps detailed above.
+A number of additional processing blocks—such as ingesting timing and solid-Earth-tide \acs{etad} correction layers, and evaluating external ionospheric models—are also executed within the co-registration and geocoding chains; however, these tasks involve only per-pixel table look-ups or simple arithmetic and are computationally negligible compared with the DEM projection, mesh interpolation, and sinc–Kaiser resampling steps detailed above.
 
 \subsection{Criticalities and weakness}
 \label{sec:cslc_criticalities}
@@ -295,10 +350,12 @@ Precise \acs{etad} products are typically released a few days after acquisition 
 Nevertheless, theoretical error budgets and extensive empirical tests show that—even without \acs{etad}—the residual mis-registration remains below the threshold required for conventional interferometric applications (e.g.\ interferogram and coherence generation, DInSAR time-series).  
 In practice, a geometry-only \acs{cslc} stack built from Sentinel-1 data based on a virtual reference image (no real reference is needed), satisfies most operational needs.
 
-\subsubsection{\acs{rosel} (L-band)}  
+\subsubsection{\acs{rosel} (L-band)}
+\label{sec:cslc_criticalities_rosel}
+
 For L-band, atmospheric delays are an order of magnitude larger and cannot be ignored.  
-Using geometry alone—or even geometry supplemented with external models such as \acs{etad} or the JPL high-resolution TEC map—does not reliably meet the stringent accuracy required for interferometric coherence.  
-Consequently, ROSE-L co-registration must employ a real \acs{slc} master (a virtual master is inadequate) and refine the geometry with image-based cross-correlation or spectral-diversity measurements.  
+Using geometry alone—or even geometry supplemented with external models such as \acs{etad} or alternatively the JPL high-resolution TEC map, even if the last one is not publicly available—does not reliably meet the stringent accuracy required for interferometric coherence.  
+Consequently, ROSE-L co-registration must employ a real \acs{slc} master (a virtual master is inadequate) and refine the geometry with both image-based cross-correlation and spectral-diversity measurements.  
 This requirement introduces two operational elements to be considered:
 \begin{itemize}
 \item \textbf{Reference-image selection}. The master should exhibit high \acs{snr}, minimal ionospheric disturbance, and acquisition geometry representative of the stack.  
