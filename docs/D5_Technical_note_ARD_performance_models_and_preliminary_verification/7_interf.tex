@@ -95,3 +95,64 @@ At the moment, another computationally expensive step is geocoding. This cost is
 \label{sec:int_criticalities}
 
 Interferometric products inherit the criticalities and weaknesses of the \acs{cslc} product.
+
+\subsection{Data Generation}
+\label{sec:int_data_generation}
+The ISCE environment can be created using
+\begin{lstlisting}[language=bash]  
+conda install conda-forge::isce2
+\end{lstlisting}
+and the creation is performed by typing the following line:
+\begin{lstlisting}[language=bash]  
+yourEnv/lib/python3.11/site-packages/isce/applications/stripmapApp.py
+--steps yourPath/StripmapAppSAOCOM.xml 2$>&1$ | tee SAOCOM
+\end{lstlisting}
+Attention must be paid in substituting \emph{yourEnv} and \emph{yourPath} with the correct paths.
+
+Hereafter there is an example of \emph{StripmapAppSAOCOM.xml} file.
+
+\begin{lstlisting}[language=xml]  
+<?xml version="1.0" encoding="UTF-8"?>
+<insarApp>
+  <component name="insar">
+    <property name="sensor name">SAOCOM_SLC</property>
+    <component name="reference">
+        <catalog>/home/debora/tests_Naples/test_pre_master/
+            reference_SAOCOM.xml</catalog>
+    </component>
+    <component name="secondary">
+        <catalog>/home/debora/tests_Naples/test_pre_master/
+            secondary_SAOCOM.xml</catalog>
+    </component>
+    <property name="demFilename">
+        <value>/home/debora/tests_Naples/demLat_40_S42_Lon_W013
+            _W016.dem.wgs84</value>
+    </property>
+    <property name="do denseoffsets">True</property>
+    <property name="do split spectrum">True</property>
+    <property name="unwrapper name">snaphu</property>
+    <property name="do dispersive">True</property>
+    <property name="dispersive filter kernel x-size">800</property>
+    <property name="dispersive filter kernel y-size">800</property>
+    <property name="dispersive filter kernel sigma_x">100</property>
+    <property name="dispersive filter kernel sigma_y">100</property>
+    <property name="dispersive filter kernel rotation">0</property>
+    <property name="dispersive filter number of iterations">5</property>
+    <property name="dispersive filter mask type">connected_components</property>
+    <property name="dispersive filter coherence threshold">0.6</property>
+
+  </component>
+</insarApp>
+\end{lstlisting}
+
+The \emph{dem} file can be created by typing
+\begin{lstlisting}[language=bash]  
+yourEnv/lib/python3.11/site-packages/isce/applications/dem.py -a 
+stitch -b 39 42 13 16 -r -s 1 -c -o 
+demLat_39_S42_Lon_W013_W016.dem.wgs84 --dir /yourPath
+\end{lstlisting}
+using the coordinates of the area of interest.
+
+
+
+

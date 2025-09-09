@@ -84,24 +84,37 @@ The following table summarizes the measured processing times.
 Note that SARSEN simplifies some interpolation steps (e.g., by using a nearest-neighbour algorithm), which speeds up the software execution but results in products with lower performance.
 
 \paragraph{NRB statistics}
+\label{sec:nrb_stats}
 
 The difference between two \acs{nrb} products obtained from Sentinel-1 data in an Alpine region, one acquired in ascending geometry and the other in descending, was evaluated using three software tools: OPERA-ISCE3, B-Open S1-RP, and the original Small C-Code.
 
-Comparing OPERA-ISCE3 with B-Open S1-RP validates that both independent implementations of the area-based algorithm \cite{Shiroma2022}, despite differing languages and architectures, yield identical results. Including the Small C-Code, which implements the point-based algorithm \cite{Small2011}, allows us to assess the impact of using a different radiometric correction model. Figure~\ref{fig:nrbs_comparison} shows the root mean square difference (RMSD) between ascending and descending observations for each tool.
+Comparing OPERA-ISCE3 with B-Open S1-RP validates that both independent implementations of the area-based algorithm \cite{Shiroma2022}, despite differing languages and architectures, yield very consistent results. Including the Small C-Code, which implements the point-based algorithm \cite{Small2011}, allows us to assess the impact of using a different radiometric correction model. Figure~\ref{fig:nrbs_comparison} shows the root mean square difference (RMSD) between ascending and descending observations for each tool.
 
-OPERA-ISCE3 and B-Open S1-RP produce perfectly aligned NRB products, with coincident RMSD values across all different output product spacing. In these area-based implementations, the effective multilook factor is dictated by the ground resolution and the radar to ground mapping geometry. At 10 m ground sampling, the look count is approximately two over flat terrain and increases with slope, which lowers speckle. Thus, at native resolution, speckle dominates the differences; as the effective number of looks grows, either by coarser sampling or explicit multilooking, the RMSD falls and no systematic bias remains.
-
-By contrast, the point-based C-Code inherently averages over a larger number of looks even at 10 m resolution, yielding lower RMSD than the area-based tools. However, when the output is coarsened by spatial averaging, the point-based algorithm still exhibits a residual bias of about 1 dB relative to the area-based algorithm. This remaining offset could reflects the different compensation model employed by the point-based approach.
-
-\begin{figure}[htbp]
+\begin{figure}[h!]
   \centering
     \centering
-    \includegraphics[width=0.9\textwidth]{Figures/nrb/nrbs_comparison.jpg}
+\includegraphics[width=0.9\textwidth]{Figures/nrb/new_salzburg.png}
     \caption{Root mean square difference between ascending and descending NRB products
 over Salzburg, using COPDEM10m and multilooked resolutions from $0.3$ arcseconds up to $15$ arcseconds.}
     \label{fig:nrbs_comparison}
   \end{figure}
-  
+
+Figure~\ref{fig:nlooks_comparison} shows the histogram of the number of looks on the same area using \acs{s1rp}, OPERA-ISCE3 and the Small C-Code.
+
+\begin{figure}[h!]
+  \centering
+    \centering
+\includegraphics[width=0.7\textwidth]{Figures/nrb/nlooks_salzburg.png}
+    \caption{Number of looks comparison on the same area between \acs{s1rp}, Opera-ISCE3 and Small C-Code.}
+    \label{fig:nlooks_comparison}
+  \end{figure}
+
+As shown in Figure~\ref{fig:nlooks_comparison}, OPERA-ISCE3 and B-Open \acs{s1rp} produce perfectly aligned NRB products, with coincident RMSD values across all different output product spacing. In these area-based implementations, the effective multilook factor is dictated by the ground resolution and the radar to ground mapping geometry. In this example, at $0.3$ arcseconds ground sampling, the look count is approximately $1.12$ over flat terrain and increases with slope (which lowers speckle). Thus, at native resolution, speckle dominates the differences; as the effective number of looks grows (either by coarser sampling or explicit multilooking) the RMSD falls, and no systematic bias remains.
+
+By contrast, the point-based C-Code inherently averages over a larger number of looks even at $0.3$ arcseconds resolution, yielding lower RMSD than the area-based tools (specifically, a constant multilook along both directions is performed, so that the aspect ratio is "squarish": in this example, a constant multilook of 4 along slant range, and a multilook of 1 along azimuth, have been performed). Furthermore, the bilinear interpolation step (recommended option) further increases the number of looks, and this is evident by comparing this approach with the Nearest Neighbor's one, as shown in Figure~\ref{fig:nrbs_comparison}.
+
+However, when the output is coarsened by spatial averaging, the point-based algorithm still exhibits a residual bias of about 1 dB relative to the area-based algorithm. This remaining offset could reflects the different compensation model employed by the point-based approach.
+
 \subsubsection{Stability of radiometric response over varying acquisition conditions}
 \label{sec:nrb_stability_diff_geom}
 The generation of \acs{nrb} products involves two main steps:
@@ -186,31 +199,42 @@ At the native 10 m resolution, RMSD values range from 3.7 dB to 5.5 dB, dominate
 \end{figure}
 
 \subsection{Dependence on External Data}
+\label{sec:nrb_dependence_external}
 
 \subsubsection{Dependence on DEM Resolution and Quality}
 
 The accuracy of radiometric terrain correction in complex terrain relies critically on the resolution and vertical accuracy of the Digital Elevation Model (DEM). A high resolution DEM captures local slope variations and terrain morphology more precisely, enabling more accurate estimation of the local incidence angle and illuminated ground area. Conversely, coarser or error-prone DEMs smooth out fine scale slopes and introduce biases in the computed Area Normalization Factor (ANF), which in turn degrade the quality of the generated NRB product.
 
 \paragraph{Theoretical model}
+\label{sec:nrb_theoretical_model_dem}
 
-The ANF is defined as the projection of a slant range pixel’s ground footprint onto a plane orthogonal to the sensor’s line of sight. Let \(A\) be the true ground cell area and \(\theta_i\) the local incidence angle (the angle between the radar line of sight and the normal to the DEM facet). Then
+For a single DEM facet the ANF is defined as the projection of a slant range pixel’s ground footprint onto a plane orthogonal to the sensor’s line of sight. Let \(A\) be the true ground cell area and \(\theta_i\) the local incidence angle (the angle between the radar line of sight and the normal to the DEM facet). Then
 \begin{equation}
   \label{eq:ANF}
   \gamma_{\mathrm{ANF}} \;=\; A \,\cos\!\theta_i.
 \end{equation}
+
+Considering that multiple DEM facets can partially contribute to the same radar cell, let \(j\) be the index of the DEM facet, let \(l\) be the index of the radar cell, let \(J(l)\) the set of DEM facets covering the radar cell \(l\), let \(w_{j,l}\) the percentage of coverage of the radar cell \(l\) by the DEM facet \(j\), the ANF associate to the radar cell is given by:
+
+\begin{equation}
+  \label{eq:ANF_integral}
+  \gamma_{\mathrm{ANF}_l} = \sum_{j \in J(l)} A_j w_{j,l} \cos\!\theta_{i_j} \,\bigl(1 - \delta\theta_{i_j} \tan\!\theta_{i_j}\bigr).
+\end{equation}
+
+In order to simplify the equation and evaluate the error on the ANF it is possible to identify an upper-bound for the local incidence angle and the value of \(\delta\theta\).
+
 If the DEM has an elevation error \(\sigma_h\), this propagates into an incidence angle error \(\delta\theta_i\approx \sigma_h / dx\), where \(dx\) is the horizontal DEM sampling. A first order Taylor expansion of \eqref{eq:ANF} yields
 \begin{equation}
   \label{eq:ANF_first_ord}
-  \gamma_{\mathrm{ANF}} 
-  \;\approx\; A \cos\!\theta_i \,\bigl(1 - \delta\theta_i \tan\!\theta_i\bigr).
+  |\Delta \gamma_{\mathrm{ANF}_l}| \le \sum_{j \in J(l)} A_j w_{j,l} \cos\!\theta_{i_j} \,\bigl(\delta\theta_{\mathrm{max}} \tan\!\theta_{\mathrm{max}}\bigr) = \gamma_{\mathrm{ANF}_l} \bigl(\delta\theta_{\mathrm{max}} \tan\!\theta_{\mathrm{max}}\bigr).
 \end{equation}
 Thus, the variance of the ANF error due to DEM noise is
 \begin{equation}
   \sigma^2_{\gamma_{\mathrm{ANF}_h}}
   = \gamma^2_{\mathrm{ANF}}
-    \Bigl(\tfrac{\tan\!\theta_i}{dx}\Bigr)^{\!2}\,\sigma^2_h.
+    \Bigl(\tfrac{\tan\!\theta_{\mathrm{max}}}{dx}\Bigr)^{\!2}\,\sigma^2_h.
 \end{equation}
-This expression shows that DEM errors have the greatest impact where the slope (and hence \(\tan\theta_i\)) is large, and diminish as the DEM pixel size \(dx\) increases.
+This expression shows that DEM errors have the greatest impact where the slope (and hence \(\tan\theta_{\mathrm{max}}\)) is large, and diminish as the DEM pixel size \(dx\) increases.
 
 \paragraph{Test on real data}
 
@@ -235,30 +259,30 @@ This comparison highlights spatial patterns of ANF error but does not identify w
 The ANF also depends on the sensor’s precise position and attitude, which vary within the orbital tube. Even small deviations in the satellite’s orbit introduce errors in slant range geometry and thus in the computed incidence angle. Because Sentinel-1’s orbital tube is on the order of few hundreds of meters, the resulting ANF variations are relatively small, and in practice one can compute a single flattening layer for the nominal track and apply it to all scenes.
 
 \paragraph{Theoretical model}
+\label{sec:nrb_theoretical_model_orbital}
 
-If an across-track baseline error \(B_{\perp}\) shifts the sensor off the nominal orbit, the resulting incidence angle perturbation is \(\delta\theta_i \approx B_{\perp}/R\), where \(R\) is the slant range distance. Starting from \eqref{eq:ANF_first_ord}, the corresponding ANF variation is
+If an across-track baseline error \(B_{\perp}\) shifts the sensor off the nominal orbit, the resulting incidence angle perturbation is \(\delta\theta_i \approx B_{\perp}/R\), where \(R\) is the slant range distance. Starting from \eqref{eq:ANF_integral}, the corresponding ANF variation is
 \begin{equation}
   \label{eq:ANF_first_ord_B_perp}
-  \gamma_{\mathrm{ANF}}' 
-  = \gamma_{\mathrm{ANF}}\,
-    \bigl(1 + \tfrac{B_{\perp}}{R}\tan\!\theta_i\bigr),
+  \gamma_{\mathrm{ANF}_l}' 
+  = \sum_{j \in J(l)} A_j w_{j,l} \cos\!\theta_{i_j} \,\bigl(1 - \tfrac{B_{\perp}}{R} \tan\!\theta_{i_j}\bigr),
 \end{equation}
 and its variance becomes
 \begin{equation}
   \sigma^2_{\gamma_{\mathrm{ANF}_{B_\perp}}}
   = \gamma^2_{\mathrm{ANF}}
-    \Bigl(\tfrac{\tan\!\theta_i}{R}\Bigr)^{\!2}\,\sigma^2_{B_{\perp}}.
+    \Bigl(\tfrac{\tan\!\theta_{\mathrm{max}}}{R}\Bigr)^{\!2}\,\sigma^2_{B_{\perp}}.
 \end{equation}
 Since \(R/dx\gg1\), DEM induced ANF errors dominate over orbital tube errors. Equation~\eqref{eq:ANF_first_ord_B_perp} also shows that a simple scaling, dependent on the angle, of the nominal ANF compensates for baseline variations up to a few kilometers.
 
 \paragraph{Test on real data}
 
-We validated these predictions using a stack of SAOCOM acquisitions over Naples, where the interferometric perpendicular baseline spans several kilometers. For each orbit realization, we computed the ground geometry ANF (no SAR image content involved) and then derived its spatial standard deviation. Figure~\ref{fig:ANF_STD_NAPLES} plots \(\sigma_{\mathrm{ANF}}\) against local slope: as expected, the variability increases with slope. The corresponding mean ANF across orbits is shown in Figure~\ref{fig:ANF_MEAN_NAPLES}.
-
+We validated these predictions using a stack of SAOCOM acquisitions over Naples, where the interferometric perpendicular baseline spans several kilometers. For each orbit realization, we computed the ground geometry ANF (no SAR image content involved) and then derived its spatial standard deviation. Figure~\ref{fig:ANF_STD_NAPLES} plots the measured \(\sigma_{\mathrm{ANF}}\): as expected, a correlation with the terrain slope is clearly visible: the variability of the ANF increases with slope, but in any case its variation is very small. The corresponding mean ANF across orbits is shown in Figure~\ref{fig:ANF_MEAN_NAPLES}.
+Figure~\ref{fig:ANF_HISTOGRAM} shows a histogram of the maximum and minimum $ANF/ANF_{mean}$ ratios, which form two extremely narrow distributions, within $0.02$ dB.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{Figures/nrb/anf_std_NAPLES.png}
-  \caption{Standard deviation of ANF across multiple SAOCOM orbits over Naples, plotted against terrain slope. Variability increases with slope, in agreement with \eqref{eq:ANF_first_ord_B_perp}.}
+  \caption{Standard deviation of ANF across multiple SAOCOM orbits over Naples. The image clearly shows that the ANF Variability increases with slope, in agreement with \eqref{eq:ANF_first_ord_B_perp}.}
   \label{fig:ANF_STD_NAPLES}
 \end{figure}
 
@@ -268,6 +292,14 @@ We validated these predictions using a stack of SAOCOM acquisitions over Naples,
   \caption{Mean ANF across SAOCOM orbit realizations over Naples. The gradient reflects the cosine dependence in \eqref{eq:ANF}.}
   \label{fig:ANF_MEAN_NAPLES}
 \end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Figures/nrb/histogram_ANF.png}
+  \caption{Histogram of the maximum and minimum $ANF/ANF_{mean}$ ratio from SAOCOM orbit realizations over Naples. Both distributions are extremely narrow, within $0.02$ dB, indicating very low variance.}
+  \label{fig:ANF_HISTOGRAM}
+\end{figure}
+
 
 Figure~\ref{fig:ANF_VS_BAS} shows the spatially averaged relative ANF (\(\Delta\mathrm{ANF}\)) versus \(|B_{\perp}|\). The near linear trend confirms the analytic scaling in \eqref{eq:ANF_first_ord_B_perp}, and even for baselines of 1 km the relative ANF error remains below 0.1 dB. Finally, Figure~\ref{fig:ANF_VS_INC_ANGLE} presents a two-dimensional scatter plot of ANF variability against incidence angle, with the theoretical first order curve overlaid. The close match validates our analytic model and suggests that a single, precomputed slope flattening layer, properly rescaled, suffices for an entire satellite track.
 
@@ -373,3 +405,48 @@ Then, at $ n \times m $ resolution, the geocoded intensity can be expressed as:
 g^{n \times m}_p &= \frac{\sum_{r} v^{n \times m}_{pr} c_r}{\sum_{r} v^{n \times m}_{pr}} = \frac{\sum_{r}\sum_{q \in p}^{} v^{m}_{qr} c_r}{\sum_{r} \sum_{q \in p}^{} v^{m}_{qr}}=\frac{\sum_{q \in p}^{} \sum_{r}v^{m}_{qr} c_r}{\sum_{q \in p}^{}\sum_{r} v^{m}_{qr}}\\
 &= \frac{\sum_{q \in p}^{} \tilde{g}^m_q}{\sum_{q \in p}^{}n_q^m} = \frac{\sum_{q \in p}^{} {g}^m_q \cdot n^m_q}{\sum_{q \in p}^{}n_q^m}
 \end{align}
+
+\subsection{Processors configurations}
+\label{sec:nrb_proc_config}
+
+\subsubsection{S1-RP}
+The following parameters have been used:
+\begin{itemize}
+    \item chunks to be used during processing: \{"x": 1024, "y": 1024\}
+    \item spacing of the resampled DEM: \{"x": 0.3 / 3600, "y": 0.3 / 3600\}
+    \item apply\_flattening, whether to apply RTC flattening: True
+    \item crs of the resampled DEM: 4326
+    \item n\_jobs, number of workers to use: 16
+    \item job\_memory, memory allocated for each worker: "16GB"
+\end{itemize}
+    
+\subsubsection{Small C-Code}
+Given the zip of a file\\"S1A\_IW\_SLC\_\_1SDV\_20190424T172321\_20190424T172348\_026935\_0307CD\_55E0.SAFE":
+\begin{itemize}
+    \item unzip the set of input products:  unzip\_list *.zip 
+    \item Move each product into “superstructure” to hold the input product with intermediate and output RTC products: mvS1\_list *SAFE
+    \item create a backscatter mosaic:
+    \begin{itemize}
+        \item pushd SLC-IW-20190424\_172321-026935
+        \item topsmosBeta SLC-IW-20190424\_172321-026935 1
+        \item popd
+    \end{itemize}
+    \item Run script to create RTC products from a Sentinel-1 IW SLC product:\\ rtcS1slc\_list SLC-IW-20190424\_172321-026935\\
+    Line 22 of the rtcS1slc\_list script has been modified in:\\ rtcS1\_dhm\_slc \$f 1 \$UZHRTC\_DIR/DEM/dem 0.3s 1 1000
+\end{itemize}
+\subsubsection{OPERA-ISCE3}
+\begin{itemize}
+    \item create a new conda environment: conda create -n RTC -c conda-forge python=3.11.12
+    \item activate your conda environment: conda activate RTC
+    \item download the source code:\\ git clone -b v1.0.2 https://github.com/opera-adt/RTC.git
+    \item install isce3: conda install -c conda-forge isce3==0.15.0
+    \item download s1-reader:\\
+    git clone -b v0.2.4 https://github.com/isce-framework/s1-reader.git
+    \item install s1-reader:\\conda env update -n RTC -f s1-reader/environment.yaml\\
+    python -m pip install ./s1-reader
+    \item install RTC:
+    python -m pip install ./RTC
+    \item launch the software: rtc\_s1.py rtc\_s1\_.yaml
+\end{itemize}
+An example of the configuration file used is provided below:
+\lstinputlisting[language=yaml]{Figures/nrb/rtc_s1.yaml}
