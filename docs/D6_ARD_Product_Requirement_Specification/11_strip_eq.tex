@@ -22,8 +22,7 @@ The following input and auxiliary data are considered for product generation:
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
-    \acs{slc} or \acs{cslc} & L1 Single Look Complex image or co-registered L1 Single Look Complex image & M \\
-    \acs{slc}/acs{cslc} annotations & L1 Single Look Complex Images annotations. & M \\
+    \acs{slc} or \acs{cslc} & L1 Single Look Complex image or co-registered L1 Single Look Complex image and annotations & M \\
     Precise Orbits & \acs{slc} precise orbits or \acs{cslc} precise reference orbits. & M \\
 \end{longtblr}
 
@@ -43,9 +42,9 @@ The following tables list the main variables associated with the \acs{stripeq} p
 	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
 	\acs{slc}/\acs{cslc} & Single look complex or Co-registered Single look complex data: 
     
-    - the amplitude is in $\beta_{LUT}^0$ convention, obtained by the calibration step using beta-zero LUT from the \acs{slc}/acs{cslc} annotations;
+    - the amplitude is in \gls{beta0} convention, obtained by the calibration step using the Look-up-Table from the \acs{slc}/\acs{cslc} annotations;
     
-    - the phase corresponds to the interpolated and resampled \acs{slc}/acs{cslc} phase & polarization, acquisition\_date, azimuth\_time, range\_time & complex64 \\
+    - the phase corresponds to the interpolated and resampled \acs{slc}/\acs{cslc} phase & polarization, acquisition\_date, azimuth\_time, range\_time & complex64 \\
     phase\_model & Topographic phase model, in rad, removed from the original image phase & acquisition\_date, azimuth\_time, range\_time & float32 \\
 \end{longtblr}
 

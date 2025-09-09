@@ -8,7 +8,7 @@ Image co-registration refers to the process of aligning two or more images so th
 For the ROSE-L mission, the co-registered products are provided in radar geometry \cite{RD41}. This product, referred to as the \acs{cslc} (Co-Registered Single-Look Complex), plays a central role in the interferometric process. It incorporates corrections for geometric distortions (e.g., topographic effects), atmospheric delays (tropospheric and ionospheric), and other influencing factors. 
 
 The \acs{cslc} maintains the full fidelity of the original SAR data, introducing no distortions, and serves as a foundational product from which other \acs{ard} products can be derived.
-The amplitude of the \acs{cslc} corresponds to $\beta_{LUT}^0$, obtained by the calibration step using beta-zero LUT from the \acs{slc} annotations.
+The amplitude of the \acs{cslc} corresponds to \gls{beta0}, obtained by the calibration step using the Look-up-Table from the \acs{slc} annotations.
 The phase information in a \acs{cslc} is flattened with respect to the reference orbit and a Digital Elevation Model (DEM).
 
 To support analysis in map-projected (ground) geometry, \acs{slc} or \acs{cslc} products can be automatically resampled onto a common geographic grid (e.g., \acs{utm}, \acs{ups}). This transformation removes the topographic phase and mitigates artifacts related to atmospheric disturbances or orbital inaccuracies. This map-projected product is known as the \acs{gslc} (Geocoded Single-Look Complex). While \acs{gslc} simplifies user interaction, allowing direct visualisation in \acs{gis} tools and the integration of data from multiple satellites, it is inherently less rigorous and unsuitable for high-precision interferometric applications such as coherence analysis or phase unwrapping.
@@ -43,11 +43,11 @@ The following input and auxiliary data are considered for product generation:
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
-	\acs{slc} & L1 Single Look Complex Images & M \\
-    \acs{slc} annotations & L1 Single Look Complex Images annotations. & M \\
+	\acs{slc} & L1 Single Look Complex Images and annotations & M \\
+    Radar Reference Grid & Virtual or real radar reference grid & M \\
     \acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & M \\
-    Orbits & \acs{slc} STandard, restituted or precise orbits. & M \\
-    \acs{etad} & \acs{etad}-like products for atmospheric delay correction. & O \\
+    Orbits & Standard, restituted or precise orbits. & M \\
+    \acs{etad} & \acs{etad}-like products for atmospheric delay and timing corrections. & O \\
     \acs{tec} & External \acs{tec} data for delay correction & O \\
 \end{longtblr}
 
@@ -68,10 +68,11 @@ The following tables list the main variables associated with the \acs{cslc} and 
 	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
 	cslc & Co-registered single look complex data: 
     
-    - the amplitude is in $\beta_{LUT}^0$ convention, obtained by the calibration step using beta-zero LUT from the \acs{slc} annotations;
+    - the amplitude is in \gls{beta0} convention, obtained by the calibration step using the Look-up-Table from the \acs{slc} annotations;
     
     - the phase corresponds to the interpolated and resampled \acs{slc} flattened phase with respect to the reference orbit and the input Digital Elevation Model (DEM) & polarisation, acquisition\_date, azimuth\_time, range\_time & complex64 \\
     phase\_model & Topographic phase model, in rad, removed from the original image phase & acquisition\_date, azimuth\_time, range\_time & float32 \\
+    
 \end{longtblr}
 
 \begin{longtblr}[
@@ -85,13 +86,15 @@ The following tables list the main variables associated with the \acs{cslc} and 
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
-	gslc & Projected \acs{slc} or \acs{cslc}, with module equal by default to beta0 or, optionally to gamma0, coefficient and phase equal to the \acs{slc} or \acs{cslc} & polarisation, acquisition\_date, x, y & complex32 \\
+	gslc & Projected \acs{slc} or \acs{cslc}, with module equal by default to \gls{beta0} or, optionally to \gls{gamma0}, coefficient and phase equal to the \acs{slc} or \acs{cslc} & polarisation, acquisition\_date, x, y & complex32 \\
     phase\_model & Projected topographic phase model, in rad, removed from the original image phase & acquisition\_date, azimuth\_time, range\_time & float32 \\
     local\_inc
     
-    \_angle & DEM-based local Incidence angle image [deg]. This variable is present only if the \acs{gslc} is provided in the gamma0 convention and is generated from an \acs{slc}. If the \acs{gslc} is derived from a \acs{cslc}, this variable will be null, and the reference\_inc\_angle metadata will be present & x, y & float32 \\
-    anf & Optional variable: area normalisation factor or local contributing area, used to obtain the gamma0 coefficient. This variable is present only if the \acs{gslc} is provided in the gamma0 convention and is generated from a \acs{slc}. If the \acs{gslc} is derived from a \acs{cslc}, this variable will be null, and the reference\_anf metadata will be present & x, y & float32 \\
+    \_angle & DEM-based local Incidence angle image [deg]. This variable is present only if the \acs{gslc} is provided in the \gls{gamma0} convention and is generated from an \acs{slc}. If the \acs{gslc} is derived from a \acs{cslc}, this variable will be null, and the reference\_inc\_angle metadata will be present & x, y & float32 \\
+    anf & Area normalisation factor or local contributing area, used to obtain the gamma0 coefficient. This variable is present only if the \acs{gslc} is provided in the \gls{gamma0} convention and is generated from a \acs{slc}. If the \acs{gslc} is derived from a \acs{cslc}, this variable will be null, and the reference\_anf metadata will be present & x, y & float32 \\
 \end{longtblr}
+
+Note that, for the \acs{gslc} the fields "anf" and "local\_inc\_angle" are always included: as variables for products directly derived from \acs{slc}, and as metadata for products derived from \acs{cslc}, with links to the corresponding static layer.
 
 The table below describes the dimensions/coordinates associated with the \acs{cslc} and \acs{gslc} main variables.
 
@@ -141,9 +144,14 @@ The following tables list the main metadata and per-pixel metadata associated wi
     etad\_file & ETAD file used for each image belonging to the CSLC stack. This is optional: it is included only if used; otherwise, it is null & - & string & \\ 
     etad\_azcorr & Extended Timing Annotation Data: azimuth time correction resampled onto the common grid of the reference geometry. This is optional: it is included only if used; otherwise, it is null & acquisition\_date, azimuth\_time, slant\_range\_time & float64 & \ding{51} \\
     etad\_rgcorr & Extended Timing Annotation Data: slant range time correction resampled onto the common grid of the reference geometry. This is optional: it is included only if used; otherwise, it is null & acquisition\_date, azimuth\_time, slant\_range\_time & float64 & \ding{51} \\
-    tec & Link to external \acs{tec} data, if used & - & string & \\ 
+    tec & Link to external \acs{tec} data, if used & - & string & \\
+    reference\_inc
+    
+    \_angle & Link to DEM-based local incidence angle map. & - & string & \\
+    reference\_anf & Link to reference area normalisation factor or local contributing area. & - & string & \\
     look\_vector & 3-D components radar unit look vector, in an Earth-Centred Earth-Fixed (\acs{ecef}) coordinate system. It consists of unit vectors from antenna to surface pixel. Only for reference geometry. &  (x, y) or (azimuth\_time, range\_time) & float64 & \ding{51} \\
     phase\_demod & Phase to be applied to demodulate each image belonging to the \acs{cslc} stack & acquisition\_date, azimuth\_time, slant\_range\_time & float32 & \ding{51} \\
+    sp\_side-band & Side-band used for the application of the split-spectrum technique. It is present only when the split-spectrum method is applied; otherwise, it is set to null. \\ 
     beta0 & LUT of the beta0 coefficients obtained from each input \acs{slc} annotation belonging to the \acs{cslc} stack & acquisition\_date, azimuth\_time, slant\_range\_time & float32 & \\
     gamma0 & LUT of the gamma0 coefficients obtained from each input \acs{slc} annotation belonging to the \acs{cslc} stack & acquisition\_date, azimuth\_time, slant\_range\_time & float32 & \\
     rcs & LUT of the Radar Cross Section (RCS) coefficients obtained from each input \acs{slc} annotation belonging to the \acs{cslc} stack & acquisition\_date, azimuth\_time, slant\_range\_time & float32 & \\
@@ -178,8 +186,8 @@ The following tables list the main metadata and per-pixel metadata associated wi
     etad\_file & Link to ETAD file. This is optional: it is included only if used; otherwise, it is null & - & string & \\ 
     reference\_inc
     
-    \_angle & Optional attribute: Link to DEM-based local incidence angle map. It is present only if the \acs{gslc} is generated from a \acs{cslc} & - & string & \\
-    reference\_anf & Optional attribute: link to reference area normalisation factor or local contributing area. It is present only if the \acs{gslc} is generated from a \acs{cslc} & - & string & \\
+    \_angle & Link to DEM-based local incidence angle map. It is present only if the \acs{gslc} is generated from a \acs{cslc} & - & string & \\
+    reference\_anf & Link to reference area normalisation factor or local contributing area. It is present only if the \acs{gslc} is generated from a \acs{cslc} & - & string & \\
     look\_vector & 3-D components radar unit look vector, in an Earth-Centred Earth-Fixed (\acs{ecef}) coordinate system. It consists of unit vectors from antenna to surface pixel. Only for reference geometry. &  (x, y) or (azimuth\_time, range\_time) & float64 & \ding{51} \\
     mask & Mask containing, for each ground cell, the following information:
     
@@ -190,11 +198,11 @@ The following tables list the main metadata and per-pixel metadata associated wi
      - 2: shadow
     
      - 3: undefined & x, y & byte & \ding{51} \\
-    nlooks & Number of equivalent looks for the gamma flattening. Present if the \acs{gslc} amplitude is in gamma0 convention & x, y & float32 & \ding{51} \\
+    nlooks & Number of equivalent looks for the gamma flattening. Present if the \acs{gslc} amplitude is in \gls{gamma0} convention & x, y & float32 & \ding{51} \\
     geometric
     
     \_accuracy
-    & Expected geometric accuracy, including eastern and northern geometric accuracy bias and standard deviation & - & dictionary & \\ 
+    & Expected geometric accuracy, including eastern and northern geometric accuracy bias and standard deviation. The measures will be performed on a validation dataset and periodically updated. & - & dictionary & \\ 
     east\_geom
     
     \_bias & Expected eastern geometric bias & - & float32 & \\
@@ -265,7 +273,10 @@ The table below describes the dimensions/coordinates associated with the \acs{cs
 	
 \end{longtblr}
 
-For the \acs{cslc} product, it is planned to use the same reference radar grid and the same slicing for the ROSE-L and Sentinel-1 missions, to ensure interoperability between the products generated with the data of both missions.
+The ideal solution to ensure interoperability between the ROSE-L and Sentinel-1 Copernicus missions would be to adopt both a common slicing approach and a shared reference radar grid.
+While the former is unfeasible—since slicing is determined by burst segmentation—the latter could still be explored.
+Given that both missions share the same orbit, it is possible to define a common virtual radar grid, with spacing determined by the higher-resolution sensor. This would allow data from the different sensors to be linked using the coordinates of the reference virtual grid.
+
 
 \subsection{Product Requirements}
 \label{sec:cslc_requirements}
@@ -295,9 +306,9 @@ The accuracy requirements reported in the following tables are intended to be ev
 
 \textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
 
-PSLR degradation (dB) & Degradation of peak sidelobe level relative to mainlobe peak in both range and azimuth directions & $\leq 0.5$~dB \\
+PSLR degradation (dB) & Standard deviation (1-$\sigma$) of degradation of peak sidelobe level relative to mainlobe peak in both range and azimuth directions & $\leq 0.1$~dB \\
 
-ISLR degradation (dB) & Degradation of total sidelobe energy relative to mainlobe energy in both range and azimuth directions & $\leq 0.5$~dB \\
+ISLR degradation (dB) & Standard deviation (1-$\sigma$) of degradation of total sidelobe energy relative to mainlobe energy in both range and azimuth directions & $\leq 0.1$~dB \\
 
 Resolution degradation (\%) & Standard deviation (1-$\sigma$) of resolution decreasing expressed as fraction of original resolution in both range and azimuth directions & $\leq 1\%$ \\
 
@@ -311,9 +322,9 @@ Regarding the co-registration errors in both azimuth and range directions, the a
     \item Model-driven + atmospheric correction. In addition to precise orbital information, this approach assumes the availability of state-of-the-art atmospheric correction models (e.g., \acs{etad}, JHR GIM), which are used to mitigate the impact of atmospheric propagation effects.
     \item Data-driven. This approach includes fine co-registration techniques based on cross-correlation methods, as well as azimuth correction strategies such as Enhanced Spectral Diversity (\acs{esd}), which exploits the spectral diversity in the overlap areas of consecutive bursts to estimate residual azimuth co-registration errors.
 \end{itemize}
-To provide a clear overview of the co-registration accuracy requirements under different processing assumptions, the expected performance thresholds are summarised separately for the C-band and L-band sensors. Due to the distinct propagation characteristics and to the sensitivity to atmospheric effects associated with each frequency band, the accuracy requirements differ accordingly. The following tables report the maximum acceptable residual errors in azimuth and range directions for each band, considering various co-registration strategies, including model-driven approaches (with and without atmospheric correction) and data-driven methods. 
+To provide a clear overview of the co-registration accuracy requirements under different processing assumptions, the expected performance thresholds are summarized separately for the C-band and L-band sensors. Due to the distinct propagation characteristics and to the sensitivity to atmospheric effects associated with each frequency band, the accuracy requirements differ accordingly. The following tables report the maximum acceptable residual errors in azimuth and range directions for each band, considering various co-registration strategies, including model driven approaches (with and without atmospheric correction) and data-driven methods. 
 
-All accuracy values are expressed as fractions of the nominal resolution in the corresponding dimension, providing a normalized reference for evaluating the effectiveness of the co-registration process.
+All accuracy values are expressed as fractions of the nominal resolution in the corresponding dimension, providing a normalized reference for evaluating the effectiveness of the co-registration process. The accuracy thresholds are evaluated at 1-$\sigma$.
 
 
 \begin{longtblr}[
@@ -385,7 +396,7 @@ For main variables and per-pixel metadata (if applicable): Schematic table with 
 \subsubsection{Timeliness}
 \label{sec:cslc_timeliness}
 
-In principle \acs{cslc} product could be generated as soon as L1 data are available. The quality and the accuracy of the co-registration process strongly depends on the availability of precise orbital data, models of the atmosphere (troposphere and ionosphere). One could foresee multiple releases of the product, with successive corrections according to the availability of precise orbits and external models. A first release would be within a few hours after the acquisition, for time-critical applications. A first revision including precise orbital data could be provided after few day, and the final release could be delivered whenever numerical weather reanalysis data, ETAD and accurate ionospheric models are available.
+In principle \acs{cslc} product could be generated as soon as L1 data are available. The quality and the accuracy of the co-registration process strongly depends on the availability of precise orbital data, models of the atmosphere (troposphere and ionosphere). One could foresee multiple releases of the product, with successive corrections according to the availability of precise orbits and external models. A first release would be within a few hours after the acquisition, for time-critical applications. A first revision including precise orbital data could be provided after few days, and the final release could be delivered whenever numerical weather reanalysis data, ETAD and accurate ionospheric models are available.
 
  In this approach the only criticality is on the availability of precise orbital data (in general available in about one week). \autoref{fig:cslc_basic} shows the flowchart for the generation of \acs{cslc} product.
 

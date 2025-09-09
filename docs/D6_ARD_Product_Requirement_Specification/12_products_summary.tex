@@ -1,0 +1,614 @@
+\section{Summary of the Default ARDs Main Characteristics}
+\label{sec:prod_summ}
+
+The generation of the proposed products can follow different processing flows, depending on the availability of the input data described in the previous sections, the mission (e.g., Sentinel-1 or ROSE-L), the desired timeliness, the application domain, and other factors.
+
+In this section, the default characteristics of each product are provided, including sampling, applied corrections, input data type, and other product-specific properties.
+
+\subsection{CSLC}
+\label{sec:cslc_summ}
+
+\begin{longtblr}[
+  label = {tab:sum_cslc},
+  entry = none,
+  caption = {Main characteristics of the default \acs{cslc} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Radar Reference Grid & & Virtual & Virtual \\
+
+Geometric alignment & { + COP\acs{dem} 30 m \\
+                        + Precise Orbits } & \ding{51} & \ding{51} \\
+
+Topographic phase correction & COP\acs{dem} 30 m & \ding{51} & \ding{51} \\
+
+Atmospheric delay \& timing corrections & \acs{etad} & \ding{51} & \ding{51} \\
+
+ESD & Geometric-corrected \acs{cslc}s (GC-CSLC) & - & \ding{51} \\
+
+ICC & Azimuth-shift-corrected GC-\acs{cslc}s (ASGC-CSLC) & - & \ding{51} \\
+
+Split-Spectrum & { + Range-Azimuth-shift-corrected GC-\acs{cslc}s (RASGC-CSLC) \\
+                   + Reference ASGC-\acs{cslc} }& - & \ding{51} \\
+
+\SetCell[r=2]{l}Spacing
+  & \SetCell[r=2]{l}
+  & \SetCell[r=2,c=2]{c}
+    {Defined by the Radar Reference Grid:\\
+     minimum between Sentinel-1\\
+     and ROSE-L spacing} & \\
+& & & \\
+
+Multilooking &  & - &  - \\
+
+Denoising &  & - &  - \\
+
+Slicing &  & S-1 burst &  ROSE-L burst \\
+
+Reference System &  & Azimuth/Slant-range &  Azimuth/Slant-range \\
+
+\end{longtblr}
+
+Note that the inputs for \acs{esd}, \acs{icc}, and split-spectrum all originate from a progressively refined form of the \acs{cslc} product. Specifically, ESD applies azimuth corrections starting from the \acs{cslc} obtained through geometric coregistration (referred to as GC-CSLC in the previous table). \acs{icc} then applies range corrections to the output of \acs{esd} (referred to as ASGC-CSLC), and finally, the split-spectrum technique provides the ultimate refinement, applied to the output of \acs{icc} (referred to as RASGC-CSLC in the previous table).
+
+\subsection{GSLC}
+\label{sec:gslc_summ}
+
+The default \acs{gslc} product is generated from the \acs{cslc}, from which it inherits the main characteristics defined in \ref{sec:cslc_summ}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_gslc},
+  entry = none,
+  caption = {Main characteristics of the default \acs{gslc} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Amplitude convention & \acs{cslc} & beta0 & beta0 \\
+
+Phase & Point-based interpolation from \acs{cslc} phase & \ding{51} & \ding{51} \\
+
+Spacing & & {Comparable with the \\
+            \acs{cslc} ground spacing} & 
+            {Comparable with the \\
+            \acs{cslc} ground spacing} \\
+
+Multilooking &  & - &  - \\
+
+Slicing &  & S-1 projected burst &  ROSE-L projected burst \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{NRB}
+\label{sec:nrb_summ}
+
+The default \acs{nrb} product is generated from the \acs{cslc}. No timing or atmospheric corrections are applied during \acs{nrb} generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_nrb},
+  entry = none,
+  caption = {Main characteristics of the default \acs{nrb} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Amplitude convention &  & gamma0 & gamma0 \\
+
+\acs{rtc} & { + \acs{cslc} \\
+              + COP\acs{dem} 30} m & \ding{51} & \ding{51} \\
+
+Shiroma for \acs{rtc} & & \ding{51} & \ding{51} \\
+
+\acs{anf} & & \ding{51} & \ding{51} \\
+
+Local Incidence Angle & & \ding{51} & \ding{51} \\
+
+Spacing & & 10 m x 10 m & 10 m x 10 m \\
+
+Multilooking &  & - &  - \\
+
+Slicing &  & US-\acs{mgrs} 100 km x 100 km &  US-\acs{mgrs} 100 km x 100 km \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{POL}
+\label{sec:pol_summ}
+
+The default \acs{pol} product is generated from the \acs{cslc}. No timing or atmospheric corrections are applied during \acs{pol} generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+Multi-looking is carried out for a proper covariance matrix estimation, but the number of looks (and hence the estimation window size) is defined by the user. A typical multi-look size is provided in \autoref{tab:sum_pol}. As the multi-looking degrades the spatial resolution, the output pixel spacing can be enlarged, e.g. to 20 m x 20 m or 30 m x 30 m, to reduce the file size of the product.
+
+\begin{longtblr}[
+  label = {tab:sum_pol},
+  entry = none,
+  caption = {Main characteristics of the default \acs{pol} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Amplitude convention &  & gamma0 & gamma0 \\
+
+\acs{rtc} & { + \acs{cslc} \\
+              + COP\acs{dem} 30} m & \ding{51} & \ding{51} \\
+
+Shiroma for \acs{rtc} & & \ding{51} & \ding{51} \\
+
+\acs{anf} & & \ding{51} & \ding{51} \\
+
+Local Incidence Angle & & \ding{51} & \ding{51} \\
+
+Spacing & & 10 m x 10 m & 10 m x 10 m \\
+
+Multilooking (az x rg) &  & 3 x 15 & 5 x 10 \\
+
+Slicing &  & US-\acs{mgrs} 100 km x 100 km &  US-\acs{mgrs} 100 km x 100 km \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+
+\subsection{ORB}
+\label{sec:orb_summ}
+
+The default \acs{orb} product is generated from the \acs{cslc}. No timing or atmospheric corrections are applied during \acs{orb} generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+A typical multi-look size is provided in \autoref{tab:sum_orb}. As the multi-looking degrades the spatial resolution, the output pixel spacing can be enlarged, e.g. to 300 m x 300 m, to reduce the file size of the product.
+
+\begin{longtblr}[
+  label = {tab:sum_orb},
+  entry = none,
+  caption = {Main characteristics of the default \acs{orb} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+Intensity convention & CSLC & sigma0 & sigma0 \\
+\acs{rtc} & { + \acs{cslc} \\
+              + COP\acs{dem} 30} m & \ding{51} & \ding{51} \\
+
+Shiroma for \acs{rtc} & & \ding{51} & \ding{51} \\
+
+\acs{anf} & & \ding{51} & \ding{51} \\
+Local Incidence Angle & & \ding{51} & \ding{51} \\
+Spacing & & 10 m x 10 m & 10 m x 10 m \\
+
+Multilooking (az x rg) &  & 300 m x 300 m & 300 m x 300 m \\
+
+Slicing &  & US-\acs{mgrs} 100 km x 100 km &  US-\acs{mgrs} 100 km x 100 km \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{PRO/PAO}
+\label{sec:pro_pao_summ}
+
+The default \acs{pro} \& \acs{pao} products are generated from the \acs{cslc}. No timing or atmospheric corrections are applied during \acs{pro} \& \acs{pao} generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_pro_pao},
+  entry = none,
+  caption = {Main characteristics of the default \acs{pro} \& \acs{pao} products.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Estimated Offsets & Pairs of \acs{cslc} & Along slant-range and azimuth &  Along slant-range and azimuth \\
+
+Pixel offset algorithm  &  & Amplitude CC &  Amplitude CC \\
+
+Spacing & & ~50 m x ~50 m & ~50 m x ~50 m \\
+
+Slicing &  & S-1 burst &  ROSE-L burst \\
+
+Reference System &  & Azimuth/Slant-range &  Azimuth/Slant-range \\
+
+\end{longtblr}
+
+\subsection{GPRO/GPAO}
+\label{sec:gpro_gpao_summ}
+
+The default \acs{gpro} \& \acs{gpao} are the geocoded \acs{gpro} \& \acs{gpao} products, from which they inherit the main characteristics defined in \ref{sec:pro_pao_summ}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_gpro_gpao},
+  entry = none,
+  caption = {Main characteristics of the default \acs{gpro} \& \acs{gpao} products.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Estimated Offsets & Pairs of \acs{cslc} & Along slant-range and azimuth &  Along slant-range and azimuth \\
+
+Ground Pojection  & { + COP\acs{dem} 30m \\
+                      + Precise Reference Orbit}& \ding{51} & \ding{51} \\
+
+Spacing & & 50 m x 50 m & 50 m x 50 m \\
+
+Slicing &  & S-1 projected burst &  ROSE-L projected burst \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{INT/COHE/UNW}
+\label{sec:int_summ}
+
+The default \acs{int}, \acs{cohe} and \acs{unw} products are generated from the \acs{cslc}. No timing or atmospheric corrections are applied during the  \acs{int}, \acs{cohe} and \acs{unw} product generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_int},
+  entry = none,
+  caption = {Main characteristics of the default \acs{int}, \acs{cohe} and \acs{unw} products.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Wrapped interferogram & Pairs of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Interferometric coherence & Pairs of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Unwrapped interferogram & { + Wrapped interferogram \\
+                            + Interferometric coherence } & \ding{51} &  \ding{51} \\
+
+Spacing & & ~50 m x ~50 m & ~50 m x ~50 m \\
+
+Slicing &  & S-1 burst &  ROSE-L burst \\
+
+Reference System &  & Azimuth/Slant-range &  Azimuth/Slant-range \\
+
+\end{longtblr}
+
+\subsection{GINT/GCOHE/GUNW}
+\label{sec:gint_summ}
+
+The default \acs{gint}, \acs{gcohe} and \acs{gunw} are the geocoded \acs{int}, \acs{cohe} and \acs{unw} products, respectively, from which they inherit the main characteristics defined in \ref{sec:int_summ}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_gpro_gpao},
+  entry = none,
+  caption = {Main characteristics of the default\acs{gint}, \acs{gcohe} and \acs{gunw} products.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Ground Projection  & { + COP\acs{dem} 30m \\
+                      + Precise Reference Orbit}& \ding{51} & \ding{51} \\
+
+Spacing & & 50 m x 50 m & 50 m x 50 m \\
+
+Slicing &  & S-1 projected burst &  ROSE-L projected burst \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+
+\subsection{\acs{cmlc}}
+\label{sec:cmlc_sum}
+
+The default \acs{cmlc} product is generated from the \acs{cslc}. No timing or atmospheric corrections are applied during \acs{cmlc} generation, as these are handled at the \acs{cslc} level. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_cmlc},
+  entry = none,
+  caption = {Main characteristics of the default \acs{cmlc} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Phase & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Long-term coherence & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Short-term coherence & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Spacing & & $\sim$50 m x 50 m & $\sim$50 m x 50 m \\
+
+Slicing &  & S-1 burst &  ROSE-L burst \\
+
+Reference System &  & Azimuth/Slant-range &  Azimuth/Slant-range \\
+
+\end{longtblr}
+
+\subsection{\acs{gmlc}}
+\label{sec:gmlc_summ}
+
+The default \acs{gmlc} is the geocoded \acs{cmlc} product, from which it inherits the main characteristics defined in \ref{sec:cmlc_sum}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_gmlc},
+  entry = none,
+  caption = {Main characteristics of the default \acs{gmlc} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Phase & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Long-term coherence & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+Short-term coherence & Stack of \acs{cslc} & \ding{51} &  \ding{51} \\
+
+
+Ground Projection  & { + COP\acs{dem} 30m \\
+                     + Precise Reference Orbit}& \ding{51} & \ding{51} \\
+
+Spacing & & 50 m x 50 m & 50 m x 50 m \\
+
+Slicing &  & S-1 projected burst &  ROSE-L projected burst \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{ENRB}
+\label{sec:enh_nrb_summ}
+
+The default \acs{enrb} is the version of the \acs{nrb} product, generated by applying specific filtering procedures to the input \acs{cslc}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_enrb},
+  entry = none,
+  caption = {Main characteristics of the default \acs{enrb} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Amplitude convention &  & gamma0 & gamma0 \\
+
+\acs{rtc} & { + \acs{cslc} \\
+              + COP\acs{dem} 30} m & \ding{51} & \ding{51} \\
+
+Shiroma for \acs{rtc} & & \ding{51} & \ding{51} \\
+
+Ghost Removal & & \ding{51} & \ding{51} \\
+
+Side-lobe suppression & & \ding{51} & \ding{51} \\
+
+\acs{anf} & & \ding{51} & \ding{51} \\
+
+Local Incidence Angle & & \ding{51} & \ding{51} \\
+
+Spacing & & 10 m x 10 m & 10 m x 10 m \\
+
+Multilooking &  & - &  - \\
+
+Slicing &  & US-\acs{mgrs} 100 km x 100 km &  US-\acs{mgrs} 100 km x 100 km \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{EORB}
+\label{sec:enh_orb_summ}
+
+The default \acs{eorb} is the version of the \acs{orb} product, generated by applying specific filtering procedures to the input \acs{cslc}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_eorb},
+  entry = none,
+  caption = {Main characteristics of the default \acs{eorb} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+ &  &  &  \\
+
+ &  &  &  \\
+
+ &  &  &  \\
+
+\end{longtblr}
+
+\subsection{GGM}
+\label{sec:ggm_summ}
+
+The default \acs{ggm} product is generated from the \acs{gpro} and \acs{gpao}. Below, only the product-specific main characteristics are reported.
+
+\begin{longtblr}[
+  label = {tab:sum_ggm},
+  entry = none,
+  caption = {Main characteristics of the default \acs{ggm} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Estimated Deformations & Pairs of \acs{gpro} and \acs{gpao} from ascending and descending geometries & Northward, Eastward and vertical deformations &  Northward, Eastward and vertical deformations \\
+
+Spacing & & 50 m x 50 m & 50 m x 50 m \\
+
+Slicing &  & US-\acs{mgrs} 100 km x 100 km &  US-\acs{mgrs} 100 km x 100 km \\
+
+Reference System &  & Cartographic: UTM/UPS &  Cartographic: UTM/UPS \\
+
+\end{longtblr}
+
+\subsection{Stripmap equivalent CSLC}
+\label{sec:ggm_summ}
+
+The default Stripmap-equivalent (\acs{stripeq}) \acs{cslc} image is a full-resolution SAR product that preserves the native resolution of the input acquisition. It stitches multiple bursts from wide-swath modes (e.g., TOPSAR, ScanSAR) into a single image while maintaining spatial consistency and phase continuity characteristic of Stripmap mode. The output retains all the information and main characteristics of the input \acs{cslc} (see also \ref{sec:cslc_summ}).
+
+\begin{longtblr}[
+  label = {tab:sum_strcslc},
+  entry = none,
+  caption = {Main characteristics of the default Stripmap-equivalent \acs{cslc} product.},
+]{
+  width   = \linewidth,
+  colspec = {X[l] X[l] X[c] X[c]},
+  colsep  = 2pt,
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+}
+
+\SetCell[r=2]{c}\textbf{Characteristic Item}
+  & \SetCell[r=2]{c}\textbf{Input Type}
+  & \SetCell[c=2]{c}\textbf{Mission} & \\
+& & \textbf{Sentinel-1} & \textbf{ROSE-L} \\
+
+Radar Reference Grid & & Virtual & Virtual \\
+
+Geometric alignment & { + COP\acs{dem} 30 m \\
+                        + Precise Orbits } & \ding{51} & \ding{51} \\
+
+Topographic phase correction & COP\acs{dem} 30 m & \ding{51} & \ding{51} \\
+
+Atmospheric delay \& timing corrections & \acs{etad} & \ding{51} & \ding{51} \\
+
+ESD & Geometric-corrected \acs{cslc}s (GC-CSLC) & - & \ding{51} \\
+
+ICC & Azimuth-shift-corrected GC-\acs{cslc}s (ASGC-CSLC) & - & \ding{51} \\
+
+Split-Spectrum & { + Range-Azimuth-shift-corrected GC-\acs{cslc}s (RASGC-CSLC) \\
+                   + Reference ASGC-\acs{cslc} }& - & \ding{51} \\
+
+\SetCell[r=2]{l}Spacing
+  & \SetCell[r=2]{l}
+  & \SetCell[r=2,c=2]{c}
+    {Defined by the Radar Reference Grid:\\
+     minimum between Sentinel-1\\
+     and ROSE-L spacing} & \\
+& & & \\
+
+Multilooking &  & - &  - \\
+
+Denoising &  & - &  - \\
+
+Slicing &  & S-1 product tile &  ROSE-L product tile \\
+
+Reference System &  & Azimuth/Slant-range &  Azimuth/Slant-range \\
+
+\end{longtblr}
+
+\end{longtblr}
