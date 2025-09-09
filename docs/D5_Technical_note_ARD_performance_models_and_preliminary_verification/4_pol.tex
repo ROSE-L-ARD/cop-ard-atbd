@@ -1,0 +1,177 @@
+\section{Polarimetric products (POL)}
+\label{sec:pol}
+
+The \acs{pol} \acs{ard} products considered in this project correspond to the polarimetric covariance matrix, which can be provided in radar coordinates (\acs{cov}) or in geographical coordinates (\acs{gcov}), i.e. after geocoding. The inputs required to generate these products correspond to individual \acs{slc} images or to previously generated \acs{cslc} products. In both cases, the processing required to compute each entry of the matrix is totally equivalent to what is done to produce \acs{nrb} data, so the reader is referred to \autoref{sec:nrb} for consulting the models and computational performance involved in such a product.
+
+Since the \acs{pol} products involve more than one input polarimetric channel, the extension of the processing from \acs{nrb} to \acs{pol} must comply with the following rules:
+\begin{itemize}
+    \item When the input data is in \acs{cslc} form, the same co-registration grid (offsets of the secondary images with respect to the primary image) and interpolation must have been applied to all polarimetric channels. The common rule consists in computing the co-registration grid using only one channel (usually a co-polar one, i.e. VV or HH), and then applying it to all channels available.
+    \item The same processing, i.e. the same algorithms, options and parameters (e.g. size of kernel), must be used for computing all entries of the matrix.
+    \item Any spatial filtering or multi-look should be applied in radar coordinates, i.e. before geocoding, for preserving all the polarimetric information.
+    \item The diagonal entries of the covariance matrix correspond to the backscattering coefficient of the individual polarimetric channels, and thus they are positive real numbers. However, the off-diagonal elements of the matrix are formed as products of the \acs{slc} values of different channels and, thus, they are complex values. Therefore, the implementation must take into account this difference in the type of data. 
+\end{itemize}
+
+In addition, the \acs{nrb} products are usually generated with a small equivalent number of looks (\acs{enl}) because they aim at preserving as much spatial resolution as possible. However, due to the higher dimensionality of the covariance matrix, the \acs{enl} required to properly estimate the covariance matrix is much larger than in the \acs{nrb} case. Because of that, an additional spatial filtering or multi-look is usually applied, hence changing the workflow with respect to a conventional \acs{nrb}. In fact, this is the main reason for providing also the \acs{cov} product, as the end user will be able to apply the spatial filtering required in radar coordinates. The \acs{cov} product will include a layer with a look-up table, or equivalent information, to geocode the result of the spatial filter, i.e. to transform it into a \acs{gcov} product, which is directly usable as an \acs{ard}.
+
+\subsection{Evaluation criteria}
+\label{sec:pol_criteria}
+
+Apart from the impact of the spatial filtering or multi-looking, the conversion from a \acs{slc} or \acs{cslc} product to a \acs{pol} product does not entail any difference with respect to the conversion to \acs{nrb}. In other words, the generation of a \acs{pol} product must be evaluated in the same way as the generation of \acs{nrb}.
+
+In order to stress the relevance of the equivalent number of looks (\acs{enl}) in the polarimetric case, which is more demanding than the single-pol case, in this section we illustrate the \acs{enl} provided by the different processing strategies, and its impact on polarimetric features derived from the resulting products.
+
+\autoref{fig:pol_enl} shows the empirical estimates of \acs{enl} for two processing approaches: without multi-looking or spatial filtering (denoted as Shiroma), and with multi-looking for different window sizes (azimuth $\times$ range). The estimation of ENL from the output image is computed using the following expression~\cite{lee_intensity_1994}:
+\begin{equation}
+\text{ENL} = \frac{\hat{I}^2}{\sigma_I^2}
+\end{equation}
+where $\hat{I}$ and $\sigma_I^2$ denote the mean and the variance, respectively, of an intensity image (i.e. backscattering coefficient).
+For this purpose, a homogeneous area on the scene is selected, which in this case corresponds to the sea.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/pol/pol_enl_vs_multilook.png}
+\caption{Equivalent number of looks (\acs{enl}) for two processing strategies: without multi-looking (denoted as Shiroma) and with multi-look for a set of window sizes (azimuth $\times$ range). Measurements are carried out with a dual-pol stripmap SAOCOM image over Naples (DSC pass, S4 beam) acquired on 28-02-2021. \acs{enl} is estimated empirically over a homogeneous area on the sea.}
+\label{fig:pol_enl}
+\end{figure}
+
+The values shown in \autoref{fig:pol_enl} demonstrate that, due to the typical oversampling of \acs{sar} images, the number of looks is much smaller than the number of samples employed to compute averages in the multi-looking. In addition, it must be noted that the \acs{enl} value provided without multi-look, i.e. using only the geocoding step defined in~\cite{Shiroma2022}, is just 3.5 over this flat area. The \acs{enl} value in slopes facing the radar is much smaller, hence compromising the statistical significance of measures derived from the polarimetric covariance matrix.  
+
+To assess the impact of the available \acs{enl} upon parameters derived from the \acs{pol} products, we show here the polarimetric entropy, which is widely used for scene characterisation and classification~\cite{Hajnsek2021}. 
+For dual-pol data, polarimetric entropy $H$ is defined as:
+\begin{equation}
+    H = - \sum_{i=1}^2 p_i \cdot \log_2 p_i
+\end{equation}
+where
+\begin{equation}
+    p_i = \frac{\lambda_i}{\lambda_1 + \lambda_2},
+\end{equation}
+and $\lambda_1$ and $\lambda_2$ are the two eigenvalues of the dual-pol covariance matrix. A low entropy (close to 0) denotes the presence of a dominant scattering mechanism, whereas a high value (close to 1) represents a non-defined polarimetric response from the scene.
+
+\autoref{fig:pol_entropy} shows the images of dual-pol entropy computed from the \acs{gcov} products pre-processed using Shiroma's approach and two different multi-look sizes. Entropy is generally low over the sea surface because its backscatter is dominated by a surface component, whereas it is very high over forested areas. Notably, there is a extremely high entropy zone in the lower left corner of the image, which corresponds to very calm water close to Ischia island. In this region the backscattering level is very close to the noise level, and hence the very high entropy. 
+
+\begin{figure}[ht!]
+\centering
+\begin{tabular}{cc}
+\includegraphics[width=0.35\textwidth]{Figures/pol/GCOV_LinearRGB_lowres.png}
+ & \includegraphics[width=0.5\textwidth]{Figures/pol/H_Shiroma.png}
+ \\
+(a) & (b) \\
+\includegraphics[width=0.5\textwidth]{Figures/pol/H_9x5.png}
+ & \includegraphics[width=0.5\textwidth]{Figures/pol/H_15x9.png}
+ \\
+(c) & (d)
+\end{tabular}
+\caption{Comparison of the dual-pol entropy computed for various processing options, using a dual-pol stripmap SAOCOM image over Naples (DSC pass, S4 beam) acquired on 28-02-2021. The RGB false colour composite is shown in (a). Images of entropy derived from the data pre-processed using: (b) Shiroma's approach, (c) 9x5 Multi-look, and (d) 15x9 Multi-look. }
+\label{fig:pol_entropy}
+\end{figure}
+
+The computation of entropy from the sampled covariance matrix is known to be underestimated, being the bias more pronounced for higher entropies and for lower values \acs{enl}~\cite{LopezMartinez2005}. As a result, the measured entropy in this scene when no multi-look is applied (\autoref{fig:pol_entropy}b, \acs{enl} = 3.5) is clearly lower than in the multi-look cases (\autoref{fig:pol_entropy}c and \autoref{fig:pol_entropy}d).
+
+\autoref{tab:pol_enl_H} shows the mean entropy measured at different locations of the scene for the same three processing options used in \autoref{fig:pol_entropy}. The small \acs{enl} provided by the approach without multi-look has a clear impact on the estimation of entropy when it is very high, namely over calm water and in forest areas, but also in an agricultural zone characterised by a moderately low entropy. 
+
+\begin{longtblr}[
+	label = tab:pol_enl_H,
+	entry = none,
+	caption = {Mean dual-pol entropy for different processing cases at various land cover areas},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,20]Q[c,20]Q[c,20]Q[c,20]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Zone}   & \textbf{Shiroma}   & \textbf{9x5 Multi-look} & \textbf{15x9 Multi-look} \\
+	Sea & 0.23 & 0.26 & 0.26 \\
+    Calm water & 0.74 & 0.92 & 0.95 \\
+    Forest & 0.68 & 0.81 & 0.83 \\
+    Urban & 0.29 & 0.30 & 0.30 \\
+    Crops & 0.40 & 0.47 & 0.48 \\
+\end{longtblr}
+
+
+
+%Impact of asc/dsc and order of steps.
+
+
+\subsection{Theoretical models}
+\label{sec:pol_models}
+
+
+The formation of the \acs{pol} products from the input \acs{slc} images consists of three or four steps:
+\begin{enumerate}
+\item Terrain flattening correction (also known as RTC), which can be directly applied to the images in \acs{slc} format.
+\item Generation of the complex cross-products between polarimetric channels (off-diagonal elements of the covariance matrix), and the real intensity values of each channel (diagonal elements of the covariance matrix).
+\item Spatial filtering or multi-looking of every matrix entry.
+\item Geocoding of all matrix entries, which is required to produce a \acs{gcov}. 
+\end{enumerate}
+
+As previously explained, the approach defined for the NISAR \acs{gcov} product~\cite{NISAR_GCOV_ProdSpec} performs the last two steps simultaneously. In that case, the extent of the spatial filter depends on the relationship between the size of the output product (posting) and the corresponding pixels in the \acs{slc} image, which differs over the image due to topographic slopes.
+
+If a \acs{cov} product is to be produced, i.e. without geocoding, the spatial filtering step is mandatory to 
+estimate a true covariance matrix.
+
+The definition of the $C_3$ matrix to be employed in the quad-pol case is the following one, denoted as $C_{3mod}$ in~\cite{CEOS-ARD_PFS_POLSAR}:
+\begin{equation}
+    C_{3mod} =
+    \begin{bmatrix}
+    <|HH|^2>         &  <HH  \cdot HV^*> &    <HH  \cdot VV^*> \\
+    <HV  \cdot HH^*> &  <|HV|^2>         &    <HV  \cdot VV^*> \\
+    <VV  \cdot HH^*> &  <VV  \cdot HV^*> &     <|VV|^2>
+    \end{bmatrix} \label{eq:C3mod}
+\end{equation}
+where the brackets denote the estimation step (i.e., spatial filtering or multi-look). In principle, the cross-polar channel HV is assumed to be equal to VH due to reciprocity, but this aspect can be forced using a symmetrization (explained later in this section).
+
+It is to be noted that the entries of the diagonal correspond to the \acs{nrb} of the individual polarimetric channels. 
+
+The definition in \eqref{eq:C3mod} does not correspond to the standard polarimetric covariance matrix (shown in \eqref{eq:C3}), because some constant factors are not present. Therefore, any user employing data in the proposed form \eqref{eq:C3mod} must take into account the conversion to the standard form \eqref{eq:C3} if it is required by the post-processing to be applied (e.g. target decompositions).
+
+\begin{equation}
+    C_{3} =
+    \begin{bmatrix}
+    <|HH|^2>               & \sqrt 2 <HH \cdot HV^*> & <HH  \cdot VV^*> \\
+    \sqrt 2 <HV\cdot HH^*> & 2 <|HV|^2>              & \sqrt 2 <HV\cdot VV^*> \\
+    <VV HH^*>              & \sqrt 2 <VV \cdot HV^*> &     <|VV|^2>
+    \end{bmatrix} \label{eq:C3}
+\end{equation}
+
+ In the case of quad-pol data, due to reciprocity, and after an adequate calibration, the two cross-polar channels (HV and VH) should be equal and are only different due to the presence of noise. Because of that, for the definition of the covariance matrix (\eqref{eq:C3mod} and \eqref{eq:C3}), only three channels are considered, i.e. HH, VV and one cross-polar channel (HV or VH). 
+
+A common practice, also considered in the definition of the \acs{gcov}-NISAR product~\cite{NISAR_GCOV_ProdSpec}, consists in averaging the two cross-polar channels and using the resulting average in the construction of the covariance matrix in the \acs{ard} product. This operation is called symmetrization in the polarimetric literature.
+
+Regarding the dual-pol mode with linear polarisations, the $C_2$ covariance matrix is defined as follows:
+\begin{equation}
+C_{2} =
+    \begin{bmatrix}
+    <|VV|^2>       & <VV \cdot VH^*> \\
+    <VH\cdot VV^*> & <|VH|^2>
+    \end{bmatrix} \label{eq:C2vh}
+\end{equation}
+
+A similar expression could be obtained by transmitting a horizontal polarisation, or even a circular polarisation, as it it done in compact- or hybrid-pol modes (see D1~\cite{D1} for more details).
+
+Provided that the covariance matrices are Hermitian, only the off-diagonal elements of the upper-triangular matrix are saved as product layers. The lower-triangular elements are just complex conjugated of the upper-triangular ones. As a result, 3 layers are saved in the dual-pol case, and 6 layers are saved in the quad-pol case.
+
+\subsection{Computational performance}
+\label{sec:pol_computation}
+
+The computational burden of generating \acs{pol} products is equivalent to the one of a \acs{nrb} product, but more layers are generated.
+
+The \acs{rtc} is applied to the \acs{slc} images of each channel. So the computational burden of this step is the one of \acs{nrb} multiplied by the number of channels: 2 for dual-pol, and 4 for quad-pol (or 3 if the symmetrization is computed before the correction) . It must be noted that the same coefficients are applied to all channels, so the computation of the coefficients, which is the most demanding operation, has the same burden as \acs{nrb}.
+
+As for the symmetrization, which consists of a simple arithmetic mean of two images, its computational burden is very small.
+
+Regarding the computation of the output layers (entries of the covariance matrix), the processing time is also the same of this step for \acs{nrb} but multiplied by the number of output layers, i.e., 3 layers for dual-pol case, and 6 layers for the quad-pol case.
+
+
+
+\subsection{Criticalities and weaknesses}
+
+Any test of the polarimetric quality of the \acs{pol} products depends on the quality of the \acs{slc} data, especially regarding the radiometric calibration and other phase-related effects, such as Faraday rotation. 
+Consequently, any analysis of the quality of the products (from the polarimetric point of view) relies on the input data, and not on the generation algorithm itself.
+
+In this sense, there exists some basic tests of the polarimetric calibration of the data that could be applied, but all of them are designed for quad-pol data, not for dual-pol data.
+
+%Lack of series of full-pol L-band data. Only ALOS-1/2, and not in stacks. 
+
+%Next: BIOMASS.
+
+\label{sec:pol_criticalities}
