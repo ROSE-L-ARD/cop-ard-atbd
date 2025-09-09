@@ -4,11 +4,11 @@
 
 \subsection{Product Description}
 \label{sec:orb_prod_description}
-The \acs{orb} product, either as defined in \cite{CEOS-ARD_PFS_ORB} or in the variants outlined in the proposal for this study, can be relatively straightforwardly derived from the \acs{nrb}. This derivation provides both the necessary full resolution and spatially averaged Sigma-Nought ($\sigma_0$) values on a map-projected grid. 
+The \acs{orb} product, either as defined in \cite{CEOS-ARD_PFS_ORB} or in the variants outlined in the proposal for this study, can be relatively straightforwardly derived from the \acs{nrb}. This derivation provides both the necessary full resolution and spatially averaged \gls{sigma0} values on a map-projected grid. 
 
-\acs{orb} comprises multiple layers of $\sigma_0$, each corresponds to a specific layer of preprocessing. These preprocessing steps include denoise, outlier removal, downsampling and surface roughness normalisation. The raw (full resolution) and intermediate products are also saved, including the noise-equivalent sigma zero (NESZ), a bright target detection mask (full resolution), and the normalization factor used for surface roughness correction. Comprehensive annotations detailing the processing steps applied to each layer ensures full traceability and allows users to reverse or reproduce the processing chain as needed.
+\acs{orb} comprises multiple layers of \gls{sigma0}, each corresponds to a specific layer of preprocessing. These preprocessing steps include denoise, outlier removal, downsampling and surface roughness normalisation. The raw (full resolution) and intermediate products are also saved, including the noise-equivalent \gls{sigma0} (NESZ), a bright target detection mask (full resolution), and the normalization factor used for surface roughness correction. Comprehensive annotations detailing the processing steps applied to each layer ensures full traceability and allows users to reverse or reproduce the processing chain as needed.
 
-A full resolution product is useful for the detection of ships or other anthropogenic targets, which could be done starting from the NRB product. Providing a $\sigma_0$ product is a logical choice when treating the data as an image of a locally homogeneous distributed surface scatterer. It also is worth noting that a full-resolution \acs{orb} product is, in general, not a good starting point for the generation of enhanced ocean products. In many cases, the generation of these products requires SLCs (or even raw data), for example for sub-look generation to enable the computation of intensity cross-spectra, or for the optimal suppression of azimuth ambiguities in coastal areas by optimal selection of the azimuth-wavenumber (AKA Doppler frequency) weighting. 
+A full resolution product is useful for the detection of ships or other anthropogenic targets, which could be done starting from the NRB product. Providing a \gls{sigma0} product is a logical choice when treating the data as an image of a locally homogeneous distributed surface scatterer. It also is worth noting that a full-resolution \acs{orb} product is, in general, not a good starting point for the generation of enhanced ocean products. In many cases, the generation of these products requires SLCs (or even raw data), for example for sub-look generation to enable the computation of intensity cross-spectra, or for the optimal suppression of azimuth ambiguities in coastal areas by optimal selection of the azimuth-wavenumber (also known as Doppler frequency) weighting. 
 
 For applications where the NRCS is relevant (e.g. surface stress or wind, oil-spill detection), a low-speckle spatially averaged product including polarimetric information, and a compensation of the known part of the angle of incidence dependence is preferable to a full-resolution product which first needs to be properly despeckled, noting that speckle filtering requires a level of expertise that makes the product deviate from the ARD rationale. Moreover, given the limitation of the effective resolution by the azimuth cut-off, which is largely wavelength independent, a spatially averaged product to a generally achievable spatial resolution facilitates the creation of intercomparable products by different sensors.
 
@@ -74,11 +74,10 @@ To generate the \acs{orb} product coincide with the \acs{nrb} product, the follo
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
-	\acs{slc} or \acs{cslc} & L1 Single Look Complex image or co-registered L1 Single Look Complex image & M \\
-    \acs{slc} annotation & L1 Single Look Complex image annotations or reference geometry annotations & M \\
-    \acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & M \\
+	\acs{slc} or \acs{cslc} & L1 Single Look Complex image or co-registered L1 Single Look Complex image and annotations & M \\
+    \acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & O \\
     Orbits & \acs{slc} Standard, restituted or precise orbits & M \\
-    \acs{etad} & \acs{etad}-like products for atmospheric delay correction & O \\
+    \acs{etad} & \acs{etad}-like products for atmospheric delay and timing corrections & O \\
     \acs{tec} & External \acs{tec} data for delay correction & O \\
     Geoid & External geoid & M \\
     \acs{era5} & ECMWF \acs{era5} wind data for angle of incidence compensation & M \\
@@ -98,11 +97,11 @@ The main variables of the \acs{orb} product are listed as follows:
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
-    $\sigma_{0,\mathrm{raw}}$ & Full resolution (single look) radar intensity, in $\sigma_0$ convention & polarization, acquisition\_date, x, y & float32 \\
-    $\sigma_{0,\mathrm{nesz}}$ & Spatially-averaged, LxL m$^2$ resolution noise equivalent sigma zero, in $\sigma_0$ convention & polarization, acquisition\_date, x, y & float32 \\
-    $\sigma_{0,\mathrm{denoise}}$ & Spatially-averaged, LxL m$^2$ resolution denoized radar intensity, in $\sigma_0$ convention & polarization, acquisition\_date, x, y & float32 \\
+    $\sigma_{0,\mathrm{raw}}$ & Full resolution (single look) radar intensity, in \gls{sigma0} convention & polarization, acquisition\_date, x, y & float32 \\
+    $\sigma_{0,\mathrm{nesz}}$ & Spatially-averaged, LxL m$^2$ resolution noise equivalent sigma zero, in \gls{sigma0} convention & polarization, acquisition\_date, x, y & float32 \\
+    $\sigma_{0,\mathrm{denoise}}$ & Spatially-averaged, LxL m$^2$ resolution denoized radar intensity, in \gls{sigma0} convention & polarization, acquisition\_date, x, y & float32 \\
     mask & Full resolution (single look) bright target mask & polarization, acquisition\_date, x, y & bool \\
-    $\sigma_{0,L}$ & Spatially-averaged, LxL m$^2$ resolution denoized and outlier removed radar intensity, in $\sigma_0$ convention & polarization, acquisition\_date, x, y & float32 \\
+    $\sigma_{0,L}$ & Spatially-averaged, LxL m$^2$ resolution denoized and outlier removed radar intensity, in \gls{sigma0} convention & polarization, acquisition\_date, x, y & float32 \\
     $\sigma_{0,L}/\sigma_{0,\mathrm{mod}}$ & Spatially-averaged, LxL m$^2$ resolution (mean) wind normalized backscatter measurements & polarization, acquisition\_date, x, y & float32 \\
 \end{longtblr}
 The table below describes the dimensions/coordinates associated with the \acs{orb} main variables.
@@ -144,7 +143,8 @@ The following table lists the main metadata and per-pixel metadata associated wi
     era5 & Link to external \acs{era5} data, if used.  & - & string & \\
         x\_sample & Pixel spacing in x direction & - & float32 &\\
         y\_sample & Pixel spacing in y direction & - & float32 &\\
-        ground\_heading & Azimuth direction & x, y & float32 & \ding{51} \\
+        ground\_heading & Azimuth direction & - & float32 & \\
+        look\_direction & Planar angle between	north and each range direction & - & float32 &\\
         inc\_angle & Angle of incidence & x, y & float32 & \ding{51} \\
         nlooks & Number of equivalent looks & x, y & float32 & \ding{51} \\
         azimuth\_time & Azimuth time & x, y & datetime64 & \ding{51} \\
@@ -342,7 +342,7 @@ A gridding/sampling frame, consistent with the reference system and slicing defi
 \end{longtblr}
 \subsection{Product Requirements}
 \subsubsection{Accuracy}
-Main impacts on \acs{orb} product generation and main requirements are similar to those indicated in the correspondent section of the \acs{nrb} product. The limitations, in this case, are less stringent both for the local slope (here the geoid is used) than for the geolocation accuracy (less binding over ocean).
+Main impacts on \acs{orb} product generation and main requirements are similar to those indicated in the correspondent section of the \acs{nrb} product. The limitations, in this case, are less stringent for the local slope (here the geoid is used) than for the geolocation accuracy (less binding over ocean).
 \begin{longtblr}[
 	label = tab:orb_accuracy_cband,
 	entry = none,
@@ -474,7 +474,7 @@ The characteristics of the \acs{orb} products in terms of usability, integrabili
 Usability &
 \begin{itemize}
     \item Pre-Calibrated Data: the \acs{orb} product is radiometrically calibrated, meaning users do not need to perform additional steps to correct the radar backscatter values. This simplifies the analysis for the users, including those who may not be experts in radar data processing.
-    \item Normalized Backscatter: since the backscatter values are normalized (converted into sigma-nought by applying a geoid correction procedure), they can be easily compared across different acquisitions, sensors, or times. 
+    \item Normalized Backscatter: since the backscatter values are normalized (converted into \gls{sigma0} by applying a geoid correction procedure), they can be easily compared across different acquisitions, sensors, or times. 
     \item Geometrically Corrected (Georeferenced): \acs{orb} products are orthorectified and projected into standard map coordinates, reducing the need for users to handle raw slant-range data or worry about terrain-induced distortions (unless further specific geometric corrections are needed for the user's application).
     \item Scalable and Flexible Data Formats: \acs{orb} products are typically provided in common geospatial formats (such as GeoTIFF, NetCDF, etc.), which are compatible with a wide range of geospatial tools (e.g., QGIS) and programming libraries (e.g., GDAL, Python). This facilitates easy integration into existing analysis workflows.
     \item Ready for Machine Learning: \acs{orb} products, being standardized and normalized, can be directly ingested into machine learning models for classification, regression, or segmentation tasks without the need for extensive preprocessing. Their calibrated and consistent nature makes them suitable for training AI models on large datasets.
@@ -483,8 +483,8 @@ Usability &
 Integrability &
 \begin{itemize}
     \item Integration into \acs{gis} platforms: \acs{orb} products are easy to integrate into Geographic Information Systems (\acs{gis}) due to their georeferencing and common data formats. Users can overlay these products with vector layers, other remote sensing data (optical, infrared), or ground truth data for comprehensive spatial analysis.
-    \item Cloud-based processing: \acs{orb} products can be easily integrated into cloud-based processing environments like Google Earth Engine (\acs{gee}), \acs{aws}, or Sentinel Hub, etc.. This allows large-scale, on-demand processing without requiring local resources. Users can perform global or regional analysis by leveraging cloud computing for processing extensive datasets.
-    \item Compatibility with remote sensing software: software packages like ESA SNAP (Sentinel Application Platform), ENVI, or commercial and fre GIS software like ArcGIS and QGIS can directly process and analyse \acs{orb} products, making them easy to integrate into radar data analysis pipelines.
+    \item Cloud-based processing: \acs{orb} products can be easily integrated into cloud-based processing environments like Google Earth Engine (\acs{gee}), \acs{aws}, or Sentinel Hub, etc. This allows large-scale, on-demand processing without requiring local resources. Users can perform global or regional analysis by leveraging cloud computing for processing extensive datasets.
+    \item Compatibility with remote sensing software: software packages like ESA SNAP (Sentinel Application Platform), ENVI, or commercial and free GIS software like ArcGIS and QGIS can directly process and analyse \acs{orb} products, making them easy to integrate into radar data analysis pipelines.
 \end{itemize}
 \\
 Interoperability &

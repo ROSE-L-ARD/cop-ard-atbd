@@ -33,11 +33,10 @@ If a more refined version of ETAD-like corrections is needed for high-end applic
 		hline{1-Z} = {-}{0.05em},
 	}
 	\textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
-	\acs{cslc} or \acs{gslc} & Co-registered (preferred) or geocoded L1 Single Look Complex image & M \\
-    \acs{slc} annotation & Reference geometry annotations & M \\
+	\acs{cslc} or \acs{gslc} & Co-registered (preferred) or geocoded L1 Single Look Complex image and annotations & M \\
     %\acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & M \\
     %Precise Orbits & \acs{slc} precise orbits & M \\
-    \acs{etad} & \acs{etad}-like products for atmospheric delay correction & O \\
+    \acs{etad} & \acs{etad}-like products for atmospheric delay and timing corrections & O \\
     \acs{tec} & External \acs{tec} data for delay correction, if not already included as an \acs{etad} layer & O \\
 \end{longtblr}
 
@@ -130,7 +129,7 @@ The following table lists the main metadata and per-pixel metadata associated wi
     etad\_file & ETAD file used for each image belonging to the \acs{cslc}/\acs{slc} stack. This is optional: it is included only if used; otherwise, it is null & - & string & \\ 
     tec & Link to external \acs{tec} data, if used & - & string & \\ 
     look\_vector & 3-D components radar unit look vector, in an Earth-Centred Earth-Fixed (\acs{ecef}) coordinate system. It consists of unit vectors from antenna to surface pixel. Only for reference geometry. &  (x, y) or (azimuth\_time, range\_time) & float64 & \ding{51} \\
-    inc\_angle & Optional attribute: list of links to reference DEM-based local incidence angle maps. It is present only if the \acs{nrb} is generated from \acs{cslc}s. & - & string & \\
+    inc\_angle & List of links to reference DEM-based local incidence angle maps. & - & string & \\
 
     
     %reference\_anf & Optional attribute: list of links to reference area normalization factor or local contributing area. & - & string & \\
