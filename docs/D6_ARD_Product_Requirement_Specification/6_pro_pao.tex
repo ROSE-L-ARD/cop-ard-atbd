@@ -1,0 +1,447 @@
+\section{Precise Range \ Azimuth Offsets (PRO / PAO \& GPRO / GPAO )}
+
+\subsection{Product Description}
+The pixel offset products contain information on the shifts in range and azimuth between a reference and secondary \acs{cslc}s (pair of \acs{cslc}). Offsets can be estimated by exploiting phase and/or amplitude information. Whenever possible, techniques based on the analysis of the phase signal provide information with better accuracy. 
+
+The phase information can be used to retrieve, both slant range and azimuth offsets, in areas where two different looks of the same scene are available. In the case of Sentinel-1 data, this operation is only feasible within the limited areas where bursts overlap, due to the characteristics of its acquisition mode. However, in TOPSAR mode, the use of phase modulation improves sensitivity, making it more effective for this kind of analysis. It is important to ensure that the interferometric phase remains continuous between adjacent bursts. Additionally, the residual phase that remains after standard processing can be used to detect and highlight local movements in the azimuth direction, providing valuable insights into dynamic surface phenomena. The range offsets, can be derived by standard differential interferometry: in this case, \acs{pro} and \acs{int} coincide, as well as \acs{gpro} and \acs{gunw}.
+
+In case of using amplitude information, the range and azimuth local residual offsets can be estimated via cross-correlation procedure.
+
+The selection criteria of the pairs of images, from which the products will be generated, will consider:
+\begin{itemize}
+    \item on demand request: the products could be required for a specific event (e.g., earthquake, fast landslides, fast glacier motion, etc.). In this case, the selected pairs of images, including images acquired in ascending and descending passes, before and after the event, and temporally closer to it.
+    \item systematic production in correspondence of occurrence of a specific event (included in a predefined list of events, e.g. earthquake, fast landslides, glacier collapse, etc.). In this case, the selection criteria is the same of the on demand request.
+    \item systematic production: the products could be generated for pairs of consecutive images acquired in interferometric mode over predefined geographic areas.
+\end{itemize}
+
+The fact that \acs{pro} \& \acs{pao} are derived from pairs of \acs{cslc}s, defined on the reference radar grid common to both Sentinel-1 and ROSE-L missions, implies that the output radar grid of these products will also be the same for Sentinel-1 and ROSE-L. This ensures the joint use of products generated from data acquired by the two missions.
+
+\subsubsection{Input and Auxiliary Data}
+The following input and auxiliary data are considered for product generation:
+
+\begin{longtblr}[
+	label = tab:in_aux_pro_pao_products,
+	entry = none,
+	caption = {"Precise Range \& Azimuth Offsets" input and auxiliary data},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,20]Q[l,60]Q[c,20]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Name}   & \textbf{Description}   & \textbf{Mandatory (M) / Optional (O)} \\
+	\acs{cslc}s & Pair of co-registered L1 Single Look Complex image (\acs{cslc}) & M \\
+    \acs{cslc} annotations & co-registered L1 Single Look Complex image annotations & M \\
+    \acs{dem} & External DEM (e.g., Copernicus DEM at different resolutions, with 30 m as the default worldwide). & M only for \acs{gpao} and \acs{gpro} \\
+    Precise Orbits & \acs{cslc} precise orbits & M only for \acs{gpao} and \acs{gpro} \\
+\end{longtblr}
+
+\subsubsection{Main Variables}
+The following tables list the main variables associated with the "Precise Range \& Azimuth Offsets" products.
+
+\begin{longtblr}[
+	label = tab:var_px_off_products,
+	entry = none,
+	caption = {"Precise Range \& Azimuth Offsets" main variables},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,15]Q[l,32]Q[l,40]Q[l,13]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} \\
+    ${\Delta_{rg}\: (m)}$ & Offsets measured along slant range direction (in meters) & polarization, acquisition\_date, azimuth\_time or y (for radar or projected geometry, respectively), slat\_range\_time or x (for radar or projected geometry, respectively) & float32 \\
+    ${\Delta_{az}\: (m)}$ & Offsets measured along azimuth direction (in meters) & polarization, acquisition\_date, azimuth\_time or y (for radar or projected geometry, respectively), slat\_range\_time or x (for radar or projected geometry, respectively) & float32 \\
+\end{longtblr}
+
+The table below describes the dimensions/coordinates associated with the "Precise Range \& Azimuth Offsets" main variables.
+
+\begin{longtblr}[
+	label = tab:var_px_off_coordinates,
+	entry = none,
+	caption = {"Precise Range \& Azimuth Offsets" main variables coordinates/dimensions},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,20]Q[l,62]Q[l,18]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Name} & \textbf{Description} & \textbf{Data Type} \\
+	polarization & Acquired polarizations & string \\
+    acquisition\_date & Image acquisition dates, formatted as YYYY-MM-DD & string \\
+    azimuth\_time & Time along satellite track direction & datetime64 \\
+    range\_time & Time across satellite track direction & float64 \\
+    x & UTM/UPS x (East) coordinates [m] & float64 \\
+    y & UTM/UPS y (North) coordinates [m] & float64 \\
+\end{longtblr}
+
+\subsubsection{Main Metadata}
+\label{sec:metadata_pix_off}
+The following table lists the main metadata and per-pixel metadata associated with the "Precise Range \ Azimuth Offsets" product.
+
+\begin{longtblr}[
+	label = tab:meta_px_off_products,
+	entry = none,
+	caption = {"Precise Range \ Azimuth Offsets" main metadata and per-pixel metadata},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,17]Q[l,38]Q[l,20]Q[l,13]Q[c,12]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Name} & \textbf{Description} & \textbf{Dimensions} & \textbf{Data Type} & \textbf{Per-pixel Metadata}\\
+    geometric
+    
+    \_accuracy
+    
+    \_type	& Type of measured geometric accuracy (only for projected products)	& - & string & \\
+    \_geometric
+    
+    \_accuracy
+    & Measured geometric accuracy, including eastern and northern geometric accuracy bias and standard deviation (only for projected products) & - & dictionary & \\ 
+    east\_geom
+    
+    \_bias & Measured eastern geometric bias & - & float32 & \\
+    east\_geom\_std & Measured eastern geometric standard deviation (only for projected products) & - & float32 & \\
+    north\_geom
+    
+    \_bias & Measured northern geometric bias & - & float32 & \\
+    north\_geom
+    
+    \_std & Measured northern geometric standard deviation (only for projected products) & - & float32 & \\
+    geometric
+    
+    \_accuracy
+    
+    \_radial
+    
+    \_rmse	& Measured radial RMSE of geometric accuracy (only for projected products) & - & float32 & \\
+     mask & Mask containing, for each ground cell for projected product or pixel for product in radar geometry, respectively, the following information:
+    
+     - 0: Invalid data
+    
+     - 1: Valid data
+
+     - 2: No data
+    
+     & x and y & byte & \ding{51} \\
+     correlation
+     
+     \_peak & Peak of the normalized correlation coefficient. Present only if the products are derived by using the images' amplitude & x and y for projected products,
+     
+     range\_time and azimuth\_time for products in radar geometry & float32 & \ding{51} \\
+     coherence & coherence map. Present only if the products are derived by using the images' phase & x and y for projected products,
+     
+     range\_time and azimuth\_time for products in radar geometry & float32 & \ding{51} \\
+     x\_sample & Pixel spacing in x direction & - & float32 & \\
+     y\_sample & Pixel spacing in y direction & - & float32 & \\
+\end{longtblr}
+
+The table below describes the dimensions/coordinates associated with the "Precise Range \ Azimuth Offsets" main metadata.
+
+\begin{longtblr}[
+	label = tab:var_pix_off_metadata_coordinates,
+	entry = none,
+	caption = {"Precise Range \ Azimuth Offsets" main metadata coordinates/dimensions},
+	]{
+		width = \linewidth,
+		colspec = {Q[l,20]Q[l,62]Q[l,18]},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+	}
+	\textbf{Name} & \textbf{Description} & \textbf{Data Type} \\
+	azimuth\_time & Time along satellite track direction & datetime64 \\
+    range\_time & Time across satellite track direction & float64 \\
+    x & UTM/UPS x (East) coordinates [m] & float64 \\
+    y & UTM/UPS y (North) coordinates [m] & float64 \\
+\end{longtblr}
+
+\subsubsection{Reference System Tiling and Slicing}
+\label{sec:propao_reference_system_tiling}
+\autoref{tab:px_off_ref_system_slicing} reports the reference system, the slicing, and grid for "Precise Range \ Azimuth Offsets" products.
+
+\begin{longtblr}[
+	label=tab:px_off_ref_system_slicing,
+	entry = none,
+	caption = {Reference system and Slicing for "Precise Range \ Azimuth Offsets"},
+	]{
+		width=\linewidth,
+		colspec = {Q[l,15]Q[l,40]Q[l,15]Q[l,30]},
+		%vline{2-5} = {-}{},
+		%vline{5-5} = {-}{},
+		hlines,
+		hline{1-Z} = {-}{0.05em},
+		rowhead=2,
+	}
+	\textbf{Product} & \textbf{Reference System} & \textbf{Slicing} & \textbf{Spacing}\\
+	\textbf{\acs{pro} / \acs{pao}} & Radar: azimuth/slant-range & Burst & ~50 m \\
+	\textbf{\acs{gpro} / \acs{gpao}} & Cartographic: UTM/UPS & Burst-projected & 50 m \\   
+	
+\end{longtblr}
+
+It is planned to use the same reference radar grid and the same slicing for the ROSE-L and Sentinel-1 missions, to ensure interoperability between the products generated with the data of both missions.
+
+\subsection{Product Requirements}
+
+\subsubsection{Accuracy}
+
+The accuracy of the \acs{pro} / \acs{pao} products is critically influenced by the chosen estimation technique, the sensor characteristics, and the underlying scene properties. For the purpose of this analysis, we assume that ionospheric effects, in particular dispersive phase distortions and group delay, have been correctly compensated, either through external ionospheric correction data or through differential techniques that inherently minimize these effects. Under this assumption, the remaining sources of error stem primarily from thermal noise, spatial decorrelation, local terrain-induced geometric distortions, and processing algorithm limitations.
+
+Two main approaches are commonly employed to estimate the offsets:
+\begin{itemize}
+    \item Interferometric phase-based methods. When the SAR scene preserves high coherence between acquisitions, interferometric techniques can be used to derive precise displacement measurements. In particular, the phase difference provides a direct measurement of displacement along the radar line-of-sight. This phase, once unwrapped and converted through known radar geometry, yields an accurate estimate of the range displacement. However, azimuthal displacement cannot be directly measured from a single interferogram. In specific configurations, such as burst overlap regions in Sentinel-1's Terrain Observation with Progressive Scans (TOPS) mode, a two-look geometry can be exploited. By generating interferograms from overlapping subswaths or looks and forming an "interferogram of interferograms", it becomes possible to retrieve the azimuth component of the displacement, albeit with lower sensitivity and increased noise.
+    \item Amplitude-based pixel offset techniques. In low-coherence or geometrically complex scenes, pixel offset techniques based on amplitude cross-correlation are often preferred. These methods estimate the local displacement by identifying the maximum correlation between image patches across the two SAR acquisitions. Pixel offset is less sensitive to decorrelation but typically achieves lower precision compared to interferometric methods. Moreover, the final resolution and accuracy are influenced by the window size used for matching, the oversampling strategy, the image signal-to-noise and signal-to-clutter ratio.
+\end{itemize}
+Overall, the accuracy of PRO/PAO products varies depending on the selected method, the radar mode, and scene content. Interferometric methods generally offer higher precision (especially in range), but require high coherence and are limited in their ability to extract azimuth displacement unless specific multi-look geometries are available. Pixel offset is complementary to SAR interferometry and is applicable in case of larger displacements, where the interferometric phase become incoherent, at the expense of somewhat lower resolution and accuracy.
+
+The following table summarizes the accuracy requirements for \acs{pro} and \acs{pao} products, considering the interferometric phase-based methods. These requirements are computed separately for ROSE-L and Sentinel-1 satellites, since they depend on satellite properties like wavelength and spectral diversity, and are intended as evaluated on pixels with coherence greater than 0.7, and performing an average over cell of 200m x 200m on the measurements in azimuth direction.
+\begin{longtblr}[
+  label = tab:pro_pao_accuracy_phase_s1,
+  entry = none,
+  caption = {Accuracy Requirements for \acs{pro}/\acs{pao} Products using Phase-based methods in case of \acs{s1} data},
+]{
+  width = \linewidth,
+  colspec = {Q[l,35] Q[l,55] Q[c,20]},
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+  rowhead = 1,
+}
+
+\textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
+
+$\sigma_{\Delta^{ph}_{rg}}$ & Range offset accuracy for \acs{s1} mission & $\leq 0.005$ m \\
+
+$\sigma_{\Delta^{ph}_{az}}$ & Azimuth offset accuracy for \acs{s1} mission & $\leq 0.04$ m \\
+
+\end{longtblr}
+
+
+\begin{longtblr}[
+  label = tab:pro_pao_accuracy_phase_rosel,
+  entry = none,
+  caption = {Accuracy Requirements for \acs{pro}/\acs{pao} Products using Phase-based methods in case of \acs{rosel} data},
+]{
+  width = \linewidth,
+  colspec = {Q[l,35] Q[l,55] Q[c,20]},
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+  rowhead = 1,
+}
+
+\textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
+
+$\sigma_{\Delta^{ph}_{rg}}$ & Range offset accuracy for \acs{rosel} mission & $\leq 0.02$ m \\
+
+$\sigma_{\Delta^{ph}_{az}}$ & Azimuth offset accuracy for \acs{rosel} mission & $\leq 1.2$ m \\
+
+\end{longtblr}
+
+
+The following table summarizes the accuracy requirements for \acs{pro} and \acs{pao} products, considering the amplitude-based pixel offset technique. These requirements are intended to be evaluated using patches with of 200m x 200m, and a coherence value greater than 0.5.
+
+\begin{longtblr}[
+  label = tab:pro_pao_accuracy_pixel_offset,
+  entry = none,
+  caption = {Accuracy Requirements for \acs{pro}/\acs{pao} Products using Pixel Offset in case of \acs{s1} and \acs{rosel} data},
+]{
+  width = \linewidth,
+  colspec = {Q[l,35] Q[l,55] Q[c,20]},
+  hlines,
+  hline{1-Z} = {-}{0.05em},
+  rowhead = 1,
+}
+
+\textbf{Metric} & \textbf{Description} & \textbf{Requirement} \\
+
+$\sigma_{\Delta^{amp}_{rg}}$ & Range offset accuracy assuming $\sim$ 5 m range resolution & $\leq 0.5$ m \\
+
+$\sigma_{\Delta^{amp}_{az}}$ & Azimuth offset accuracy assuming $\sim$ 20.0 m azimuth resolution & $\leq 2$ m \\
+
+\end{longtblr}
+
+\subsubsection{Timeliness}
+\acs{pro} and \acs{pao} are generated from interferometric products (phase-based approach) or by-products of the data-driven co-registration (pixel offset approach). Displacement or varying atmospheric conditions between acquisitions have the same effect on the SAR image: a misplacement of the object. The data-driven co-registration process can estimate the offsets between images but cannot separate atmospheric effects from the actual displacement of objects on the ground. Therefore, it is necessary to filter out artifacts, particularly ionospheric effects. Model-based or data-driven approaches can be followed for \acs{cslc} and interferometric products generation. 
+
+Depending on the target application, the model-based approach can be adopted for non-time-critical use cases, while the data-driven approach can be selected for products requiring faster delivery times.
+
+In the following, the different possible workflows are reported, depending on the \acs{pro} and \acs{pao} techniques, as well as the exploitation of external models or data-driven approaches.
+In addition, the timeline provided indicates the time required to collect the input data and complete the main processing steps. The processing time refers to a standard \acs{s1} dataset and is approximated, considering that the latency in obtaining the input data is the dominant factor.
+
+The first workflow refers to a phase-based technique, including interferometric processing, and the use of external models for compensating atmospheric and processing artifacts. The timeliness of this workflow is strongly affected by the availability of external data.
+
+\begin{figure}[H]
+	\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[node distance=1cm and 2cm]
+			
+			% Define the style for the nodes
+			% \tikzstyle{node} = [circle, draw, fill=blue!20, text centered, minimum size=1.5cm]
+			
+			% Draw nodes
+			\node[rectin] (init) {\acs{slc}};
+			\node[block, right=of init] (coreg_geo) {Geometric co-registration};
+			\node[block, right=of coreg_geo] (coreg_ref) {Refinement};
+			\node[rectaux, below=of init] (dem) {\acs{dem}};
+			\node[empty, below=of coreg_geo] (empty1) {};
+			\node[rectaux, below=of empty1] (orbit) {Orbital data};
+			\node[empty, below=of coreg_ref] (empty2) {};            
+			\node[rectaux, below=of empty2] (models) {External models};
+			\node[rectout, right=of coreg_ref] (cslc) {\acs{cslc}};
+			\node[block, right=of cslc] (interf) {Interf};
+			\node[rectout, right=of interf] (phase) {PHASE};
+			\node[block, right=of phase] (propaoproc) {PHDIFF};
+			\node[rectout, right=of propaoproc] (pro_pao) {\acs{pro} and \acs{pao}};
+			
+			%\node[block, right=of coreg_ref] (interf) {PHASE};
+			%\node[rectout, right=of interf] (pro_pao) {\acs{pro} & \acs{pao}};
+			
+			% Draw edges with arrows
+			\draw[->, thick] (init) -- (coreg_geo);
+			\draw[->, thick] (coreg_geo) -- (coreg_ref);
+			\draw[->, thick] (dem) -| (coreg_geo);
+			\draw[->, thick] (orbit) -- (coreg_geo);
+			\draw[->, thick] (models) -- (coreg_ref); % Changed -| to --
+			\draw[->, thick] (coreg_ref) -- (cslc);
+			\draw[->, thick] (cslc) -- (interf);
+			\draw[->, thick] (interf) -- (phase);
+			\draw[->, thick] (phase) -- (propaoproc);
+			\draw[->, thick] (propaoproc) -- (pro_pao);
+			
+			% Timeline with linked markers and adaptive length
+			\def\timelineStart{init}
+			\def\timelineEnd{pro_pao}
+			%\pgfnodealias{start}{\timelineStart}
+			%\pgfnodealias{end}{\timelineEnd}
+			\draw[thick, ->] (\timelineStart.west |- 0,-6) -- (\timelineEnd.east |- 0,-6) node[right] {Time};
+			
+			\foreach \node/\label in {init/Start, orbit/1h-3d, models/\textbf{1-30d}, cslc/<1h, phase/<1h, pro_pao/<1h} {
+				\draw (\node.south |- 0,-6) -- (\node.south |- 0,-6.5) node[below] {\label};
+				\draw[dotted, thick] (\node.south) -- (\node.south |- 0, -6.25); % Connects the node to the timeline
+			}
+		\end{tikzpicture}
+	}	
+	\caption{Sample workflow for generation of \acs{pro} and \acs{pao} products exploiting interferometric processing and co-registration refinement with external models.}
+	\label{fig:pro_pao_phase_model_driven}
+\end{figure}
+
+Alternatively, a data-driven approach can be followed, estimating corrections directly from a stack of SAR data. In this case, the processing is more complex, generally involving more than a single image and requiring the solution of inverse problems with high computational complexity.
+\begin{figure}[H] % Changed H to h!
+	\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[node distance=1cm and 2cm]			
+			% Draw nodes
+			\node[rectin] (init) {\acs{slc}};
+			\node[block, right=of init] (coreg_geo) {Geometric co-registration};
+			\node[block, right=of coreg_geo] (coreg_data_driven) {Data-driven co-registration};
+			\node[rectaux, below=of init] (dem) {\acs{dem}};
+			\node[empty, below=of coreg_geo] (empty1) {};
+			\node[rectaux, below=of empty1] (orbit) {Orbital data};
+                \node[empty, below=of coreg_data_driven] (empty2) {};  
+			\node[rectin, below=of empty2] (ref_stack) {Reference SLC stack};
+			\node[rectout, right=of coreg_data_driven] (cslc) {\acs{cslc}};
+			\node[block, right=of cslc] (interf) {Interf};
+			\node[rectout, right=of interf] (phase) {PHASE};
+			\node[block, right=of phase] (propaoproc) {PHDIFF};
+			\node[rectout, right=of propaoproc] (pro_pao) {\acs{pro} and \acs{pao}};
+			% Draw edges with arrows
+			\draw[->, thick] (init) -- (coreg_geo);
+			\draw[->, thick] (coreg_geo) -- (coreg_data_driven);
+			\draw[->, thick] (dem) -| (coreg_geo);
+			\draw[->, thick] (orbit) -- (coreg_geo);
+			\draw[->, thick] (ref_stack) -- (coreg_data_driven);
+			\draw[->, thick] (coreg_data_driven) -- (cslc);
+			\draw[->, thick] (cslc) -- (interf);
+			\draw[->, thick] (interf) -- (phase);
+			\draw[->, thick] (phase) -- (propaoproc);
+			\draw[->, thick] (propaoproc) -- (pro_pao);			
+			% Timeline with linked markers and adaptive length
+			\def\timelineStart{init}
+			\def\timelineEnd{pro_pao}
+			\draw[thick, ->] (\timelineStart.west |- 0,-6) -- (\timelineEnd.east |- 0,-6) node[right] {Time};
+			\foreach \node/\label in {init/Start, orbit/1h-3d, ref_stack/<1h, cslc/<1h, phase/<1h, pro_pao/<1h} {
+				\draw (\node.south |- 0,-6) -- (\node.south |- 0,-6.5) node[below] {\label};
+				\draw[dotted, thick] (\node.south) -- (\node.south |- 0, -6.25); % Connects the node to the timeline
+			}
+		\end{tikzpicture}	
+	}
+	\caption{Sample workflow for generation of \acs{pro} and \acs{pao} products exploiting interferometric processing and co-registration data-driven.}
+	\label{fig:pro_pao_phase_data_driven}
+\end{figure}
+
+In case of pixel-offset technique a dense cross-correlation is applied to the \acs{cslc} product in order to extract the residual local offset. 
+
+\begin{figure}[H] % Changed H to h!
+	\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[node distance=1cm and 2cm]			
+			% Draw nodes
+			\node[rectin] (init) {\acs{slc}};
+			\node[block, right=of init] (coreg_geo) {Geometric co-registration};
+			\node[block, right=of coreg_geo] (coreg_data_driven) {Data-driven co-registration};
+			\node[rectaux, below=of init] (dem) {\acs{dem}};
+                \node[empty, below=of coreg_geo] (empty1) {};
+			\node[rectaux, below=of empty1] (orbit) {Orbital data};
+                \node[empty, below=of coreg_data_driven] (empty2) {};
+			\node[rectin, below=of empty2] (ref_stack) {Reference SLC stack};
+			\node[rectout, right=of coreg_data_driven] (cslc) {\acs{cslc}};
+			\node[block, right=of cslc] (crosscorr) {Dense correlation};
+			\node[rectout, right=of crosscorr] (pro_pao) {\acs{pro} and \acs{pao}};
+			% Draw edges with arrows
+			\draw[->, thick] (init) -- (coreg_geo);
+			\draw[->, thick] (coreg_geo) -- (coreg_data_driven);
+			\draw[->, thick] (dem) -| (coreg_geo);
+			\draw[->, thick] (orbit) -- (coreg_geo);
+			\draw[->, thick] (ref_stack) -- (coreg_data_driven);
+			\draw[->, thick] (coreg_data_driven) -- (cslc);
+			\draw[->, thick] (cslc) -- (crosscorr);
+			\draw[->, thick] (crosscorr) -- (pro_pao);			
+			% Timeline with linked markers and adaptive length
+			\def\timelineStart{init}
+			\def\timelineEnd{pro_pao}
+			\draw[thick, ->] (\timelineStart.west |- 0,-6) -- (\timelineEnd.east |- 0,-6) node[right] {Time};
+			\foreach \node/\label in {init/Start, orbit/1h-3d, ref_stack/<1h, cslc/<1h, pro_pao/<1h} {
+				\draw (\node.south |- 0,-6) -- (\node.south |- 0,-6.5) node[below] {\label};
+				\draw[dotted, thick] (\node.south) -- (\node.south |- 0, -6.25); % Connects the node to the timeline
+			}
+		\end{tikzpicture}	
+	}
+	\caption{Sample workflow for generation of \acs{pro} and \acs{pao} products exploiting pixel offset processing and co-registration data-driven.}
+	\label{fig:pro_pao_amp_data_driven}
+\end{figure}
+
+\subsection{Usability, Integrability and Interoperability}
+\label{sec:usability_integrability_pix_off}
+The characteristics of the "Precise Range \& Azimuth Offsets" products in terms of usability, integrability and interoperability are in the following table.
+
+\begin{longtblr}[
+  caption = {Usability, Integrability, and Interoperability of "Pixel Offsets" Products},
+  label = {tab:pixel_offsets_characteristics},
+]{
+  colspec = {Q[2cm] Q[12cm]},
+  rowhead = 1,
+  width = \linewidth
+}
+\hline
+\textbf{Aspect} & \textbf{Description} \\
+\hline
+Usability &
+\begin{itemize}
+  \item Displacement Monitoring: Ideal for detecting large displacements such as landslides, glacier flow, earthquakes, or mining subsidence, in both range and azimuth directions.
+  \item Complementary to InSAR: Effective where InSAR fails (e.g., due to decorrelation or large deformation). Allows capturing horizontal (east/north) and vertical motion in case of using double geometry.
+  \item Global to Local Monitoring: Suitable for regional or global-scale observations (e.g., glaciers, tectonics) and local events (e.g., fast landslides).
+  \item Broad Application Domain: Useful in natural hazard analysis, glaciology, volcanology, earthquake monitoring, and fine co-registration tasks
+\end{itemize}
+\\
+Integrability &
+\begin{itemize}
+  \item Integration with InSAR: Combines with interferometric measurements to derive full 3D deformation fields when ascending/descending geometries are used. This integration allows a more comprehensive knowledge of the analyzed phenomena.
+  \item Multi-Sensor Compatibility: Can be derived from various sensors and integrated in joint analyses.
+  \item Input for Geophysical Models: Supports models of surface dynamics (e.g., glacier flow, landslides, earthquake rupture), improving simulation accuracy.
+\end{itemize}
+\\
+Interoperability &
+\begin{itemize}
+  \item Sensor-Independent Formats: Pixel offsets in projected geometry can be standardized across sensors for interoperability in displacement workflows.
+  \item Geolocation Harmonization: When geocoded, products align spatially with other \acs{eo} datasets (e.g., NRB, optical, DEMs) to support multi-source analysis.
+  \item Software Ecosystem Support: Usable in major \acs{eo} software platforms, supporting scientific and operational pipelines.
+\end{itemize}
+\\
+\hline
+\end{longtblr}
