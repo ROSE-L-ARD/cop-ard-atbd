@@ -166,12 +166,13 @@ Implementation Risk & 2-3 & The algorithm adopted OPERA is expected to be a cons
 Known Limitations & 2 & There is some residual phase bias at the beginning of the time series. This is probably unavoidable even with different approaches if one wants to generate the product starting immediately from the first acquisitions. A learning phase of several months is likely necessary to further minimize the phase bias.\\
 \end{longtblr}
 
-\subsection{INT/COHE}
+\subsection{INT/COHE/UNW and GINT/GCOHE/GUNW}
+\label{sec:insar_products}
 
 \begin{longtblr}[
   label = tab:int_evaluation_criteria,
   entry = none,
-  caption = {INT/COHE Evaluation Criteria},
+  caption = {Interferometric Products Evaluation Criteria},
 ]{
   width = \linewidth,
   colspec = {Q[l,25]Q[c,7]Q[l,68]},
@@ -183,23 +184,24 @@ Known Limitations & 2 & There is some residual phase bias at the beginning of th
 Relevance to ROSE-L Objectives 
 
 Use case coverage& 2 & This product is specific for interferometric applications, in particular land and infrastructure deformation. The geocoded coherence layer can be used in land use and change detection applications jointly with other SAR or optical data (e.g. Sentinel-2). Usually, this is an intermediate product not directly usable by the end-user.\\
-Algorithm Robustness and Reliability & 3-5 & Interferometric techniques for interferogram and coherence are well-established and widely used and part of all InSAR tools. The algorithm for generation of interferometric phase are consolidated, but the product cannot be generated in a fully automatic way maintaining a constant level of accuracy. \\
+Algorithm Robustness and Reliability & 3-5 & Interferometric techniques for interferogram and coherence are well-established and widely used and part of all InSAR tools. The algorithm for generation of unwrapped interferometric phase are consolidated, but the product cannot be generated in a fully automatic way maintaining a constant level of accuracy. \\
 Precision and Accuracy & 3 & The product fulfills requirements for final applications.\\
 Interoperability & 2 & It is foreseen to put \acs{rosel} on the same orbital plane of \acs{s1}. This allows having products on the same grid both in radar and ground coordinate reference systems.\\
 Timeliness and Computational Efficiency	&  1-4 & Model-driven and data-driven techniques can be used jointly or alternatively, depending on the desired accuracy. Model-driven co-registration can be performed using \acs{dem} and orbital data, allowing the product to be delivered in near real-time (score 4). More accurate models can be used with a slight delay (score 3). Data-driven approaches can be employed to better estimate certain parameters (score 3). Additionally, both approaches can be combined (score 1). \\
-Compliance to Standards	& 3 & INT/COHE is the latest \acs{ard} product introduced in the Combined CEOS-ARD for Synthetic Aperture Radar definition.\\
-Software Availability and Reusability & 5 & The generation of interferograms and coherence relies on the availability of \acs{cslc} products. Once the topographic phase and the artifacts related to the atmosphere have been removed at level of \acs{cslc} product, the generation on interferometric phase and coherence is straightforward. In addition functionalities to perform data-driven ionospheric phase artifacts removal.\\	
-Data Requirements and Constraints & 2-3 & In the model-based approach, the accuracy of the product depends on the availability of precise orbital data and models. Alternatively, a data-driven approach can be adopted; however, in this case, the workflow is more complex and depends on the selection of the reference image(s).\\
-Implementation Risk & 3 & The techniques are well consolidated and no particular risk is foreseen.\\
-Known Limitations & 2 & With present models of the atmosphere, the compensation of ionospheric effects at L-band could be critical. In case of interferometric products, data-driven techniques (split-spectrum) can be adopted to mitigate this problem.\\	
+Compliance to Standards	& 3 & INT/COHE/UNW and their geocoded versions are the latest \acs{ard} product introduced in the Combined CEOS-ARD for Synthetic Aperture Radar definition.\\
+Software Availability and Reusability & 5 & The generation of interferograms and coherence relies on the availability of \acs{cslc} products. Once the topographic phase and the artifacts related to the atmosphere have been removed at level of \acs{cslc} product, the generation on interferometric phase and coherence is straightforward. Additionally, the estimation of ionospheric effects can be further refined by applying the Split-Spectrum technique.\\	
+Data Requirements and Constraints & 2-3 & In the model-based approach, the accuracy of the product depends on the availability of precise orbital data and models. Alternatively, a data-driven approach can be adopted; however, in this case, the workflow is more complex and depends on the selection of the reference image(s). Regarding the unwrapped interferograms, several factors affect their accuracy; in particular, the unwrapping process can introduce significant errors in regions characterized by low coherence and high phase noise.\\
+Implementation Risk & 3 & The techniques are well consolidated and no particular risk is foreseen for the \asc{int}/\acs{cohe}/\acs{gint} and \acs{gcohe}. Regarding the \acs{unw} and \acs{gunw} products, unwrapping errors must be mitigated as much as possible by employing robust phase unwrapping algorithms.\\
+Known Limitations & 2 & With present models of the atmosphere, the compensation of ionospheric effects at L-band could be critical. In case of interferometric products, data-driven techniques (split-spectrum) can be adopted to mitigate this problem. Phase unwrapping errors, on the other hand, represent a significant limitation for the correct interpretation and use of the \acs{unw} and \acs{gunw} products.\\	
 \end{longtblr}
 
-\subsection{PRO/PAO}
+\subsection{PRO/PAO and GPRO/GPAO}
+\label{sec:propao_products}
 
 \begin{longtblr}[
   label = tab:propao_evaluation_criteria,
   entry = none,
-  caption = {PRO/PAO Evaluation Criteria},
+  caption = {PRO/PAO and GPRO/GPAO Evaluation Criteria},
 ]{
   width = \linewidth,
   colspec = {Q[l,25]Q[c,7]Q[l,68]},
@@ -210,7 +212,7 @@ Known Limitations & 2 & With present models of the atmosphere, the compensation 
 \textbf{Criterion} & \textbf{Score} & \textbf{Justification} \\
 Relevance to ROSE-L Objectives 
 
-Use case coverage& 2 &  This is a product tailored for a specific application: Ground motion. The product is ready to be used without need of further processing.\\
+Use case coverage& 2 &  These are products tailored for a specific application: Ground motion. The products are ready to be used without need of further processing.\\
 Algorithm Robustness and Reliability & 3-5 &  The extraction of displacement information through pixel-offset or interferometric technique is well consolidated. The usage of the phase information to extract azimuth displacement has been demonstrated only in some particular cases. In fact, it requires special data (2 looks), which are not usually available.\\
 Precision and Accuracy & 2 & The sensitivity to the displacement in azimuth direction is low with respect to the line-of-sight direction.\\
 Interoperability & 2 & It is foreseen to put \acs{rosel} on the same orbital plane of \acs{s1}. This allows having products on the same grid both in Radar and ground coordinate reference systems.\\
@@ -247,7 +249,7 @@ Algorithm Robustness and Reliability & 3 & \acs{enrb} product share most of the 
 Precision and Accuracy & 3 & The geolocation accuracy of the original \acs{slc} and \acs{cslc} products is preserved. Additionally, the radiometry is compensated for geometric distortions, enabling the joint analysis of data acquired with different observation geometries.\\	
 Interoperability & 4 & \acs{rosel} is planned to be placed in the same orbital plane as \acs{s1}, allowing the adoption of the same ground coordinate reference systems and grid. In general, since the product is projected and the dependency on the SAR sensor observation mode and geometry is compensated, it can be used together with other SAR or optical data.\\
 Timeliness and Computational Efficiency	& 1-4 & The additional processing to improve the quality of the product with respect to standard \acs{nrb} does not affect significantly the timeliness and the complexity. Model-driven and data-driven techniques can be used jointly or alternatively, depending on the desired accuracy. Model-driven co-registration can be performed using \acs{dem} and orbital data, allowing the product to be delivered in near real-time (score 4). More accurate models can be used with a slight delay (score 3). Data-driven approaches can be employed to better estimate certain parameters (score 3). Additionally, both approaches can be combined (score 1).\\
-Compliance to Standards	& 4 & It is a particular \acs{nrb} product, which is a Well defined and consolidated product.\\	
+Compliance to Standards	& 4 & It is a particular \acs{nrb} product, which is a well-defined and consolidated product.\\	
 Software Availability and Reusability & 3 & The core is based on the \acs{s1} \acs{ard} processor, which implements the area-based algorithm and includes functions that exploit model-driven corrections (\acs{etad}). It has been enhanced with functionalities for data-driven co-registration, including matching via cross-correlation and \acs{esd}. Other well-established open-source implementations of area-based and point-based algorithms are publicly available.\\	
 Data Requirements and Constraints & 2-3 & In the model-based approach, the accuracy of the product depends on the availability of precise orbital data and models. Alternatively, a data-driven approach can be adopted; however, in this case, the workflow is more complex and depends on the selection of the reference image(s).\\
 Implementation Risk & 3 & The techniques are well consolidated and no particular risk is foreseen.\\
@@ -272,7 +274,7 @@ Known Limitations & 2 &  With present models of the atmosphere the compensation 
 Relevance to ROSE-L Objectives
 
 Use case coverage& 2 & \acs{eorb} is an \acs{orb} products with improved characteristics. As in the case of \acs{nrb}, it covers all use cases but the ones related to phase information (based on interferometry), with better performance than \acs{nrb} in most of them.\\
-Algorithm Robustness and Reliability & 3& \acs{eorb} product share most of the algorithm with \acs{orb} product. In addition, side-lobe suppression and gosth-removal are applied in order to improve the quality of the product. These techniques are well-known, but they are not applied regularly in standard product generation.\\
+Algorithm Robustness and Reliability & 3& \acs{eorb} product share most of the algorithm with \acs{orb} product. In addition, side-lobe suppression and ghost-removal are applied in order to improve the quality of the product. These techniques are well-known, but they are not applied regularly in standard product generation.\\
 Precision and Accuracy & 3&  The geolocation accuracy of the original SLC and CSLC products is preserved. Additionally, the radiometry is compensated for geometric distortions, enabling 
  the joint analysis of data acquired with different observation geometries.\\	
 Interoperability & 4& \acs{rosel} is planned to be placed in the same orbital plane as \acs{s1}, allowing the adoption of the same ground coordinate reference systems and grid. Since the \acs{orb} product is projected and the dependency on the SAR sensor observation mode and geometry is compensated, it can be used together with other SAR or optical data. In addition, \acs{rosel} is planned to acquire dual-pol data in the same mode as \acs{s1}, e.g. VV and VH channels over land, so the multi-frequency and polarimetric combination can be readily exploited using this product.\\
@@ -300,12 +302,12 @@ Known Limitations & 2& With present models of the atmosphere the compensation of
 \textbf{Criterion} & \textbf{Score} & \textbf{Justification} \\
 Relevance to ROSE-L Objectives 
 
-Use case coverage& 3 & Stripmap Equivalent allows covering the same use cases and objective of \acs{cslc} product. In fact, it is a particular \acs{cslc} product independent from the specific acquisition mode, where the modulation of the phase due to the TOPSAR or SCANSAR acquisition is removed, the burst are mosaicked in order to make the phase continuous and make it possible to generate interferometric products as for images acquired in Stripmap mode.\\
-Algorithm Robustness and Reliability & 5 & The same algorithms used for \acs{cslc} product will be exploited, avoiding phase modulation after secondary image warp. In addition a mosaiking step is necessary to merge togheter all the bursts.\\
+Use case coverage& 3 & Stripmap Equivalent allows covering the same use cases and objective of \acs{cslc} product. In fact, it is a particular \acs{cslc} product independent from the specific acquisition mode, where the modulation of the phase due to the TOPSAR or SCANSAR acquisition is removed, the bursts are mosaicked in order to make the phase continuous and make it possible to generate interferometric products as for images acquired in Stripmap mode.\\
+Algorithm Robustness and Reliability & 5 & The same algorithms used for \acs{cslc} product will be exploited, avoiding phase modulation after secondary image warp. In addition a mosaicking step is necessary to merge together all the bursts.\\
 Precision and Accuracy & 3 & The product maintains the same characteristics of the input \acs{slc} product.\\	
 Interoperability & 2 & It is foreseen to put \acs{rosel} on the same orbital plan of \acs{s1}. This allows having products on the same grid both in Radar and ground coordinate reference systems.\\
 Timeliness and Computational Efficiency	& 1-4 & Model-driven and data-driven techniques can be used jointly or alternatively, depending on the desired accuracy. Model-driven co-registration can be performed using \acs{dem} and orbital data, allowing the product to be delivered in near real-time (score 4). More accurate models can be used with a slight delay (score 3). Data-driven approaches can be employed to better estimate certain parameters (score 3). Additionally, both approaches can be combined (score 1).\\	
-Compliance to Standards	& 2 & A standard definition is not yet avalable for this product. It can be derived extending \acs{cslc} definition.\\	
+Compliance to Standards	& 2 & A standard definition is not yet available for this product. It can be derived extending \acs{cslc} definition.\\	
 Software Availability and Reusability & 3 & The core of the co-registration is based on the \acs{s1} \acs{ard} processor, which already includes functions that exploit model-driven co-registration (\acs{etad}). It has been enhanced with functionalities to perform data-driven co-registration, including matching via cross-correlation and \acs{esd}.\\	
 Data Requirements and Constraints & 2-3 & In the model-based approach, the accuracy of the product depends on the availability of precise orbital data and models. Alternatively, a data-driven approach can be adopted; however, in this case, the workflow is more complex and depends on the selection of the reference image(s).\\
 Implementation Risk & 3 & The techniques are well established, and no particular risks are foreseen, except for the complexity of the algorithm.\\
