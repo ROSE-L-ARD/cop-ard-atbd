@@ -42,6 +42,8 @@ parts:
       - file: pol/pol_data_vis
       - file: pol/pol_saocom.ipynb
         title: POL SAOCOM demo
+      - file: pol/pol_RGB_image_saocom.ipynb
+        title: POL RGB image
       - file: pol/pol_entropy_image_saocom.ipynb
         title: POL entropy analysis
       - file: pol/pol_simulate_FR_image_saocom.ipynb
@@ -80,6 +82,10 @@ parts:
       - file: pro_pao/pro_pao_product
       - file: pro_pao/pro_pao_atbd
       - file: pro_pao/pro_pao_data_vis
+      - file: pro_pao/pro_pao_phase
+        title: PRO/PAO phase demo
+      - file: pro_pao/pro_pao_amplitude
+        title: PRO/PAO amplitude demo
   - caption: STRIP_EQ
     chapters:
       - file: strip_eq/strip_eq_overview
