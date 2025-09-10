@@ -30,7 +30,7 @@ The following figure is a simple schema for the steps necessary to obtain the in
    Schema of Radar rasterization steps.
 
 The algorithms for slope compensation and the projection matrix described below are  
-based on :cite:`Shiroma2022`. The Shiroma algorithm provides a solution to  
+based on {cite}`Shiroma2022`. The Shiroma algorithm provides a solution to  
 the lack of bijective correspondence between ground and radar coordinates,  
 i.e., the two coordinate systems map "many-to-one" and "one-to-many" between them.  
 To achieve this, the reference surface is first computed over the geographical  
@@ -41,10 +41,10 @@ considered for the derivation of the radar sample correction factor.
 In addition, the Shiroma algorithm, using the slant-range projection with the area projection algorithms,  
 fills all spaces covered by the projected area elements without leaving gaps,  
 reducing or eliminating the need for DEM oversampling, as required instead by the procedure proposed by  
-:cite:`Small2011`.
+{cite}`Small2011`.
 
 In cases of stacks of CSLC images with orbital baselines of a few hundred meters, it is possible,  
-according to :cite:`Navacchi2023`, to compute the ANF function and the weights of the AP algorithm  
+according to {cite}`Navacchi2023`, to compute the ANF function and the weights of the AP algorithm  
 only once for the reference virtual image and then use these weights for all secondary images.
 
 .. _ABP_inputs:
@@ -73,7 +73,7 @@ The *Radar rasterization* tool provides the following outputs:
 
 Algorithms
 ''''''''''  
-The core functionalities are based on the algorithm described in :cite:`Shiroma2022`  
+The core functionalities are based on the algorithm described in {cite}`Shiroma2022`  
 and are able to derive the projection matrix for geocoding and the correction for terrain slope  
 to provide radiometrically terrain-corrected images.  
 The algorithm finds the correspondence between areas on the ground and areas on the radar image grid,  
@@ -159,7 +159,7 @@ the local contributing area for the derivation of the :math:`\gamma^0`.
    vector, :math:`\vec{r}` is the look vector, :math:`\vec{n}` is the ground surface normal,  
    :math:`\theta` is the ellipsoidal incidence angle, :math:`\theta_{i}` is the local-incidence angle,  
    and :math:`\psi` is the projection angle.  
-   Credits: :cite:`Shiroma2022`.
+   Credits: {cite}`Shiroma2022`.
 
 The computation of the local contributing area requires the following steps:
 
