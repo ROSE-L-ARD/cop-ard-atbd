@@ -7,7 +7,7 @@ Overview
 --------
 
 The purpose of this utilitiy is to compute the fine shift in azimuth direction between a reference and a secondary image, by exploiting the interferometric double phase difference between the different acquisition dates and and the overlapping areas between bursts.
-The proposed algorithm is based on :cite:`ESD2016`.
+The proposed algorithm is based on {cite}`ESD2016`.
 
 Inputs
 -------
