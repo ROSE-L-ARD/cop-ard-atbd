@@ -35,6 +35,7 @@ sphinx:
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  # Enable MathJax for LaTeX rendering
     autosectionlabel_prefix_document: true # Optional: Add document name to section labels
   latex_elements:
+    docclass: book
     papersize: a4paper # or 'letterpaper'
     pointsize: 11pt    # or '10pt', '12pt'
     preamble: |
