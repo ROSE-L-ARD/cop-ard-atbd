@@ -1,17 +1,17 @@
 .. _pol_label:
 
-========================================================
+===========================================
 Algorithm Theoretical Basis Document (ATBD)
-========================================================
+===========================================
 
 The generation of POL products involves the same processing steps of the NRB products, but
 they are applied to additional layers of output data.
 
 Input data
-=============
+==========
 
 SAR data
-------------
+--------
 
 The input for the generation of this product is a SLC or a CSLC product, i.e. a stack of
 co-registered slc's in radar geometry. In both cases, two or four polarimetric channel
@@ -21,17 +21,17 @@ quad-pol mode.
 An example with SAOCOM dual-pol data (VV-VH) is used for illustration purposes.
 
 Auxiliary data
-------------------
+--------------
 
 As in the case of NRB, auxiliary information is required for applying the radiometric terrain
 correction (RTC) and the geocoding.
 
 
 Algorithm steps
-========================
+===============
 
 Read channels and auxiliary layers
----------------------------------------------
+----------------------------------
 
 .. code::
 
@@ -46,7 +46,7 @@ Read channels and auxiliary layers
         A = rosel.io.read( rtc_ap_path, mask_and_scale = False ).v
 
 Radiometric terrain correction (RTC)
----------------------------------------------
+------------------------------------
 
 .. code:: 
 
@@ -57,7 +57,7 @@ Radiometric terrain correction (RTC)
         slc_vh_flat = rosel.shiroma.flatten_radar_image(slc_vh, A, data_path = f"{out_path}/flattened_slc_vh", read=True)
 
 Covariance matrix formation: cross-products and estimation
----------------------------------------------
+----------------------------------------------------------
 
 The expression of the dual-pol covariance matrix is:
 
@@ -109,7 +109,7 @@ where :math:`< >` denotes a spatial averaging or filtering, and superscript :mat
             
 
 Save the COV product
----------------------------------------------
+--------------------
 
 .. code:: 
 
@@ -120,7 +120,7 @@ Save the COV product
 
 
 Geocoding and save the GCOV product
----------------------------------------------
+-----------------------------------
 
 Geocoding is carried out using Shiroma's approach.
 In case of 'MULTI-LOOK' estimation, the output grid can be coarsened.

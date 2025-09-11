@@ -1,8 +1,8 @@
 .. _nrb_data_vis:
 
-=====================
+==================
 Data visualization
-=====================
+==================
 
 POL products are currently stored in Zarr as folders (named COV or GCOV) with a number of subfolders (data layers) that depends on the number of polarimetric channels.
 
@@ -35,7 +35,7 @@ A file called 'COV_LinearRGB.png' or 'GCOV_LinearRGB.png' is saved in a
 subfolder called 'figures' of the input folder.
     
 Load packages and define auxiliary functions for the visualization
-------
+------------------------------------------------------------------
 
 .. code-block:: python
 
@@ -98,7 +98,7 @@ Load packages and define auxiliary functions for the visualization
         im.show()
 
 Definition of parameters and output folder
-------
+------------------------------------------
 
 .. code-block:: python
 
@@ -116,7 +116,7 @@ Definition of parameters and output folder
     pathlib.Path(output_folder).mkdir(parents=True, exist_ok=True)
 
 Reading of the POL product
-------
+--------------------------
 
 .. code-block:: python
 
@@ -127,7 +127,7 @@ Reading of the POL product
     C12 = rosel.io.read( os.path.join( input_folder, product, 'C12') ).v
 
 RGB representation and file save
-------
+--------------------------------
 .. code-block:: python
 
     # RGB representation (using only the intensities of the VV and VH channels)
