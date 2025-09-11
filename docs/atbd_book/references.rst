@@ -1,6 +1,6 @@
 .. _references:
 
-References
------------------------------
 
 .. bibliography::
+
+
