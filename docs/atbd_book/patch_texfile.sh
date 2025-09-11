@@ -63,6 +63,8 @@ awk -v repl="$REPLACE" -v n="$N" -v out="$TMPFILE" '
   }
 ' "$PREAMBLE"
 
+sed -i '/\\chapter{References}/s/^/% /' "$TMPFILE"
+
 # Overwrite original file
 mv "$TMPFILE" "$PREAMBLE"
 
