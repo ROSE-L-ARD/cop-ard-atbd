@@ -37,6 +37,8 @@ Project team members
 
 * **Francesco Vecchioli (B-open Solutions)**
 
+* **Carmine Frascella (B-open Solutions)**
+
 * **Alejadro Mestre-Quereda (Universitad de Alicante)**
 
 * **Juan M Lopez-Sanchez (Universitad de Alicante)**
