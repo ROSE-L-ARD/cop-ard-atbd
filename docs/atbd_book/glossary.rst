@@ -1,240 +1,224 @@
-
 .. _glossary:
 
-Definitions and Abbreviations
+Acronyms
 -----------------------------
 
-This section contains the main definitions and acronyms used throughout the document.
 
-Definitions
-~~~~~~~~~~~
+   AD
+      Applicable Document
 
-.. glossary::
+   SAR
+      Synthetic Aperture Radar
 
+   ADFS
+      Auxiliary Data Files Specifications
 
-
-Acronyms
-~~~~~~~~
-
-.. glossary::
-
-    AD
-        Applicable Document
-
-    ADF
-        Auxiliary Data File
-
-    ADFS
-        Auxiliary Data Files Specifications
-
-    ANF
-        Area Normalization Factor
+   ANF
+      Area Normalization Factor
         
-    AOI
-        Area of Interest
+   AOI
+      Area of Interest
 
-    ARD
-        Analysis Ready Data
+   ARD
+      Analysis Ready Data
 
-    ATBD
-        Algorithmic Theoretical Basis Document
+   ATBD
+      Algorithmic Theoretical Basis Document
 
-    CEOS
-        Committee on Earth Observation Satellites
+   CEOS
+      Committee on Earth Observation Satellites
 
-    CoSSC
-        Co-registered Single-Look Slant Range Complex
+   CoSSC
+      Co-registered Single-Look Slant Range Complex
 
-    CSC
-        Copernicus Space Component
+   CSC
+      Copernicus Space Component
 
-    CSLC
-        Co-registered Single Look Complex
+   CSLC
+      Co-registered Single Look Complex
 
-    DC
-        Doppler Centroid
+   DC
+      Doppler Centroid
 
-    DEM
-        Digital Elevation Model
+   DEM
+      Digital Elevation Model
 
-    DH
-        Dual pol – HH/HV
+   DH
+      Dual pol - HH/HV
 
-    DIL
-        Data Item Library
+   DIL
+      Data Item Library
 
-    DS
-        Distributed Scatterer
+   DS
+      Distributed Scatterer
         
-    DV
-        Dual pol – VV/VH
+   DV
+      Dual pol - VV/VH
 
-    ECSS
-        European Cooperation on Space Standardization
+   ECSS
+      European Cooperation on Space Standardization
 
-    EO
-        Earth Observation
+   EO
+      Earth Observation
 
-    EOPF
-        Earth Observation Processor Framework
+   EOPF
+      Earth Observation Processor Framework
 
-    ESA
-        European Space Agency
+   ESA
+      European Space Agency
 
-    ETAD
-        Extended Timing Annotation Dataset
+   ETAD
+      Extended Timing Annotation Dataset
 
-    EU
-        European Union
+   EU
+      European Union
 
-    EW
-        Extra Wide swath
+   EW
+      Extra Wide swath
 
-    FDBAQ
-        Flexible Dynamic Block Adaptive Quantization
+   FDBAQ
+      Flexible Dynamic Block Adaptive Quantization
 
-    GIS
-        Geographic Information System
+   GIS
+      Geographic Information System
 
-    GRD
-        Ground Range Detected
+   GRD
+      Ground Range Detected
 
-    GSLC
-        Geocoded Single Look Complex
+   GSLC
+      Geocoded Single Look Complex
 
-    HH
-        Partial dual – HH only
+   HH
+      Partial dual - HH only
 
-    HV
-        Partial dual – HV only
+   HV
+      Partial dual - HV only
 
-    ICD
-        Interface Control Document
+   ICD
+      Interface Control Document
 
-    ICP
-        Input Copernicus Processors
+   ICP
+      Input Copernicus Processors
 
-    I/Q
-        In-Phase & Quadrature
+   I/Q
+      In-Phase & Quadrature
 
-    IW
-        Interferometric Wide swath
+   IW
+      Interferometric Wide swath
 
-    L0
-        Level 0
+   L0
+      Level 0
 
-    L1
-        Level 1
+   L1
+      Level 1
 
-    L2
-        Level 2
+   L2
+      Level 2
 
-    N/A
-        Not Applicable or Not Available
+   N/A
+      Not Applicable or Not Available
 
-    NRB
-        Normalized Radar Backscatter
+   NRB
+      Normalized Radar Backscatter
 
-    OCN
-        Ocean
+   OCN
+      Ocean
 
-    OLQC
-        On-Line Quality Control
+   OLQC
+      On-Line Quality Control
 
-    OSW
-        Ocean Swell spectra
+   OSW
+      Ocean Swell spectra
 
-    OWI
-        Ocean Wind field
+   OWI
+      Ocean Wind field
 
-    PDP
-        Python Data Processors
+   PDP
+      Python Data Processors
 
-    PDFS
-        Product Data Format Specifications
+   PDFS
+      Product Data Format Specifications
 
-    PS
-        Persistent Scatterer
+   PS
+      Persistent Scatterer
 
-    PSI
-        Persistent Scatterer interferometry
+   PSI
+      Persistent Scatterer interferometry
 
-    RD
-        Reference Document
+   RD
+      Reference Document
 
-    RDP
-        Re-engineered Data Processor
+   RDP
+      Re-engineered Data Processor
 
-    RVL
-        Surface Radial Velocity
+   RVL
+      Surface Radial Velocity
 
-    S1
-        Sentinel-1
+   S1
+      Sentinel-1
 
-    SAR
-        Synthetic Aperture Radar
+   SAR
+      Synthetic Aperture Radar
 
-    SBAS
-        Small Baseline Subset
+   SBAS
+      Small Baseline Subset
 
-    SH
-        Single pol - HH
+   SH
+      Single pol - HH
 
-    SL2
-        S1 L1 SLC internal product
+   SL2
+      S1 L1 SLC internal product
 
-    SLC
-        Single Look Complex
+   SLC
+      Single Look Complex
 
-    SM
-        Stripmap
+   SM
+      Stripmap
 
-    SoW
-        Statement of Work
+   SoW
+      Statement of Work
 
-    SP
-        Software Package
+   SP
+      Software Package
 
-    STAC
-        SpatioTemporal Asset Catalogs
+   STAC
+      SpatioTemporal Asset Catalogs
 
-    SUM
-        Software User and Operations Manual
+   SUM
+      Software User and Operations Manual
 
-    SV
-        Single pol - VV
+   SV
+      Single pol - VV
 
-    TBA
-        To Be Agreed
+   TBA
+      To Be Agreed
 
-    TBD
-        To Be Defined
+   TBD
+      To Be Defined
 
-    TBW
-        To Be Written
+   TBW
+      To Be Written
 
-    TOPSAR
-        Terrain Observation with Progressive Scanning SAR
+   TOPSAR
+      Terrain Observation with Progressive Scanning SAR
 
-    TRL
-        Technological Readiness Level
+   TRL
+      Technological Readiness Level
 
-    TN
-        Technical Note
+   TN
+      Technical Note
 
-    VH
-        Partial dual – VH only
+   VH
+      Partial dual - VH only
 
-    VHR
-        Very High Resolution
+   VHR
+      Very High Resolution
 
-    VV
-        Partial dual – VV only
+   VV
+      Partial dual - VV only
 
-    WV
-        Wave
+   WV
+      Wave
 
-    XFDU
-        XML Formatted Data Unit
-
-
+   XFDU
+      XML Formatted Data Unit
