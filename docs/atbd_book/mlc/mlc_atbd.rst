@@ -5,7 +5,7 @@
 Algorithm Theoretical Basis Document (ATBD) 
 ========================================================
 
-.. figure:: ./images/CMLC_generation.png
+.. figure:: ./images/CMLC_generation2.png
    :name: Workflow for CMLC generation.
    :scale: 60%
    :align: center
@@ -35,9 +35,9 @@ The algorithm that generated the CSLC does not require any additional data.
 Algorithm description
 ========================
 
-.. figure:: ./images/CMLC_cartoon_detailed_v2.png
+.. figure:: ./images/CMLC_cartoon_detailed_v4.png
    :name: Detailed workflow for CMLC generation.
-   :scale: 50%
+   :scale: 40%
    :align: center
 
    Detailed internal workflow for CMLC generation.
@@ -65,10 +65,21 @@ After the estimation of the interferometric phase :math:`\phi_n`, we are going t
 
 The memory parameter :math:`\alpha` controls the bandwidth of the current reference, a small parameter corresponds to a short memory, which is optimal for fast-decorrelating scenarios. A large value of the parameter is suited to stable targets.
 
+Stable reference generation 
+------------------------------
+
+We take periodically snapshots of the current reference :math:`z` as a stable reference :math:`p_k` after a certain number of update steps (e.g. :math:`M=10` which would correspond to 60 days for a 6-day repeat ROSE-L time series):
+
+.. math::
+    p_k = z_{Mk}.
+
+The long-term coherence :math:`\gamma^l_n` is taken as the coherence of the interferogram between :math:`y_n` and :math:`p_k`.
+
+
 Current reference calibration
 ---------------------------------
 
-As time passes, the current reference risks drifting away from the phase of the first acquisition of the stack. For this reason we are going to calibrate its phase with a more stable reference :math:`p` by generating an interferogram and compensating the phase:
+As time passes, the current reference risks drifting away from the phase of the first acquisition of the stack. For this reason we are going to calibrate its phase with one of the stable references :math:`p` by generating an interferogram and compensating the phase:
 
 .. math::
     \varphi_n = \angle \sum_{(r,a) \in \Omega} p_n^*(r,a) z_{n+1}(r,a).
@@ -78,27 +89,8 @@ As time passes, the current reference risks drifting away from the phase of the 
     z_{n+1} \leftarrow z_{n+1} e^{-j\varphi_n}.
 
 
-The phase compensation is performed only if the coherence between :math:`p_n` and :math:`z_{n+1}` is above a chosen threshold (e.g. 0.1) to avoid adding noise in cases of low coherence.
+We pick the oldest possible stable reference :math:`p_k`, among those whose coherence with :math:`z_{n+1}` is above a chosen threshold (e.g. 0.1) to avoid adding noise in cases of low coherence. If no such reference exists, the calibration is not performed.
 
-Stable reference generation and update
-------------------------------------------
-
-We take initially a snapshot of the current reference :math:`z` as a stable reference :math:`p` after a certain number of update steps (e.g. :math:`m=10` which would correspond to 60 days for a 6-day repeat ROSE-L time series):
-
-.. math::
-    p_n = z_n, \quad \textrm{for} \quad n=M.
-
-After that we update the stable reference with a pace with is slower than the pace we update the current reference, so that the stable reference represents older acquisitions.
-
-.. math::
-    p_{n+1} = \beta_1 p_n + \beta_2 z_n.
-
-With the choice :math:`\beta_1 = 1, \beta_2=1` the stable reference is simply the sum of all past "current references" from step :math:`M` onwards. It represents therefore the mid-point between the current acquisition and the :math:`M^{th}` acquisition.
-
-With the choice :math:`\beta_2=0` the stable reference is not going to be updated with new information and remains frozen.
-
-
-The long-term coherence :math:`\gamma^l_n` is taken as the coherence of the same interferogram between :math:`y_n` and :math:`p_n`.
 
 Geocoding
 -------------
@@ -119,7 +111,6 @@ In contrast, algorithms based on the coherence matrix have a complexity that gro
 Possible algorithm improvements
 ===============================
 - Better sampling in radar coordinates of CMLC product.
-- Saving and make use of several "past references", e.g. one for each year.
 - Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we need to optimize simultaneously the short and the long-term coherence.
 
 
@@ -185,9 +176,9 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`p_n`
+     - :math:`p_k`
    * - Description
-     - The past reference, a linear combination of current references
+     - A past reference, a snapshot of current references
    * - Purpose
      - Internal: an interferometric reference to calibrate the phase of the current reference 
    * - Units
@@ -199,7 +190,7 @@ Detailed variable description
    * - Range of values
      - N/A
    * - Initial/default values
-     - :math:`p_n = z_n`, for a fixed :math:`M` (minimum stack size)
+     - :math:`p_1 = z_M` (:math:`M` is the minimum stack size to generate a reference)
    * - Name in pseudo-code
      - ``past_reference``
    * - 
@@ -302,26 +293,6 @@ Detailed variable description
      - 0.95
    * - Name in pseudo-code
      - ``memory_param``
-   * - 
-     -
-   * - Symbol
-     - :math:`\beta_1, \, \beta_2`
-   * - Description
-     - Memory parameters for updating the past reference
-   * - Purpose
-     - User input
-   * - Units
-     - natural units
-   * - Type
-     - float
-   * - Dimensionality
-     - scalar
-   * - Range of values
-     - :math:`(0,1]`
-   * - Initial/default values
-     - (1,0)
-   * - Name in pseudo-code
-     - ``memory_param_past_beta1,memory_param_past_beta2``
    * - 
      -
    * - Symbol
