@@ -5,7 +5,7 @@
 Algorithm Theoretical Basis Document (ATBD) 
 ========================================================
 
-.. figure:: ./images/CMLC_generation2.png
+.. figure:: ./images/CMLC_generation.png
    :name: Workflow for CMLC generation.
    :scale: 60%
    :align: center
