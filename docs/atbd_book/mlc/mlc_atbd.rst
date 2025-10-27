@@ -24,7 +24,7 @@ The input for the generation of this product is a CSLC product, i.e. a stack of 
 Internal data
 -----------------
 
-This algorithm keeps two special images between each update step, one is called "current reference" and the other "past reference". These images are linear combinations of images that have been already processed and are introduced to avoid accessing the entire past history.
+This algorithm needs access to a set of special reference images, which it updates at each step. One image is called "current reference" and the others "past references". These images are linear combinations of images that have been already processed. They represent past acquisitions and are introduced to avoid accessing the entire past history.
 
 Auxiliary data
 ------------------
@@ -90,6 +90,17 @@ As time passes, the current reference risks drifting away from the phase of the 
 
 
 We pick the oldest possible stable reference :math:`p_k`, among those whose coherence with :math:`z_{n+1}` is above a chosen threshold (e.g. 0.1) to avoid adding noise in cases of low coherence. If no such reference exists, the calibration is not performed.
+
+
+Spatial sampling
+--------------------
+
+In order to limit aliasing in the spatial frequencies, one should apply multi-looking windows that are large enough w.r.t. the posting. Considering a target posting of 50 m (ROSE-L), for a simple boxcar window we consider sufficient a multi-looking area of 100 m x 100 m (i.e. twice the posting). 
+Let us compute :math:`d_{rg}` and :math:`d_{az}` as the number of pixels in range and azimuth that correspond nominally to a ground spacing of 50 m. The multi-looking window size shall thus be :math:`2\,d_{rg} \times 2\,d_{az}`.
+
+Since the multi-looking windows are overlapping by 50% in each direction, the size of the generated references (i.e. the size of all windows combined) is four times the size of a regular acquisition.
+
+In practice, it is possible to adopt a code with coinciding posting and window size (i.e. :math:`2\,d_{rg}` and :math:`2\,d_{az}`) as in the demonstrator, and run it four times, each time with a 2D pixel offset: :math:`(0,0)`, :math:`(d_{rg},0)`, :math:`(0, d_{az})`, :math:`(d_{rg},d_{az})`. By interleaving the resulting phase estimates, the algorithm shall generate an output correctly sampled with the desired posting (:math:`d_{rg}` and :math:`d_{az}`).
 
 
 Geocoding
