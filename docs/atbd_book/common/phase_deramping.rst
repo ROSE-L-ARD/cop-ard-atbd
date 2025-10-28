@@ -35,14 +35,15 @@ resulting in a baseband signal in the case of *deramping* or a modulated signal 
 
 Processing parameters
 ---------------------
-None
+
+No processing parameters are needed for this operation.
 
 Algorithm
 ---------
 The *phase deramping* procedure must account for both TOPSAR modulation (for IW and EW acquisition modes)  
 and the presence of a Doppler centroid.  
 The mechanism to reconstruct the TOPSAR modulation is extensively explained in {cite}`RDTOPSDEMOD`.  
-The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is shown in the figure below.
+The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is shown in :numref:`TOPS_time_freq_diagram`.
 
 .. _TOPS_time_freq_diagram_figure:
 .. figure:: images/TOPS_time_freq_diagram.png
@@ -55,24 +56,133 @@ The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is sho
    Credits: {cite}`RDTOPSDEMOD`. 
 
 The Doppler centroid is provided in a Look-Up Table (LUT).  
-Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r )`.  
+Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r)`.  
 
-The following figure presents a simplified schema of this step:
+:numref:`deramping_schema` presents a simplified schema of this step.
 
+.. _deramping_schema_figure:
 .. figure:: images/Deramping_diagram_v1.drawio.png
-   :name: Deramping_schema
+   :name: deramping_schema
    :align: center
-   :width: 300
+   :width: 450
 
    Diagram of image deramping processing step.
 
-Let :math:`\phi_{demod} (t_a,t_r )` be the total demodulation phase. The final demodulated SLC :math:`slc' (t_a,t_r )` is:
+Let :math:`\phi_{demod} (t_a,t_r)` be the total demodulation phase. The final demodulated SLC :math:`slc' (t_a,t_r)` is:
 
 .. math::
    :label: eq_deramping
 
    slc' (t_a,t_r ) = slc (t_a,t_r ) e^{-j\phi_{demod} (t_a,t_r ) }
 
-:eq:`eq_deramping`
-
 Phase reramping is the inverse operation of deramping, achieved simply by inverting the sign of the phase in the complex exponent.
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`slc`
+   * - Description
+     - Input SLC image, expressed in Digital Number (DN) or calibrated
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\phi_{demod}`
+   * - Description
+     - Total demodulation phase polynomial coefficients' matrix
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (degree in range, degree in azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`slc'`
+   * - Description
+     - Output demodulated SLC image, expressed in Digital Number (DN) or calibrated depending on the input image
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - complex array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`t_a`
+   * - Description
+     - azimuth absolute coordinate
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - datetime64[ns]
+   * - Dimensionality
+     - (azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`t_r`
+   * - Description
+     - range coordinate
+   * - Purpose
+     - Internal
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -

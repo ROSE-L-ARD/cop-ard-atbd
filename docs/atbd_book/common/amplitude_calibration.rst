@@ -31,8 +31,8 @@ The *amplitude calibration* tool provides in output the complex L1 data calibrat
 
 Processing parameters
 ---------------------
-None
 
+No processing parameters are needed for this operation.
 
 Algorithm
 ----------
@@ -56,7 +56,7 @@ Detailed variable description
    * - Symbol
      - :math:`slc`
    * - Description
-     - Input SLC image expressed in Digital NUmber (DN)
+     - Input SLC image, expressed in Digital Number (DN)
    * - Purpose
      - Input
    * - Units
@@ -74,9 +74,9 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`slc`
+     - :math:`A_c`
    * - Description
-     - Amplitude calibration polynomial coefficient
+     - Amplitude calibration polynomial coefficients' matrix
    * - Purpose
      - Input
    * - Units
@@ -96,7 +96,7 @@ Detailed variable description
    * - Symbol
      - :math:`slc_{ac}`
    * - Description
-     - Output calibrated SLC Beta0 convention
+     - Output calibrated SLC in :math:`\beta^0` convention
    * - Purpose
      - Output
    * - Units
@@ -140,13 +140,13 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - seconds
    * - Type
-     - datetime64[ns]
+     - float
    * - Dimensionality
-     - (azimuth)
+     - (range)
    * - Range of values
-     - N/A
+     - :math:`\ge 0`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code

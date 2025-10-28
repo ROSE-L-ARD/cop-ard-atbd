@@ -23,13 +23,13 @@ The algorithm can be divided into three steps, executed in the following sequenc
 - :ref:`Amplitude calibration <amplitude_calibration>`  
 - :ref:`Phase deramping <phase_deramping>`  
 
-The :numref:`calibration_unit_schema` shows a simplified schema of this functionality,  
+:numref:`calibration_unit_schema` shows a simplified schema of this functionality,  
 with the necessary inputs and provided outputs.  
 
 .. _calibration_unit_schema_figure:  
 .. figure:: images/ARD_Calibration.nonoise.drawio.png  
    :name: calibration_unit_schema  
-   :width: 300  
+   :width: 450  
    :align: center  
 
    Diagram of *Calibration Unit*.  
