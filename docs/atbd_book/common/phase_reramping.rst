@@ -132,7 +132,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - nanoseconds
    * - Type
      - datetime64[ns]
    * - Dimensionality
@@ -172,7 +172,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - nanoseconds
    * - Type
      - datetime64[ns]
    * - Dimensionality
