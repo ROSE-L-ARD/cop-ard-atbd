@@ -177,7 +177,7 @@ The computation of the local contributing area requires the following steps:
    
     A_{\sigma_x} = \frac{1}{4} \sum_{j \in J} \lVert \vec{e}_{1_x}^j \times \vec{e}_{2_x}^j \rVert, \forall{x \in D}
 
-where :math:`\vec{e}_1` and :math:`\vec{e}_2` are vectors representing two of the facet’s edges.
+where :math:`\vec{e}_1` and :math:`\vec{e}_2` are vectors representing two of the facet's edges.
 
 - Scale the facet ground surface area :math:`A_{\sigma_x}` to the facet gamma-naught area :math:`A_{\gamma_x}` to obtain the local contributing area in ground geometry (see :numref:`bck_coefficients_representation`):
 

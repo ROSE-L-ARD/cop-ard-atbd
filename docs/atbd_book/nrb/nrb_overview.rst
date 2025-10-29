@@ -12,7 +12,7 @@ Synthetic Aperture Radar” :cite:`CEOS-ARD_PFS_SAR`. This product exclusively c
 Radiometric Terrain Correction (RTC), providing Gamma-Nought as defined in :cite:`Small2011`,
 which mitigates the impact of differing observation geometries. It is the most readily comprehensible
 product, enabling direct visualization for visual interpretation, as well as deeper analysis.
-Indeed, analysing backscatter time series can yield information regarding the observed object’s
+Indeed, analysing backscatter time series can yield information regarding the observed object's
 type for classification purposes (land use, land cover), as well as its temporal variations,
 enabling applications such as change detection, security applications, and vegetation growth
 monitoring.
