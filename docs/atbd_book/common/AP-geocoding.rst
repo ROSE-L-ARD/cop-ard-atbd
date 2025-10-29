@@ -51,9 +51,9 @@ For **real-valued** input data, such as the flattened CSLC intensity image expre
 .. math::
    :label: eq_cell_proj_real
 
-   \gamma^0_g(x) = \frac{\sum_{i \in M_x} w_{x,i} \ \gamma^0_r(i)}{\sum_{i \in M_x} w_{x,i}}
+   \gamma^0_g(x) = \frac{\sum_{i \in M_x} w_{i,x} \ \gamma^0_r(i)}{\sum_{i \in M_x} w_{i,x}}
 
-Here, :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and :math:`w_{x,i}` are the corresponding weights. 
+Here, :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and :math:`w_{i,x}` are the corresponding weights. 
 :numref:`area_based_geocoding_intensity_figure` illustrates the intensity image obtained from a SAOCOM acquisition over Salamanca (ES) in ascending geometry, beam S4.
 
 .. _area_based_geocoding_intensity_figure:
@@ -107,7 +107,7 @@ Projection Geocoding applies the same APM to the complex-valued samples:
 .. math::
    :label: eq_cell_proj_complex
 
-   cpx_g(x) = \frac{\sum_{i \in M_x} w_{x,i} \ cpx_r(i)}{\sum_{i \in M_x} w_{x,i}}
+   cpx_g(x) = \frac{\sum_{i \in M_x} w_{i,x} \ cpx_r(i)}{\sum_{i \in M_x} w_{i,x}}
 
 where :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and for a radar cell :math:`i` belonging to :math:`M_x`, 
 :math:`cpx_r(i)` is the complex value in radar coordinates and :math:`cpx_g(x)` is the corresponding geocoded complex value.  
@@ -127,18 +127,18 @@ factor :math:`(m_r, m_a)` in slant range and azimuth, the inputs and APM must be
 .. math::
    :label: eq_multilook_weights
 
-   \bar{w}_{x,i} = \sum_{l \in I_r(i)} w_{x,l}
+   \bar{w}_{i,x} = \sum_{l \in I_r(i)} w_{l,x}
 
-In the previous formulas, :math:`I_r(i)` denotes the set of radar pixels contributing to the multilooked image radar pixel :math:`i`, and :math:`w_{x,\cdot}` are the corresponding weights.
+In the previous formulas, :math:`I_r(i)` denotes the set of radar pixels contributing to the multilooked image radar pixel :math:`i`, and :math:`w_{\cdot,x}` are the corresponding weights.
 
 Additionally, output cells can be grouped and averaged by summing projection weights across neighboring output pixels:
 
 .. math::
    :label: eq_output_averaging
 
-   \hat{w}_{x,i} = \sum_{y \in I_g(x)} w_{y,i}
+   \hat{w}_{i,x} = \sum_{y \in I_g(x)} w_{i,y}
 
-Here, :math:`I_g(x)` denotes the set of ground pixels contributing to the multilooked output image ground pixel :math:`x`, and :math:`w_{\cdot, i}` are the corresponding weights.
+Here, :math:`I_g(x)` denotes the set of ground pixels contributing to the multilooked output image ground pixel :math:`x`, and :math:`w_{i,\cdot}` are the corresponding weights.
 
 
 Detailed variable description
@@ -231,7 +231,7 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`{w}_{x,i}`
+     - :math:`{w}_{i,x}`
    * - Description
      - Weights to be applied the full-resolution input image to project it to the output grid.
    * - Purpose
@@ -241,7 +241,7 @@ Detailed variable description
    * - Type
      - float matrix (sparse)
    * - Dimensionality
-     - (ground cell, radar cell)
+     - (radar cell, ground cell)
    * - Range of values
      - :math:`[0, 1]`
    * - Initial/default values
@@ -331,7 +331,7 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`\bar{w}_{x,i}`
+     - :math:`\bar{w}_{i,x}`
    * - Description
      - Weights to be applied to the multilooked input image to project it to the output grid.
    * - Purpose
@@ -341,7 +341,7 @@ Detailed variable description
    * - Type
      - float matrix (sparse)
    * - Dimensionality
-     - (ground cell, radar cell)
+     - (radar cell, ground cell)
    * - Range of values
      - :math:`\ge 0`
    * - Initial/default values
@@ -351,7 +351,7 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`\hat{w}_{x,i}`
+     - :math:`\hat{w}_{i,x}`
    * - Description
      - Weights to be applied to the output image after the multilook operation.
    * - Purpose
@@ -361,7 +361,7 @@ Detailed variable description
    * - Type
      - float matrix (sparse)
    * - Dimensionality
-     - (ground cell, radar cell)
+     - (radar cell, ground cell)
    * - Range of values
      - :math:`\ge 0`
    * - Initial/default values
