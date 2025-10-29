@@ -26,7 +26,8 @@ The *noise removal* tool provides in output:
 
 Processing parameters
 ---------------------
-None 
+
+No processing parameters are needed for this operation.
 
 Algorithm
 ----------
@@ -53,3 +54,173 @@ The corrected SLC :math:`slc_{nc} (t_a,t_r )` is obtained as follows:
    slc_{nc} (t_a,t_r )= amp_{nc} (t_a,t_r ) e^{j\angle slc(t_a,t_r )}
 
 where :math:`\angle slc(t_a,t_r )` is the phase of the original SLC image.
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`slc`
+   * - Description
+     - Input SLC image, expressed in Digital Number (DN)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`slc_{nc}`
+   * - Description
+     - Input SLC image, expressed in Digital Number (DN), with modified amplitude after the subtraction of the noise power.
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - complex array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`noise`
+   * - Description
+     - Noise power, obtained using polynomial interpolation of the elements in the LUT associated with the input SLC image
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`amp_{nc}`
+   * - Description
+     - Modified amplitude after the subtraction of the noise power
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`|slc|^2`
+   * - Description
+     - Input SLC image power
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\angle slc`
+   * - Description
+     - Input SLC image phase
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`[-\pi, \pi)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`t_a`
+   * - Description
+     - azimuth absolute coordinate
+   * - Purpose
+     - Internal
+   * - Units
+     - nanoseconds
+   * - Type
+     - datetime64[ns]
+   * - Dimensionality
+     - (azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`t_r`
+   * - Description
+     - range coordinate
+   * - Purpose
+     - Internal
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
