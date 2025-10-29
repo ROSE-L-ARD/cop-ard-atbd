@@ -16,8 +16,8 @@
 
 Flattening
 ---------------
-The *Flatteining* is the process of removing from amplituide or phase signal of the SAR complex image a model:
+The *Flattening* is the process of removing from amplituide or phase signal of the SAR complex image a model:
 
 - :ref:`Noise removal <noise_removal>`: modifies the amplitude of the complex SLC data in order to compensate for estimated noise power. Used in NRB, POL product generation.
 - :ref:`Gamma flattening <gamma_flattening>`: removal of the expected RCS based on the local terrain contributing area and the SAR geometric distortsion. Used in the NRB, GSLC, POL product generation.
-- :ref:`Phase flattening <phase_flattening>`: removal of the topographic signature derived from the DEM, the orbital parameters and SAR geometric acquisition model. Usded in CSLC product generation.
+- :ref:`Phase flattening <phase_flattening>`: removal of the topographic signature derived from the DEM, the orbital parameters and SAR geometric acquisition model. Used in CSLC product generation.
