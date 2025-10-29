@@ -32,6 +32,9 @@ Inputs
 - :math:`img_r`: Real or complex valued image in radar geometry
 - :math:`ANF`: Area normalization factor in radar geometry (optional)
 
+:ref:`Radar rasterization <radar_rasterization>` section provides details on how to compute the APM and the ANF, 
+if the input image is in :math:`\beta^0` convention.
+
 Outputs
 --------
 
@@ -126,12 +129,16 @@ factor :math:`(m_r, m_a)` in slant range and azimuth, the inputs and APM must be
 
    \bar{w}_{x,i} = \sum_{l \in I_r(i)} w_{x,l}
 
+In the previous formulas, :math:`I_r(i)` denotes the set of radar pixels contributing to the multilooked image radar pixel :math:`i`, and :math:`w_{x,\cdot}` are the corresponding weights.
+
 Additionally, output cells can be grouped and averaged by summing projection weights across neighboring output pixels:
 
 .. math::
    :label: eq_output_averaging
 
-   \bar{w}_{x,i} = \sum_{y \in I_g(x)} w_{y,i}
+   \hat{w}_{x,i} = \sum_{y \in I_g(x)} w_{y,i}
+
+Here, :math:`I_g(x)` denotes the set of ground pixels contributing to the multilooked output image ground pixel :math:`x`, and :math:`w_{\cdot, i}` are the corresponding weights.
 
 
 Detailed variable description
@@ -146,7 +153,7 @@ Detailed variable description
    * - Symbol
      - :math:`img_r`
    * - Description
-     - Input real or complex image to be projected
+     - Input radar image (real or complex) to be projected
    * - Purpose
      - Input
    * - Units
@@ -164,81 +171,21 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`ANF`
+     - :math:`img_g`
    * - Description
-     - Area normalization factor in radar geometry
+     - Output geocoded image (real or complex)
    * - Purpose
-     - Input
+     - Output
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float/complex matrix
    * - Dimensionality
-     - (range, azimuth)
+     - (x, y)
    * - Range of values
      - N/A
    * - Initial/default values
      - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`{w}_{x,i}`
-   * - Description
-     - Weigths to be applied the full-resolution input image to project it to the output grid.
-   * - Purpose
-     - Internal
-   * - Units
-     - N/A
-   * - Type
-     - float matrix (sparse)
-   * - Dimensionality
-     - (ground cell, radar cell)
-   * - Range of values
-     - :math:`[0, 1]`
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`\bar{w}_{x,i}`
-   * - Description
-     - Weigths to be applied the multilooked input image to project it to the output grid.
-   * - Purpose
-     - Internal
-   * - Units
-     - N/A
-   * - Type
-     - float matrix (sparse)
-   * - Dimensionality
-     - (ground cell, radar cell)
-   * - Range of values
-     - :math:`[0, 1]`
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`(m_r, m_a)`
-   * - Description
-     - Multilook factor in range and azimuth direction.
-   * - Purpose
-     - Internal
-   * - Units
-     - pixels
-   * - Type
-     - int
-   * - Dimensionality
-     - (range multilook factor, azimuth multilook factor)
-   * - Range of values
-     - :math:`\ge 0`
-   * - Initial/default values
-     - (1,1)
    * - Name in pseudo-code
      - N/A
    * - 
@@ -248,7 +195,7 @@ Detailed variable description
    * - Description
      - Radar cross-section gamma-nought in radar geometry
    * - Purpose
-     - Internal
+     - Input
    * - Units
      - N/A
    * - Type
@@ -277,6 +224,146 @@ Detailed variable description
      - (x, y)
    * - Range of values
      - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`{w}_{x,i}`
+   * - Description
+     - Weights to be applied the full-resolution input image to project it to the output grid.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix (sparse)
+   * - Dimensionality
+     - (ground cell, radar cell)
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`cpx_r`
+   * - Description
+     - Input radar image (real or complex) to be projected
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`cpx_g`
+   * - Description
+     - Output complex geocoded image
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - complex matrix
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`(m_r, m_a)`
+   * - Description
+     - Multilook factors in range and azimuth direction.
+   * - Purpose
+     - Internal
+   * - Units
+     - pixels
+   * - Type
+     - int
+   * - Dimensionality
+     - (range multilook factor, azimuth multilook factor)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - (1,1)
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\bar{\gamma}^0_{r}`
+   * - Description
+     - Multilooked radar cross-section gamma-nought in radar geometry
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\bar{w}_{x,i}`
+   * - Description
+     - Weights to be applied to the multilooked input image to project it to the output grid.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix (sparse)
+   * - Dimensionality
+     - (ground cell, radar cell)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\hat{w}_{x,i}`
+   * - Description
+     - Weights to be applied to the output image after the multilook operation.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix (sparse)
+   * - Dimensionality
+     - (ground cell, radar cell)
+   * - Range of values
+     - :math:`\ge 0`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
