@@ -38,7 +38,8 @@ The tool provides the following outputs:
 
 Processing parameters
 ---------------------
-None  
+
+No processing parameters are needed for this operation.
 
 Algorithm
 ---------
@@ -52,7 +53,7 @@ It is important to note that the input data have two sets of coordinates: **geog
 
 The algorithm follows these steps:
 
-1. Extract a **regular planar triangulation** using geographic coordinates, as shown in :numref:`regular_grid_triangulation`:
+1. Extract a **regular planar triangulation** using geographic coordinates, as shown in :numref:`regular_grid_triangulation`.
 
 .. figure:: images/regular_grid_triangulation_bw.png
    :name: regular_grid_triangulation
@@ -61,7 +62,7 @@ The algorithm follows these steps:
 
    Triangulation of a regular grid.
 
-2. Substitute geographic coordinates with radar coordinates in the triangulation, obtaining a **deformed triangulation**, as shown in :numref:`irregular_grid_triangulation`:
+2. Substitute geographic coordinates with radar coordinates in the triangulation, obtaining a **deformed triangulation**, as shown in :numref:`irregular_grid_triangulation`.
 
 .. figure:: images/irregular_grid_triangulation_bw.png
    :name: irregular_grid_triangulation
@@ -73,7 +74,7 @@ The algorithm follows these steps:
 3. For each triangle facet:
    
    - Define the **linear interpolation function**, substituting geographic coordinates with radar coordinates.
-   - Apply the **linear interpolation function** to the output points belonging to the triangle, as shown in :numref:`interpolation_on_triang`:
+   - Apply the **linear interpolation function** to the output points belonging to the triangle, as shown in :numref:`interpolation_on_triang`.
 
 .. figure:: images/interpolation_on_triang_bw.png
    :name: interpolation_on_triang
