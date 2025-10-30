@@ -24,7 +24,7 @@ Outputs
 Processing Parameters
 ---------------------
 
-None
+No processing parameters are needed for this operation.
 
 Algorithm
 ---------
