@@ -13,9 +13,6 @@ Outputs
 
 - :math:`S'`: stack of co-registered images with phase filtered for ionospheric effects
 
-Processing Parameters
----------------------
-
 
 Algorithm
 ---------
@@ -220,7 +217,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - hertz
+     - Hz
    * - Type
      - float
    * - Dimensionality
@@ -240,7 +237,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - hertz
+     - Hz
    * - Type
      - float
    * - Dimensionality
