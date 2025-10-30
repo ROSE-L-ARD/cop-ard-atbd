@@ -45,3 +45,171 @@ In general, to compensate for ionospheric effects or where a polynomial function
 .. note::
     A robust estimation technique must be employed to remain insensitive to outliers.
     For instance, outliers can be identified by comparing the values at a given patch with the median of the neighboring patches and discarding them if the difference exceeds a certain threshold. The removed outliers can then be replaced with the corresponding median values.
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Symbol
+     - :math:`\Delta t_{r_s}`
+   * - Description
+     - Residual offsets in slant range direction, to be applied to the secondary image to match the reference image, computed using the model-based methods
+   * - Purpose
+     - Input
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta t_{a_s}`
+   * - Description
+     - Residual offsets in azimuth direction, to be applied to the secondary image to match the reference image, computed using the model-based methods
+   * - Purpose
+     - Input
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\delta t_{r_s}`
+   * - Description
+     - Residual offsets in slant range direction, to be applied to the secondary image to match the reference image, computed using image matching or ESD
+   * - Purpose
+     - Input
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\delta t_{a_s}`
+   * - Description
+     - Residual offsets in azimuth direction, to be applied to the secondary image to match the reference image, computed using image matching or ESD
+   * - Purpose
+     - Input
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\hat{\delta} t_{r_s}`
+   * - Description
+     - Residual offsets in slant range direction, to be applied to the secondary image to match the reference image, reconstructed over the reference image through interpolation
+   * - Purpose
+     - Internal
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\hat{\delta} t_{a_s}`
+   * - Description
+     - Residual offsets in azimuth direction, to be applied to the secondary image to match the reference image, reconstructed over the reference image through interpolation
+   * - Purpose
+     - Internal
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta_{corr} t_{r_s}`
+   * - Description
+     - Corrected offset in slant range direction to be applied to the secondary image to match the reference image
+   * - Purpose
+     - Input
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta_{corr} t_{a_s}`
+   * - Description
+     - Corrected offset in azimuth direction to be applied to the secondary image to match the reference image
+   * - Purpose
+     - Input
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
