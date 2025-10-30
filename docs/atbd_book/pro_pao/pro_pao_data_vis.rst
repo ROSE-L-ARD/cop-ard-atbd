@@ -14,7 +14,7 @@ In the following a short guide to open the product and access variables and meta
 .. _open_pro_pao_datatree:
 
 Opening PRO / PAO products in python
-============================================
+====================================
 
 Overview
 --------
@@ -81,7 +81,7 @@ See Also
 .. _pro_pao_qgis_guide:
 
 Loading PRO / PAO products in QGIS
-=========================================
+==================================
 
 Overview
 --------
