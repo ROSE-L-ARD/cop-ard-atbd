@@ -171,7 +171,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - radians
    * - Type
      - float array
    * - Dimensionality

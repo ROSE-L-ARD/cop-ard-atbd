@@ -122,7 +122,7 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - N/A
+     - scalar
    * - Range of values
      - N/A
    * - Initial/default values
@@ -138,7 +138,7 @@ Detailed variable description
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - radians
    * - Type
      - float
    * - Dimensionality
