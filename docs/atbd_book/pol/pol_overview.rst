@@ -17,8 +17,8 @@ is a subset of the POL ARD which coincides with the NRB ARD.
 
 The POL ARD products considered in this project correspond to the polarimetric covariance matrix
 representation, which fully preserves polarimetric content, e.g. the inter-channel polarimetric phases.
-The covariance matrix is square with size 3x3 for full-pol (denoted as :math:`C_3`) and with size 2x2 for
-compact- and dual-pol modes (denoted as :math:`C_2`).
+The covariance matrix is square with size :math:`3 \times 3` for full-pol (denoted as :math:`C_3`) and with 
+size :math:`2 \times 2` for compact- and dual-pol modes (denoted as :math:`C_2`).
 
 The product can be provided in radar coordinates (denoted as COV) or in geographical coordinates, i.e. after
 geocoding (denoted as GCOV).
