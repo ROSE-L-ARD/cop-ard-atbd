@@ -78,8 +78,8 @@ cd _build/latex
 Compile the `.tex` document **twice** (only one `.tex` file should be present):
 
 ```
-xelatex *tex > tex_to_pdf.log
-xelatex *tex > tex_to_pdf.log
+xelatex -interaction=batchmode *tex > tex_to_pdf.log
+xelatex -interaction=batchmode *tex > tex_to_pdf.log
 ```
 
 This ensures proper references, page numbers, and table of contents.
@@ -91,5 +91,5 @@ This ensures proper references, page numbers, and table of contents.
 For convenience, the complete build process can be executed with a single command:
 
 ```
-jb clean .; rm -rf _build/; jb build . --all; echo | jb build . --builder pdflatex > build.log 2>&1; ./patch_texfile.sh; cd _build/latex; xelatex *tex > tex_to_pdf.log; xelatex *tex > tex_to_pdf.log
+jb clean .; rm -rf _build/; jb build . --all; echo | jb build . --builder pdflatex > build.log 2>&1; ./patch_texfile.sh; cd _build/latex; xelatex -interaction=batchmode *tex > tex_to_pdf.log; xelatex -interaction=batchmode *tex > tex_to_pdf.log
 ```
