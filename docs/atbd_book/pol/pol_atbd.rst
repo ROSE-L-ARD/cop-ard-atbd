@@ -63,13 +63,13 @@ The expression of the dual-pol covariance matrix is:
 
 .. math::
 
-C_2 =
-    \begin{bmatrix}
-        <|VV|^2>       & <VV \cdot VH^*> \\
-        <VH\cdot VV^*> & <|VH|^2>
-    \end{bmatrix}
+    C_2 =
+        \begin{bmatrix}
+            \langle |VV|^2 \rangle & \langle VV \cdot VH^* \rangle \\
+            \langle VH \cdot VV^* \rangle & \langle |VH|^2 \rangle
+        \end{bmatrix}
 
-where :math:`< >` denotes a spatial averaging or filtering, and superscript :math:`*` is the complex conjugate.
+where :math:`\langle \rangle` denotes a spatial averaging or filtering, and superscript :math:`*` is the complex conjugate.
 
 .. code:: 
 
@@ -189,4 +189,3 @@ Otherwise, the output grid posting is similar to SLC resolution.
                 enable_dask=True,
             )
     
-
