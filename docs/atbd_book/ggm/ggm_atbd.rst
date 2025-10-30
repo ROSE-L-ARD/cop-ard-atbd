@@ -71,14 +71,6 @@ The overdetermined system is solved using the Least Mean Square Error (LMSE) met
 
    \hat{\mathbf{u}} = (\mathbf{A}^\top \mathbf{A})^{-1} \mathbf{A}^\top \mathbf{d}
 
-.. _ggm_scheme:
-.. figure:: images/ggm_scheme.png
-   :width: 100%
-   :align: center
-   :alt: Graphic scheme for GGM product generation
-
-   Simple graphic scheme for the generation of the GGM products starting from the PRO/PAO products.
-
 Being the measurement noise non-uniform, a weighted LMSE solution is applied:
 
 .. math::
@@ -101,3 +93,281 @@ With :math:`\sigma_r` and :math:`\sigma_a` denoting standard deviations of range
    \mathbf{L} = (\mathbf{A}^\top \mathbf{W} \mathbf{A})^{-1} \mathbf{A}^\top \mathbf{W}
 
 Azimuth offset noise in Sentinel-1 and ROSE-L data is significantly higher than range offset noise. This discrepancy must be considered when refining displacement products. Since azimuth offsets are up to two orders of magnitude noisier, it’s advisable to **coarsen the azimuth resolution** using spatial averaging (e.g. multilook) to improve reliability of azimuth-constrained products.
+
+.. _ggm_scheme:
+.. figure:: images/ggm_scheme.png
+   :width: 95%
+   :align: center
+   :alt: Graphic scheme for GGM product generation
+
+   Simple graphic scheme for the generation of the GGM products starting from the PRO/PAO products.
+
+Detailed variable description
+=============================
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`\Delta_{rg}^a`
+   * - Description
+     - Offset measured in slant range direction in ascending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta_{rg}^d`
+   * - Description
+     - Offset measured in slant range direction in descending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta_{az}^a`
+   * - Description
+     - Offset measured in azimuth direction in ascending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta_{az}^d`
+   * - Description
+     - Offset measured in azimuth direction in descending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\sigma_{a,rg}`
+   * - Description
+     - Standard deviation of the measured offset in slant range direction in ascending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\sigma_{d,rg}`
+   * - Description
+     - Standard deviation of the measured offset in slant range direction in descending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\sigma_{a,az}`
+   * - Description
+     - Standard deviation of the measured offset in azimuth direction in ascending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\sigma_{d,az}`
+   * - Description
+     - Standard deviation of the measured offset in azimuth direction in descending geometry
+   * - Purpose
+     - Input
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\mathbf{u}`
+   * - Description
+     - Solution of the weighted LMSE system, containing the components of the deformation along the three axes E,N,H
+   * - Purpose
+     - Output
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (axis, range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\mathbf{d}`
+   * - Description
+     - Stack of offset measurements in slant range/azimuth directions and both geometries
+   * - Purpose
+     - Internal
+   * - Units
+     - metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (index, range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\mathbf{A}`
+   * - Description
+     - Matrix of lines of flight/sight components for both geometries 
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (index, axis, range, azimuth)
+   * - Range of values
+     - :math:`[-1, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\mathbf{W}`
+   * - Description
+     - Diagonal weight matrix based on inverse variances 
+   * - Purpose
+     - Internal
+   * - Units
+     - 1 / squared metres
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (index, index, range, azimuth)
+   * - Range of values
+     - :math:`\ge 0`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\mathbf{L}`
+   * - Description
+     - Weighted LMSE method's matrix
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float matrix
+   * - Dimensionality
+     - (axis, index, range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
