@@ -42,7 +42,7 @@ Algorithm
 ---------
 The *phase reramping* process must account for both TOPSAR modulation (for IW and EW acquisition modes)
 and the presence of a Doppler centroid.
-The mechanism to reconstruct the TOPSAR modulation is extensively explained in {cite}`RDTOPSDEMOD`.  
+The mechanism to reconstruct the TOPSAR modulation is extensively explained in :cite:`RDTOPSDEMOD`.  
 
 The Doppler centroid is provided in a Look-Up Table (LUT).  
 Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r)`.  

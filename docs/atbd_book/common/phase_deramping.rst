@@ -42,7 +42,7 @@ Algorithm
 ---------
 The *phase deramping* procedure must account for both TOPSAR modulation (for IW and EW acquisition modes)  
 and the presence of a Doppler centroid.  
-The mechanism to reconstruct the TOPSAR modulation is extensively explained in {cite}`RDTOPSDEMOD`.  
+The mechanism to reconstruct the TOPSAR modulation is extensively explained in :cite:`RDTOPSDEMOD`.  
 The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is shown in :numref:`TOPS_time_freq_diagram`.
 
 .. _TOPS_time_freq_diagram_figure:
@@ -53,7 +53,7 @@ The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is sho
 
    Linear variation of the Doppler frequency across azimuth time within a burst (in red).  
    The representation assumes a Doppler centroid frequency :math:`f_{\eta c}` of 0 Hz for simplicity.  
-   Credits: {cite}`RDTOPSDEMOD`. 
+   Credits: :cite:`RDTOPSDEMOD`. 
 
 The Doppler centroid is provided in a Look-Up Table (LUT).  
 Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r)`.  
