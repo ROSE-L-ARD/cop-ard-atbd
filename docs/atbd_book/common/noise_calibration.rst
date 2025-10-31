@@ -73,9 +73,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -87,15 +87,15 @@ Detailed variable description
    * - Symbol
      - :math:`slc_{nc}`
    * - Description
-     - Input SLC image, expressed in Digital Number (DN), with modified amplitude after the subtraction of the noise power.
+     - Input SLC image, expressed in Digital Number (DN), with modified amplitude after the subtraction of the noise power
    * - Purpose
      - Output
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -115,9 +115,9 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -135,9 +135,9 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -155,9 +155,9 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -207,7 +207,7 @@ Detailed variable description
    * - Symbol
      - :math:`t_r`
    * - Description
-     - range coordinate
+     - slant range coordinate
    * - Purpose
      - Internal
    * - Units
@@ -215,12 +215,10 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - (range)
+     - (slant range)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -

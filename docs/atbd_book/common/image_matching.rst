@@ -38,136 +38,6 @@ The Pearson correlation coefficient between the reference image :math:`slc_r` an
 To find the values :math:`(\delta t_{r_s}, \delta t_{a_s})` that maximize the function :math:`\Gamma(\delta t_{r_s}, \delta t_{a_s})` with sub-pixel accuracy, it is sufficient to evaluate the function at offsets that are integer multiples of the image spacing. Once the function has been computed at these integer nodes, it is possible to oversample the objective function or fit a paraboloid around the local peak to obtain the coordinates of the maximum.
 The maximum of the objevtive function and the position of the maximum are the main outputs of the function.
 
-Detailed variable description
------------------------------
-
-.. list-table:: Variable Description Table
-   :widths: 25 50
-   :header-rows: 1
-
-   * - Property
-     - Value
-   * - Symbol
-     - :math:`slc_r`
-   * - Description
-     - Reference (real or complex) SLC image
-   * - Purpose
-     - Input
-   * - Units
-     - N/A
-   * - Type
-     - float/complex matrix
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - N/A
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`slc_s`
-   * - Description
-     - Secondary (real or complex) SLC image
-   * - Purpose
-     - Input
-   * - Units
-     - N/A
-   * - Type
-     - float/complex matrix
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - N/A
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`(t_{r_s}, t_{a_s})`
-   * - Description
-     - Coordinates of the output reference grid in the secondary image grid
-   * - Purpose
-     - Internal
-   * - Units
-     - (seconds, nanoseconds)
-   * - Type
-     - (float, datetime64[ns])
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - (:math:`\ge 0`, N/A)
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`\delta t_{r_s}`
-   * - Description
-     - Offset in slant range direction to be applied to the secondary image to match the reference image
-   * - Purpose
-     - Output
-   * - Units
-     - seconds
-   * - Type
-     - float
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - N/A
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`\delta t_{a_s}`
-   * - Description
-     - Offset in azimuth direction to be applied to the secondary image to match the reference image
-   * - Purpose
-     - Output
-   * - Units
-     - nanoseconds
-   * - Type
-     - timedelta64[ns]
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - N/A
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`\Gamma`
-   * - Description
-     - Absolute value of the Pearson correlation coefficient in correspondance of the optimum shift
-   * - Purpose
-     - Output
-   * - Units
-     - N/A
-   * - Type
-     - float
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - :math:`[0, 1]`
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-
 Code
 -------
 
@@ -320,3 +190,131 @@ Code
             },
             attrs={"type": type, "pixel_to_time": pixel_to_time.flatten()},
         )
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`slc_r`
+   * - Description
+     - Reference (real or complex) SLC image
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array / float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`slc_s`
+   * - Description
+     - Secondary (real or complex) SLC image
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array / float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`(t_{r_s}, t_{a_s})`
+   * - Description
+     - Coordinates of the output reference grid in the secondary image grid
+   * - Purpose
+     - Internal
+   * - Units
+     - (seconds, nanoseconds)
+   * - Type
+     - (float, datetime64[ns])
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[0,+\infty) \times (-\infty, +\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\delta t_{r_s}`
+   * - Description
+     - Offset in slant range direction to be applied to the secondary image to match the reference image
+   * - Purpose
+     - Output
+   * - Units
+     - seconds
+   * - Type
+     - float
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\delta t_{a_s}`
+   * - Description
+     - Offset in azimuth direction to be applied to the secondary image to match the reference image
+   * - Purpose
+     - Output
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Gamma`
+   * - Description
+     - Absolute value of the Pearson correlation coefficient in correspondance of the optimum shift
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A

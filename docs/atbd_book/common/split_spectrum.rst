@@ -99,9 +99,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -119,9 +119,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -141,7 +141,7 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -161,7 +161,7 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -181,7 +181,7 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -201,7 +201,7 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -248,5 +248,3 @@ Detailed variable description
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -

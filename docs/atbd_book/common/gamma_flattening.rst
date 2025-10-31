@@ -32,8 +32,7 @@ Algorithm
 ---------
 
 The first step consists in extracting the real and imaginary parts of the input CSLC image. Considering the calibration 
-procedure in :ref:`Amplitude calibration <amplitude_calibration>`, the squared modulus of CSLC represents  
-:math:`\beta^0_{LUT}`, calculated using the LUT table extracted from the SLC annotations. Therefore:
+procedure in :ref:`Amplitude calibration <amplitude_calibration>`, :math:`\beta^0` is the squared modulus of the CSLC product:
 
 .. math::
    :label: eq_CSLC_module
@@ -57,7 +56,7 @@ the CSLC complex product by the square root of :math:`ANF`:
 .. math::
    :label: eq_CSLC_flat
 
-   CSLC_{flatten} = \frac{CSLC}{\sqrt{ANF/\beta^0}} = CSLC \sqrt{\gamma^0_r}
+   CSLC_{flatten} = \frac{CSLC}{\sqrt{\frac{ANF}{\beta^0}}} = CSLC \sqrt{\gamma^0_r}
 
 An example of SAR Sentinel-1 image intensity, corresponding to a single burst in radar geometry, 
 is shown in :numref:`intensity_iw1_92640_044_salzburg_orig`.
@@ -101,9 +100,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -121,11 +120,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -141,11 +140,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -161,9 +160,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -175,23 +174,20 @@ Detailed variable description
    * - Symbol
      - :math:`\beta^0`
    * - Description
-     - Slant-range backscatter coefficient, derived using the calibration LUT
+     - Slant range backscatter coefficient
    * - Purpose
      - Internal
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
-
 
      

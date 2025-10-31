@@ -159,9 +159,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float/complex matrix
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -179,7 +179,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float/complex matrix
+     - complex float array
    * - Dimensionality
      - (x, y)
    * - Range of values
@@ -199,11 +199,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - N/A
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -213,17 +213,17 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0_{g}`
    * - Description
-     - Radar cross-section gamma-nought in ground geometry
+     - Geocoded radar cross-section gamma-nought
    * - Purpose
      - Output
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -239,7 +239,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix (sparse)
+     - sparse float array
    * - Dimensionality
      - (radar cell, ground cell)
    * - Range of values
@@ -253,15 +253,15 @@ Detailed variable description
    * - Symbol
      - :math:`cpx_r`
    * - Description
-     - Input radar image (real or complex) to be projected
+     - Input complex radar image to be projected
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - complex matrix
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -279,7 +279,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex matrix
+     - complex float array
    * - Dimensionality
      - (x, y)
    * - Range of values
@@ -293,19 +293,39 @@ Detailed variable description
    * - Symbol
      - :math:`(m_r, m_a)`
    * - Description
-     - Multilook factors in range and azimuth direction.
+     - Multilook factors in slant range and azimuth direction.
    * - Purpose
      - Internal
    * - Units
      - pixels
    * - Type
-     - int
+     - (int, int)
    * - Dimensionality
-     - (range multilook factor, azimuth multilook factor)
+     - (slant range multilook factor, azimuth multilook factor)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`\mathbb{N}^+ \times \mathbb{N}^+`
    * - Initial/default values
      - (1,1)
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`I_r(i)`
+   * - Description
+     - Set of radar pixels contributing to the multilooked image radar pixel :math:`i`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - N/A
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
    * - Name in pseudo-code
      - N/A
    * - 
@@ -319,9 +339,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -339,11 +359,31 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix (sparse)
+     - sparse float array
    * - Dimensionality
      - (radar cell, ground cell)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`I_g(x)`
+   * - Description
+     - Set of ground pixels contributing to the multilooked output image ground pixel :math:`x`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - N/A
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - N/A
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -359,17 +399,15 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix (sparse)
+     - sparse float array
    * - Dimensionality
      - (radar cell, ground cell)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
 
 
 

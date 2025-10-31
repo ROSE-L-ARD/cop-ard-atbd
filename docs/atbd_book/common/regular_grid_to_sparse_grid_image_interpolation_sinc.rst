@@ -5,8 +5,10 @@ Regular grid to sparse grid image interpolation - *image resampling*
 
 Overview
 --------
-This function allows interpolation of a regular gridded image onto a sparse grid using the truncated *sinc* interpolation method. This is useful when resampling the secondary SLC image onto the same grid as the input reference image. In the case of complex images, it is assumed that the image is in baseband, meaning the phase has been appropriately deramped.
+This function allows interpolation of a regular gridded image onto a sparse grid using the truncated *sinc* interpolation method. This is useful when resampling the secondary image onto the same grid as the input reference image. In the case of complex images (SLC), it is assumed that the image is in baseband, meaning the phase has been appropriately deramped.
 To limit the ripple effect caused by the finite length of the interpolator, a weighting function is applied using a bi-parametric Kaiser window.
+
+In the following sections, it is assumed that the input image is complex (SLC), but the algorithm can be identically applied to real images.
 
 Inputs
 ------
@@ -59,28 +61,28 @@ Let :math:`(S_{r},S_{a})` be the size of the interpolation kernel, with :math:`K
 .. math::
     :label: coreg_kernel_1
 
-    k_x(x) = sinc(x + \delta t_{r_s}) * w_{kaiser}(x + \delta t_{r_s}, \beta=\beta_{kaiser}), \quad \forall \ x \in K_r
+    k_r(x) = sinc(x + \delta t_{r_s}) w_{kaiser}(x + \delta t_{r_s}, \beta=\beta_{kaiser}), \quad \forall \ x \in K_r
 
 .. math::
     :label: coreg_kernel_2
 
-    k_y(y) = sinc(y + \delta t_{a_s}) * w_{kaiser}(y + \delta t_{a_s}, \beta=\beta_{kaiser}), \quad \forall \ y \in K_a
+    k_a(y) = sinc(y + \delta t_{a_s}) w_{kaiser}(y + \delta t_{a_s}, \beta=\beta_{kaiser}), \quad \forall \ y \in K_a
 
 .. math::
     :label: coreg_kernel_3
 
-    k(x,y) = k_x^T(x,y) * k_y(x,y)
+    k(x,y) = k_x^T(x,y) \cdot k_y(x,y)
 
 4. Application of the kernel:
 
 .. math::
     :label: coreg_kernel_apply
 
-    CSLC_{deramp}(t_{r_r},t_{a_r}) = \sum_{x \in K_{r}}{\sum_{y \in K_{a}}{\hat{slc}_{deramp}(x,y) * k(x,y)}}.
+    CSLC_{deramp}(t_{r_r},t_{a_r}) = \sum_{x \in K_{r}}{\sum_{y \in K_{a}}{SLC_{deramp}(\hat{t}_{r_s} + x, \hat{t}_{a_s} + y) k(x,y)}}
 
 The computation of the integer component of the coordinates must be intended in this way:
 
-- For each entry :math:`t_{r_s}[i]` of :math:`t_{r_s}`, in general :math:`t_{r_s}[i]` does not belong to the secondary image range grid, and :math:`\hat{t}_{r_s}[i]` is the element in the secondary image range grid that best approximates :math:`t_{r_s}[i]`;
+- For each entry :math:`t_{r_s}[i]` of :math:`t_{r_s}`, in general :math:`t_{r_s}[i]` does not belong to the secondary image slant range grid, and :math:`\hat{t}_{r_s}[i]` is the closest element in the secondary image slant range grid to :math:`t_{r_s}[i]`;
 - The same applies in the azimuth direction.
 
 After these considerations, the computation of the fractional component is straightforward and well defined.
@@ -99,15 +101,15 @@ Detailed variable description
    * - Symbol
      - :math:`SLC_{deramp}`
    * - Description
-     - Input (real or complex deramped) SLC image
+     - Input deramped SLC image
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - float/complex matrix
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -119,7 +121,7 @@ Detailed variable description
    * - Symbol
      - :math:`(t_{r_r}, t_{a_r})`
    * - Description
-     - Desired (output) reference range/azimuth grid
+     - Output reference slant range/azimuth grid
    * - Purpose
      - Input
    * - Units
@@ -127,9 +129,9 @@ Detailed variable description
    * - Type
      - (float, datetime64[ns])
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - (:math:`\ge 0`, N/A)
+     - :math:`[0,+\infty) \times (-\infty, +\infty)` 
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -139,7 +141,7 @@ Detailed variable description
    * - Symbol
      - :math:`(\Delta t_{r_s}, \Delta t_{a_s})`
    * - Description
-     - Range/azimuth offsets of the secondary image grid, with respect to the reference range/azimuth grid
+     - Slant range/azimuth offsets of the secondary image grid, with respect to the reference range/azimuth grid
    * - Purpose
      - Input
    * - Units
@@ -147,7 +149,7 @@ Detailed variable description
    * - Type
      - (float, timedelta64[ns])
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -159,15 +161,15 @@ Detailed variable description
    * - Symbol
      - :math:`CSLC_{deramp}`
    * - Description
-     - Output (real or complex deramped) coregistered SLC image
+     - Output deramped coregistered SLC image
    * - Purpose
      - Output
    * - Units
      - N/A
    * - Type
-     - float/complex matrix
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -179,17 +181,17 @@ Detailed variable description
    * - Symbol
      - :math:`(S_r, S_a)`
    * - Description
-     - Interpolation kernel range/azimuth sizes
+     - Interpolation kernel slant slant range/azimuth sizes
    * - Purpose
      - Internal
    * - Units
-     - N/A
+     - (pixels, pixels)
    * - Type
      - (int, int)
    * - Dimensionality
-     - N/A
+     - (scalar, scalar)
    * - Range of values
-     - (:math:`\ge 0`, :math:`\ge 0`)
+     - :math:`\mathbb{N}^+ \times \mathbb{N}^+` 
    * - Initial/default values
      - (11, 11)
    * - Name in pseudo-code
@@ -203,13 +205,13 @@ Detailed variable description
    * - Purpose
      - Input
    * - Units
-     - N/A
+     - N/A (fare ricerca)
    * - Type
      - float
    * - Dimensionality
-     - N/A
+     - scalar
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - 6
    * - Name in pseudo-code
@@ -219,7 +221,7 @@ Detailed variable description
    * - Symbol
      - :math:`(K_r, K_a)`
    * - Description
-     - Interpolation kernel samples along range/azimuth, based on the kernel size :math:`(S_r, S_a)`
+     - Interpolation kernel samples along slant range/azimuth, based on the kernel size :math:`(S_r, S_a)`
    * - Purpose
      - Internal
    * - Units
@@ -227,7 +229,7 @@ Detailed variable description
    * - Type
      - (float array, float array)
    * - Dimensionality
-     - (range samples, azimuth samples)
+     - (slant range samples, azimuth samples)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -247,9 +249,9 @@ Detailed variable description
    * - Type
      - (float, datetime64[ns])
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - (:math:`\ge 0`, N/A)
+     - :math:`[0,+\infty) \times (-\infty, +\infty)` 
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -259,7 +261,7 @@ Detailed variable description
    * - Symbol
      - :math:`(\hat{t}_{r_s}, \hat{t}_{a_s})`
    * - Description
-     - Integer part of the output reference grid in the secondary image grid
+     - Integer component of the output reference grid in the secondary image grid
    * - Purpose
      - Internal
    * - Units
@@ -267,9 +269,9 @@ Detailed variable description
    * - Type
      - (float, datetime64[ns])
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - (:math:`\ge 0`, N/A)
+     - :math:`[0,+\infty) \times (-\infty, +\infty)` 
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -279,7 +281,7 @@ Detailed variable description
    * - Symbol
      - :math:`(\delta t_{r_s}, \delta t_{a_s})`
    * - Description
-     - Fractional part of the output reference grid in the secondary image grid
+     - Fractional component of the output reference grid in the secondary image grid
    * - Purpose
      - Internal
    * - Units
@@ -287,9 +289,49 @@ Detailed variable description
    * - Type
      - (float, timedelta64[ns])
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - (:math:`\ge 0`, N/A)
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`k_r`
+   * - Description
+     - Interpolation kernel along slant range direction
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - slant range samples
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`k_a`
+   * - Description
+     - Interpolation kernel along azimuth direction
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - azimuth samples
+   * - Range of values
+     - N/A
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -299,42 +341,18 @@ Detailed variable description
    * - Symbol
      - :math:`k`
    * - Description
-     - Interpolation kernel, obtained from the matrix multiplication of the two kernel vectors :math:`k_x` and :math:`k_y`
+     - Interpolation kernel, obtained from the matrix multiplication of the two kernel vectors :math:`k_r` and :math:`k_a`
    * - Purpose
      - Internal
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range samples, azimuth samples)
+     - (slant range samples, azimuth samples)
    * - Range of values
      - N/A
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
-   * - Symbol
-     - :math:`\hat{slc}_{deramp}`
-   * - Description
-     - Input (real or complex deramped) SLC image, windowed according to the interpolation kernel shape
-   * - Purpose
-     - Internal
-   * - Units
-     - N/A
-   * - Type
-     - float/complex matrix
-   * - Dimensionality
-     - (range, azimuth)
-   * - Range of values
-     - N/A
-   * - Initial/default values
-     - N/A
-   * - Name in pseudo-code
-     - N/A
-   * - 
-     -
-
-

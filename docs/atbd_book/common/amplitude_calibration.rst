@@ -37,12 +37,12 @@ No processing parameters are needed for this operation.
 Algorithm
 ----------
 
-Let :math:`slc (t_a,t_r )` be the image corrected for thermal noise. The amplitude calibration consists of rescaling the amplitude of the complex signal according to a scaling factor :math:`A_c (t_a,t_r )`. This coefficient can be reconstructed using polynomial interpolation of the LUT elements annotated in the input image.
+Let :math:`slc (t_a,t_r)` be the image corrected for thermal noise. The amplitude calibration consists of rescaling the amplitude of the complex signal according to a scaling factor :math:`A_c (t_a,t_r)`. This coefficient can be reconstructed using polynomial interpolation of the LUT elements annotated in the input image.
 
 .. math::
    :label: eq_amp_calib
 
-   slc_{ac} (t_a,t_r ) = slc (t_a,t_r ) A_c (t_a,t_r )
+   slc_{ac} (t_a,t_r) = slc (t_a,t_r) A_c (t_a,t_r)
 
 Detailed variable description
 -----------------------------
@@ -62,9 +62,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -76,15 +76,15 @@ Detailed variable description
    * - Symbol
      - :math:`A_c`
    * - Description
-     - Amplitude calibration polynomial coefficients' matrix
+     - Amplitude calibration polynomial function
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (degree in range, degree in azimuth)
+     - (degree in slant range, degree in azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -102,9 +102,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -136,7 +136,7 @@ Detailed variable description
    * - Symbol
      - :math:`t_r`
    * - Description
-     - range coordinate
+     - slant range coordinate
    * - Purpose
      - Internal
    * - Units
@@ -144,12 +144,10 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - (range)
+     - (slant range)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
