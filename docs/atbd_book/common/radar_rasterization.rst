@@ -227,3 +227,391 @@ Considering the definition of :math:`A_{\gamma_x}` in :eq:`eq_Asigma_scaled_tayl
    ANF_i = \cfrac{A_{\Gamma_i} } {A_{\beta}}, \forall{i \in P}
 
 The :math:`ANF` can then be used to scale the radar :math:`\beta^0` to the backscatter coefficient :math:`\gamma^0`.
+
+Detailed variable description
+-----------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`G2RAM_{ref}`
+   * - Description
+     - Reference Geo2Radar Association matrix (containing, for each ground cell: azimuth, slant range, distance to satellite, line of sight, height)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float/datetime64[ns] array
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`ANF`
+   * - Description
+     - Area Normalization Factor
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[0,+\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`w`
+   * - Description
+     - Area Projection matrix
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - sparse float array
+   * - Dimensionality
+     - (radar cell, ground cell)
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`nlook`
+   * - Description
+     - Equivalent number of looks associated with the geographic grid
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - :math:`[0,+\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\theta_i`
+   * - Description
+     - Local incidence angles associated with the geographic grid
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`layover`
+   * - Description
+     - Layover mask over the radar grid
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - bool array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`\{0, 1\}`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`M(x)`
+   * - Description
+     - Set of radar cells contributing to the ground pixel :math:`x`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - N/A
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`J`
+   * - Description
+     - Indices of the triangles belonging to each ground cell, from 1 to 4 for the two triangulations
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - int
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - :math:`\{1, 2, 3, 4\}`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`{w}^j_{i,x}`
+   * - Description
+     - Portion of the radar resolution cell :math:`i` covered by the triangle with index :math:`j` of the ground cell :math:`x`.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`{w}_{i,x}`
+   * - Description
+     - Portion of the radar resolution cell :math:`i` covered by the ground cell :math:`x`.
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{n}^j_x`
+   * - Description
+     - Facet ground surface normal referred to the ground cell :math:`x` considering the triangle :math:`j`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (axis)
+   * - Range of values
+     - :math:`[-1, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{r}^j_x`
+   * - Description
+     - Look unit vector referred to the ground cell :math:`x` considering the triangle :math:`j`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (axis)
+   * - Range of values
+     - :math:`[-1, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{x}^j_x`
+   * - Description
+     - Along-track unit vector referred to the ground cell :math:`x` considering the triangle :math:`j`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (axis)
+   * - Range of values
+     - :math:`[-1, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\theta_{i_x}`
+   * - Description
+     - Local incidence angle referred to the ground cell :math:`x`
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{e}^j_{h_x}`
+   * - Description
+     - Vector representing facet :math:`h`-th edge (:math:`h=1,2`) referred to the ground cell :math:`x` considering the triangle :math:`j`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (axis)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`A_{\sigma_x}`
+   * - Description
+     - Facet ground surface area referred to the ground cell :math:`x`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, +\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`A_{\gamma_x}`
+   * - Description
+     - Facet gamma-naught area referred to the ground cell :math:`x`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, +\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`A_{\Gamma_i}`
+   * - Description
+     - Gamma-naught area referred to the radar cell :math:`i`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, +\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`A_{\beta}`
+   * - Description
+     - Radar grid pixel area from the beta-naught LUT table
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`[0, +\infty)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
