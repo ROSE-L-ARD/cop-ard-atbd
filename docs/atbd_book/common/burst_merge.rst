@@ -136,7 +136,7 @@ Detailed variable description
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -150,9 +150,9 @@ Detailed variable description
    * - Purpose
      - Input
    * - Units
-     - N/A
+     - radians
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
@@ -172,11 +172,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - > 0
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -192,11 +192,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - bool array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`\{0, 1\}`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -212,11 +212,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - bool array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`\{0, 1\}`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -232,7 +232,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
@@ -250,13 +250,13 @@ Detailed variable description
    * - Purpose
      - Output
    * - Units
-     - N/A
+     - radians
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -272,11 +272,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - > 0
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -292,11 +292,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - bool array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`\{0, 1\}`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -312,11 +312,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - bool array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`\{0, 1\}`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -332,11 +332,11 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - int matrix
+     - int array
    * - Dimensionality
      - (x, y)
    * - Range of values
-     - N/A
+     - :math:`\mathbb{N} \cup \{ -1 \}`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
