@@ -3,8 +3,8 @@
 Radar Rasterization
 ~~~~~~~~~~~~~~~~~~~~~~
 The main scope of this tool is to compute the slope compensation with the area normalization factor (ANF)  
-necessary to convert the radar backscatter coefficient or the beta-nought (:math:`\beta^0`),  
-to gamma-nought (:math:`\gamma^0`).  
+necessary to convert the radar backscatter coefficient or the beta-naught (:math:`\beta^0`),  
+to gamma-naught (:math:`\gamma^0`).  
 The procedure also extracts the area projection matrix (for geocoding with the area-based projection algorithm),  
 the local incidence angle, the number of looks in ground coordinates, and the layover mask in radar geometry.
 

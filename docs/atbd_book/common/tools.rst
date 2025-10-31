@@ -22,7 +22,7 @@ It includes the algorithms for the following tools:
 
 - :ref:`Calibration`:
   
-  - :ref:`Amplitude calibration <amplitude_calibration>`: derive the radar cross-section beta naught or sigma nought according to the input metadata.
+  - :ref:`Amplitude calibration <amplitude_calibration>`: derive the radar cross-section beta naught or sigma naught according to the input metadata.
   - :ref:`Phase deramping <phase_deramping>`: remove the linear frequency modulation (also called deramping), which is necessary for performing basic operations like interpolation/resampling of the data, often used in interferometric processing chains. In addition, the deramping procedure demodulates the signal to report its spectrum in baseband.
   - :ref:`Phase reramping <phase_reramping>`: restore the original linear frequency modulation after the image resampling step. This procedure modulates the signal to restore the original image spectrum.
 

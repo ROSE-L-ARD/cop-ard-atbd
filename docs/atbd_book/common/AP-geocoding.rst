@@ -193,7 +193,7 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0_{r}`
    * - Description
-     - Radar cross-section gamma-nought in radar geometry
+     - Radar cross-section gamma-naught in radar geometry
    * - Purpose
      - Input
    * - Units
@@ -213,7 +213,7 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0_{g}`
    * - Description
-     - Geocoded radar cross-section gamma-nought
+     - Geocoded radar cross-section gamma-naught
    * - Purpose
      - Output
    * - Units
@@ -353,7 +353,7 @@ Detailed variable description
    * - Symbol
      - :math:`\bar{\gamma}^0_{r}`
    * - Description
-     - Multilooked radar cross-section gamma-nought in radar geometry
+     - Multilooked radar cross-section gamma-naught in radar geometry
    * - Purpose
      - Internal
    * - Units

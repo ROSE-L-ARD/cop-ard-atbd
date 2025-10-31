@@ -25,7 +25,7 @@ The *amplitude calibration* tool requires the following inputs:
 Outputs
 -------
 
-The *amplitude calibration* tool provides in output the complex L1 data calibrated in Beta nought :math:`\beta^0`:
+The *amplitude calibration* tool provides in output the complex L1 data calibrated in Beta naught :math:`\beta^0`:
 
 - :math:`slc_{ac}`: Calibrated SLC image with amplitude corrected for thermal noise and converted to radar cross-section.
 
