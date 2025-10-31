@@ -153,7 +153,7 @@ Detailed variable description
    * - Type
      - complex float array
    * - Dimensionality
-     - (range, azimuth) or vectorized in a single spatial dimension
+     - (slant range, azimuth) or vectorized in a single spatial dimension
    * - Range of values
      - N/A
    * - Initial/default values
@@ -173,7 +173,7 @@ Detailed variable description
    * - Type
      - complex float array
    * - Dimensionality
-     - (range, azimuth) or vectorized in a single spatial dimension
+     - (slant range, azimuth) or vectorized in a single spatial dimension
    * - Range of values
      - N/A
    * - Initial/default values
@@ -193,7 +193,7 @@ Detailed variable description
    * - Type
      - complex float array
    * - Dimensionality
-     - (range, azimuth) or vectorized in a single spatial dimension
+     - (slant range, azimuth) or vectorized in a single spatial dimension
    * - Range of values
      - N/A
    * - Initial/default values
