@@ -126,13 +126,13 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0`
    * - Description
-     - Input Radar cross-section gamma-nought
+     - Input geocoded radar cross-section gamma-nought
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x, y)
    * - Range of values
