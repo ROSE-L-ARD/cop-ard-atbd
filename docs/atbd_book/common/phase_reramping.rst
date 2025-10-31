@@ -74,9 +74,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -88,17 +88,17 @@ Detailed variable description
    * - Symbol
      - :math:`\phi_{demod}`
    * - Description
-     - Total demodulation phase polynomial coefficients' matrix
+     - Total demodulation phase polynomial function
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (degree in range, degree in azimuth)
+     - (degree in slant range, degree in azimuth)
    * - Range of values
-     - N/A
+     - :math:`[-\pi, \pi)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -108,15 +108,15 @@ Detailed variable description
    * - Symbol
      - :math:`slc'`
    * - Description
-     - Output remodulated SLC image, expressed in Digital Number (DN) or calibrated depending on the input image
+     - Output modulated SLC image, expressed in Digital Number (DN) or calibrated depending on the input image
    * - Purpose
      - Output
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -148,7 +148,7 @@ Detailed variable description
    * - Symbol
      - :math:`t_r`
    * - Description
-     - range coordinate (reference image)
+     - slant range coordinate (reference image)
    * - Purpose
      - Internal
    * - Units
@@ -156,9 +156,9 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - (range)
+     - (slant range)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -166,7 +166,7 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`t_{a_s}`
+     - :math:`t_a`
    * - Description
      - azimuth absolute coordinate (secondary image)
    * - Purpose
@@ -186,9 +186,9 @@ Detailed variable description
    * - 
      -
    * - Symbol
-     - :math:`t_{r_s}`
+     - :math:`t_r`
    * - Description
-     - range coordinate (secondary image)
+     - slant range coordinate (secondary image)
    * - Purpose
      - Internal
    * - Units
@@ -196,12 +196,10 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - (range)
+     - (slant range)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -

@@ -12,7 +12,7 @@ Inputs
 The *Phase Flattening* tool requires the following inputs:
 
     - :math:`CSLC_{deramp}`: Coregistered deramped SLC image  
-    - :math:`\Delta t_{r_s}`: Range offset of the input (secondary) image grid, with respect to the reference range/azimuth grid
+    - :math:`\Delta t_{r_s}`: Range offset of the input (secondary) image grid, with respect to the reference range/azimuth grid (one way)
 
 Outputs
 -------
@@ -28,19 +28,19 @@ Algorithm
 ---------
 The flattened SLC computation follows these steps:
 
-1. Compute the simulated phase :math:`\phi_{topo}` associated with the reference and secondary images (:math:`c` indicates the speed of light):
+1. Compute the simulated phase :math:`\phi_{topo}` associated with the reference and secondary images:
 
 .. math::
     :label: topo_phase
 
-    \phi_{topo} = \frac{2 \pi f_0}{c} \Delta t_{r_s}
+    \phi_{topo} = 2 \pi f_0 \Delta t_{r_s}
 
 2. Apply phase demodulation:
 
 .. math::
     :label: rm_topo_phase
 
-    CSLC_{flatten,deramp} = CSLC_{deramp} * e^{-j\phi_{topo}}
+    CSLC_{flatten,deramp} = CSLC_{deramp} e^{j\phi_{topo}}
 
 Detailed variable description
 -----------------------------
@@ -60,9 +60,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -74,15 +74,15 @@ Detailed variable description
    * - Symbol
      - :math:`\Delta t_{r_s}`
    * - Description
-     - Range offset of the secondary image grid, with respect to the reference range/azimuth grid
+     - Slant range offset of the secondary image grid, with respect to the reference slant range/azimuth grid (one way)
    * - Purpose
      - Input
    * - Units
      - seconds
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -100,9 +100,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -140,14 +140,12 @@ Detailed variable description
    * - Units
      - radians
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - N/A
+     - :math:`[-\pi, \pi)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -

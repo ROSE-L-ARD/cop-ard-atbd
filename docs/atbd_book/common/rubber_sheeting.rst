@@ -53,6 +53,8 @@ Detailed variable description
    :widths: 25 50
    :header-rows: 1
 
+   * - Property
+     - Value
    * - Symbol
      - :math:`\Delta t_{r_s}`
    * - Description
@@ -62,9 +64,9 @@ Detailed variable description
    * - Units
      - seconds
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -82,9 +84,9 @@ Detailed variable description
    * - Units
      - nanoseconds
    * - Type
-     - timedelta64[ns]
+     - timedelta64[ns] array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -102,9 +104,9 @@ Detailed variable description
    * - Units
      - seconds
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -122,9 +124,9 @@ Detailed variable description
    * - Units
      - nanoseconds
    * - Type
-     - timedelta64[ns]
+     - timedelta64[ns] array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -142,9 +144,9 @@ Detailed variable description
    * - Units
      - seconds
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -162,9 +164,9 @@ Detailed variable description
    * - Units
      - nanoseconds
    * - Type
-     - timedelta64[ns]
+     - timedelta64[ns] array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -182,9 +184,9 @@ Detailed variable description
    * - Units
      - seconds
    * - Type
-     - float
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -202,14 +204,12 @@ Detailed variable description
    * - Units
      - nanoseconds
    * - Type
-     - timedelta64[ns]
+     - timedelta64[ns] array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -

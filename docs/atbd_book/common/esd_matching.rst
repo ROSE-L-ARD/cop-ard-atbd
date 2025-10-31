@@ -12,13 +12,13 @@ The proposed algorithm is based on :cite:`ESD2016`.
 Inputs
 -------
 
-- :math:`slc_r^i` and :math:`slc_r^j`:: reference SLC image in correspondece of the adjacent bursts :math:`i` and :math:`j`
-- :math:`slc_s^i` and :math:`slc_s^j`: secondary SLC image in correspondece of the adjacent bursts :math:`i` and :math:`j`
+- :math:`slc_r^i` and :math:`slc_r^j`:: reference SLC image in correspondence of the adjacent bursts :math:`i` and :math:`j`
+- :math:`slc_s^i` and :math:`slc_s^j`: secondary SLC image in correspondence of the adjacent bursts :math:`i` and :math:`j`
 
 Outputs
 --------
 
-- :math:`\Delta t_{a_s}`: offset in azimuth directions to be applied to the secondary image to match the reference image
+- :math:`\hat{\Delta t}_{a_s}`: offset in azimuth directions to be applied to the secondary image to match the reference image
 - :math:`\Gamma(\Delta t_{a_s})`: Objective function in correspondence of the optimum shift
 
 
@@ -32,14 +32,14 @@ Let :math:`\phi_{r,s}^{i,j}` be the phase difference between the two images and 
 .. math::
     :label: eq_phi_esd
 
-    \phi_{r,s}^{i,j} = \arg \left[ \left( slc_r^i \cdot slc_s^j \right) \left( slc_s^i \cdot slc_r^j \right)^* \right]
+    \phi_{r,s}^{i,j} = \angle \left[ \left( slc_r^i \cdot slc_s^j \right) \left( slc_s^i \cdot slc_r^j \right)^* \right]
 
 This phase is related to the expected azimuth shift :math:`\Delta t_{a_s}^{i,j}` through the following expression:
 
 .. math::
     :label: eq_esd
 
-    \hat{\Delta t}_{a_s}^{i,j} = \arg\min_{\Delta t_{a_s}^{i,j}} \left[ \left| \arg \sum_{p} e^{j \left( \phi_{r,s}^{i,j} - 2 \pi \Delta f_{DC}^{i,j} \Delta t_{a_s}^{i,j} \right)} \right| \right]
+    \hat{\Delta t}_{a_s}^{i,j} = \argmax_{\Delta t_{a_s}^{i,j}} \left| \sum_{p \in O_{i,j}} e^{j \left( \phi_{r,s}^{i,j} - 2 \pi \Delta f_{DC}^{i,j} \Delta t_{a_s}^{i,j} \right)} \right|
 
 .. note::
     It is important that the phase modulation due to the acquisition geometry (e.g., topography) has been removed.  
@@ -183,3 +183,232 @@ Only points with coherence above a certain threshold (coherence_th) are consider
                 "shift": xr.concat(shift, dim="reference_date"),
             }
         )
+
+
+Detailed variables description
+------------------------------
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`slc_r^i`
+   * - Description
+     - Reference SLC image in correspondence of the overlap area between adjacent bursts :math:`i, j` (burst :math:`i`)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     - 
+   * - Symbol
+     - :math:`slc_r^j`
+   * - Description
+     - Reference SLC image in correspondence of the overlap area between adjacent bursts :math:`i, j` (burst :math:`j`)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -  
+   * - Symbol
+     - :math:`slc_s^i`
+   * - Description
+     - Secondary SLC image in correspondence of the overlap area between adjacent bursts :math:`i, j` (burst :math:`i`)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     - 
+   * - Symbol
+     - :math:`slc_s^j`
+   * - Description
+     - Secondary SLC image in correspondence of the overlap area between adjacent bursts :math:`i, j` (burst :math:`j`)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -  
+   * - Symbol
+     - :math:`O_{i,j}`
+   * - Description
+     - Set of points belonging to the overlap area between two adjacent bursts :math:`i, j`
+   * - Purpose
+     - Internal
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[-\pi, \pi)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\phi^{i,j}_{r,s}`
+   * - Description
+     - Phase difference between the two images and between two adjacent bursts :math:`i, j`
+   * - Purpose
+     - Internal
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[-\pi, \pi)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta f^{i,j}_{DC}`
+   * - Description
+     - Nominal doppler difference between two adjacent bursts :math:`i, j`
+   * - Purpose
+     - Internal
+   * - Units
+     - Hz
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Delta t^{i,j}_{a_s}`
+   * - Description
+     - Variable of the offset in azimuth direction of the secondary image with respect to the reference one, between two adjacent bursts :math:`i, j`
+   * - Purpose
+     - Internal
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\hat{\Delta t}^{i,j}_{a_s}`
+   * - Description
+     - Offset in azimuth direction of the secondary image with respect to the reference one, between two adjacent bursts :math:`i, j`
+   * - Purpose
+     - Internal
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns]
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\hat{\Delta t}_{a_s}`
+   * - Description
+     - Offset in azimuth direction of the secondary image with respect to the reference one, obtained through interpolation of the values across multiple couples of adjacent bursts
+   * - Purpose
+     - Output
+   * - Units
+     - nanoseconds
+   * - Type
+     - timedelta64[ns] array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Gamma`
+   * - Description
+     - Coherence function computed in correspondance of the optimal azimuth shifts
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[0, 1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A

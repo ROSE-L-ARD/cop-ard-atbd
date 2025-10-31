@@ -95,9 +95,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -109,17 +109,17 @@ Detailed variable description
    * - Symbol
      - :math:`\phi_{demod}`
    * - Description
-     - Total demodulation phase polynomial coefficients' matrix
+     - Total demodulation phase polynomial function
    * - Purpose
      - Input
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (degree in range, degree in azimuth)
+     - (degree in slant range, degree in azimuth)
    * - Range of values
-     - N/A
+     - :math:`[-\pi, \pi)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -135,9 +135,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - complex array
+     - complex float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -169,7 +169,7 @@ Detailed variable description
    * - Symbol
      - :math:`t_r`
    * - Description
-     - range coordinate
+     - slant range coordinate
    * - Purpose
      - Internal
    * - Units
@@ -177,12 +177,10 @@ Detailed variable description
    * - Type
      - float
    * - Dimensionality
-     - (range)
+     - (slant range)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0,+\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
