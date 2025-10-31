@@ -231,6 +231,26 @@ Detailed variable description
    * - 
      -
    * - Symbol
+     - :math:`M(x)`
+   * - Description
+     - Set of radar cells contributing to the ground pixel :math:`x`
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - N/A
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
      - :math:`{w}_{i,x}`
    * - Description
      - Weights to be applied the full-resolution input image to project it to the output grid.
