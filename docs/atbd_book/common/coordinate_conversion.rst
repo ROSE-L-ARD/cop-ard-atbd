@@ -171,7 +171,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x,y)
    * - Range of values
@@ -185,13 +185,13 @@ Detailed variable description
    * - Symbol
      - :math:`t_a`
    * - Description
-     - Zero-Doppler oservation time
+     - Zero-Doppler observation time
    * - Purpose
      - Output
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x,y)
    * - Range of values
@@ -211,7 +211,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x,y)
    * - Range of values
@@ -231,7 +231,7 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
      - (x,y)
    * - Range of values
@@ -240,5 +240,3 @@ Detailed variable description
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
