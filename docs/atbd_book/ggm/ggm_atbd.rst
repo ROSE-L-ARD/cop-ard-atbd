@@ -120,9 +120,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -140,9 +140,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -160,9 +160,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -180,9 +180,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -200,11 +200,11 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0, +\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -220,11 +220,11 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0, +\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -240,11 +240,11 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0, +\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -260,11 +260,11 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0, +\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -280,9 +280,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (axis, range, azimuth)
+     - (axis, slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -300,9 +300,9 @@ Detailed variable description
    * - Units
      - metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (index, range, azimuth)
+     - (index, slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
@@ -320,9 +320,9 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (index, axis, range, azimuth)
+     - (index, axis, slant range, azimuth)
    * - Range of values
      - :math:`[-1, 1]`
    * - Initial/default values
@@ -340,11 +340,11 @@ Detailed variable description
    * - Units
      - 1 / squared metres
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (index, index, range, azimuth)
+     - (index, slant range, azimuth)
    * - Range of values
-     - :math:`\ge 0`
+     - :math:`[0, +\infty)`
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
@@ -360,14 +360,12 @@ Detailed variable description
    * - Units
      - N/A
    * - Type
-     - float matrix
+     - float array
    * - Dimensionality
-     - (axis, index, range, azimuth)
+     - (axis, index, slant range, azimuth)
    * - Range of values
      - N/A
    * - Initial/default values
      - N/A
    * - Name in pseudo-code
      - N/A
-   * - 
-     -
