@@ -126,7 +126,7 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0`
    * - Description
-     - Input geocoded radar cross-section gamma-nought
+     - Input geocoded radar cross-section gamma-naught
    * - Purpose
      - Input
    * - Units
@@ -226,7 +226,7 @@ Detailed variable description
    * - Symbol
      - :math:`\gamma^0_{mosaic}`
    * - Description
-     - Mosaicked Radar cross-section gamma-nought
+     - Mosaicked Radar cross-section gamma-naught
    * - Purpose
      - Output
    * - Units

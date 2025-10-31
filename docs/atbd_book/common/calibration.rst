@@ -35,7 +35,7 @@ with the necessary inputs and provided outputs.
    Diagram of *Calibration Unit*.  
 
 Specifically, the amplitude signal can be extracted from the input digital number (:math:`DN`)  
-and converted to beta-nought (:math:`\beta^0`). 
+and converted to beta-naught (:math:`\beta^0`). 
 
 The purpose of phase deramping is to compensate for phase modulation caused by the acquisition  
 mode and geometry, ensuring the signal is reported in baseband. The demodulation process  
