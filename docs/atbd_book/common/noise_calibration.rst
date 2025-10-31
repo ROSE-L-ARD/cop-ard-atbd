@@ -175,7 +175,7 @@ Detailed variable description
    * - Type
      - float array
    * - Dimensionality
-     - (range, azimuth)
+     - (slant range, azimuth)
    * - Range of values
      - :math:`[-\pi, \pi)`
    * - Initial/default values
