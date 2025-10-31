@@ -13,9 +13,9 @@
    limitations under the License.
 .. _int_cohe_label:
 
-========================================================
+===========================================
 Algorithm Theoretical Basis Document (ATBD) 
-========================================================
+===========================================
 
 The generation of interferometric phase and coherence is a relatively straightforward process when starting from CSLC products, which are ready for interferometry.  
 In CSLC products, the topographic contribution has been removed, and the model-based and the data-driven approaches compensate for both tropospheric and ionospheric effects.  
@@ -152,3 +152,150 @@ Different statistical models may be applied for the probability density function
 
 In addition in this case the phase unwrapping problem can be transformed in a dual problem of *network flow optimization* :cite:`costantini1998phase`. 
 
+Detailed variables description
+''''''''''''''''''''''''''''''
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`S`
+   * - Description
+     - Stack of coregistered SLC images
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (acquisition date, slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`L_r`
+   * - Description
+     - Number of looks in slant range direction
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - int
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`\mathbb{N}^+`
+   * - Initial/default values
+     - 1
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     - 
+   * - Symbol
+     - :math:`L_a`
+   * - Description
+     - Number of looks in azimuth direction
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - int
+   * - Dimensionality
+     - scalar
+   * - Range of values
+     - :math:`\mathbb{N}^+`
+   * - Initial/default values
+     - 1
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     - 
+   * - Symbol
+     - :math:`\phi_{r,s}`
+   * - Description
+     - Interferometric phase (considering a reference/secondary images pair)
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[-\pi, \pi)`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Gamma_{r,s}`
+   * - Description
+     - Interferometric coherence (considering a reference/secondary images pair)
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`[0,1]`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\phi^{unw}_{r,s}`
+   * - Description
+     - Unwrapped interferometric phase (considering a reference/secondary images pair)
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`I_{r,s}`
+   * - Description
+     - Complex interferogram (considering a reference/secondary images pair)
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - complex float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
