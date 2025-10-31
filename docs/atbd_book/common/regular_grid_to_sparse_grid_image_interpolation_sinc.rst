@@ -205,7 +205,7 @@ Detailed variable description
    * - Purpose
      - Input
    * - Units
-     - N/A (fare ricerca)
+     - N/A
    * - Type
      - float
    * - Dimensionality
