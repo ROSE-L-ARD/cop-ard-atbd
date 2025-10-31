@@ -28,15 +28,15 @@ Inputs
 The *Radar Mapping* tool requires the following inputs:
 
   - :math:`G2RAM`: Geo2Radar Association Matrix (Reference azimuth, slant range, line of sight, and height).
-  - :math:`\theta_i`: Ground Incidence Angle, a map of the local incidence angle on the output geographic grid.
+  - :math:`\theta_i`: Local incidence angle on the output geographic grid.
   - Parameters configuration file: Type of geographic grid (reference or complementary Geogrid).
 
 Outputs
 '''''''
 *Radar Mapping* tool provides the following outputs:
 
-  - :math:`Z`: Elevation angle in radar reference grid.
-  - :math:`\Theta_i`: Ground incidence angle in radar reference grid.
+  - :math:`Z`: Elevation angle in the radar reference grid.
+  - :math:`\Theta_i`: Local incidence angle in the radar reference grid.
   - :math:`shadow`: Shadow mask in radar reference grid.
 
 Algorithms
@@ -64,8 +64,6 @@ The elevation angle :math:`\zeta` is defined as the angle between the range dist
 
    \zeta = \arccos \left( \frac{\vec{r} \cdot \vec{p}}{|\vec{r}| |\vec{p}|} \right)
 
-:eq:`eq_elevation_angle`
-
 Given the angles :math:`\zeta` and :math:`\theta_i` in ground geometry, it is possible to compute the equivalent :math:`Z` and :math:`\Theta_i` in radar geometry  
 by interpolating according to the method described in :ref:`Sparse grid to regular grid image interpolation <sparse_grid_to_regular_grid_image_interpolation_linear>`.
 
@@ -79,4 +77,192 @@ The shadow mask is defined as follows:
 
    shadow_i = \left( \cos{\Theta_{i}} < 0 \right) \,\text{OR}\, \left( Z_i > \max_{j \in B_i}{Z_j} \right), \forall{ i \in P}
 
-:eq:`eq_shadow_mask`
+Detailed variable description
+'''''''''''''''''''''''''''''
+
+.. list-table:: Variable Description Table
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Property
+     - Value
+   * - Symbol
+     - :math:`G2RAM`
+   * - Description
+     - Reference Geo2Radar Association matrix (containing, for each ground cell: azimuth, slant range, distance to satellite, line of sight, height)
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float/datetime64[ns] array
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\theta_i`
+   * - Description
+     - Local incidence angle on the geographic grid
+   * - Purpose
+     - Input
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (x, y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`Z`
+   * - Description
+     - Elevation angle on the reference radar grid
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\Theta_i`
+   * - Description
+     - Local incidence angle on the reference radar grid
+   * - Purpose
+     - Output
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`shadow`
+   * - Description
+     - Shadow mask in radar reference grid
+   * - Purpose
+     - Output
+   * - Units
+     - N/A
+   * - Type
+     - bool array
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - :math:`\{0, 1\}`
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{p}`
+   * - Description
+     - Satellite position
+   * - Purpose
+     - Input
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (axis)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\vec{r}`
+   * - Description
+     - Range vector connecting the satellite and the target on the ground
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - float array
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`\zeta`
+   * - Description
+     - Elevation angle on the geographic grid
+   * - Purpose
+     - Internal
+   * - Units
+     - radians
+   * - Type
+     - float array
+   * - Dimensionality
+     - (x,y)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`B_i`
+   * - Description
+     - Buffer of points in the range direction before the point :math:`i` for a given azimuth row
+   * - Purpose
+     - Internal
+   * - Units
+     - N/A
+   * - Type
+     - N/A
+   * - Dimensionality
+     - N/A
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
