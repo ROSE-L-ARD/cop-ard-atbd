@@ -77,7 +77,7 @@ The shadow mask is defined as follows:
 
    shadow_i = \left( \cos{\Theta_{i}} < 0 \right) \,\text{OR}\, \left( Z_i > \max_{j \in B_i}{Z_j} \right), \forall{ i \in P}
 
-Detailed variable description
+Detailed variables description
 '''''''''''''''''''''''''''''
 
 .. list-table:: Variable Description Table

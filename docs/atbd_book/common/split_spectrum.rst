@@ -81,7 +81,7 @@ The corrected SLC image :math:`S'` is obtained by applying the ionospheric phase
    S' = S \cdot e^{j \Delta \phi _{iono}}
 
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

@@ -89,7 +89,7 @@ After these considerations, the computation of the fractional component is strai
 
 By applying this resampling approach, where each output point is independent, the parallelization of the algorithm becomes straightforward.
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table
