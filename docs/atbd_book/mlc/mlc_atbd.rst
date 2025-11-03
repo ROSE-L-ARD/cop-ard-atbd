@@ -133,7 +133,7 @@ Possible algorithm improvements
   * Test 1
   * Test 2
 
-Detailed variable description
+Detailed variables description
 =============================
 
 .. list-table:: Variable Description Table
