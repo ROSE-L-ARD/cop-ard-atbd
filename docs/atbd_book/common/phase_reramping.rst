@@ -56,7 +56,7 @@ Let :math:`\phi_{demod} (t_{a_s},t_{r_s})` be the total demodulation phase. The 
 
    slc' (t_a,t_r) = slc (t_a,t_r) e^{j\phi_{demod} (t_{a_s},t_{r_s}) }
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

@@ -191,7 +191,7 @@ Code
             attrs={"type": type, "pixel_to_time": pixel_to_time.flatten()},
         )
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

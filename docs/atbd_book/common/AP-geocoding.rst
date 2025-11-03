@@ -141,7 +141,7 @@ Additionally, output cells can be grouped and averaged by summing projection wei
 Here, :math:`I_g(x)` denotes the set of ground pixels contributing to the multilooked output image ground pixel :math:`x`, and :math:`w_{i,\cdot}` are the corresponding weights.
 
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

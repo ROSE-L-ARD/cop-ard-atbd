@@ -44,7 +44,7 @@ Let :math:`slc (t_a,t_r)` be the image corrected for thermal noise. The amplitud
 
    slc_{ac} (t_a,t_r) = slc (t_a,t_r) A_c (t_a,t_r)
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

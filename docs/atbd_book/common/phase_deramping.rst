@@ -77,7 +77,7 @@ Let :math:`\phi_{demod} (t_a,t_r)` be the total demodulation phase. The final de
 
 Phase reramping is the inverse operation of deramping, achieved simply by inverting the sign of the phase in the complex exponent.
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

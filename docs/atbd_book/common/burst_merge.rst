@@ -114,7 +114,7 @@ Finally, the mosaicked data are tiled according to the modified Sentinel-2 MGRS 
    The mosaicking procedure described for real valued data (NRB) can be also applied to complex valued data, such as CSLC in radar geometry, or GSLC in projected geometry.
 
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

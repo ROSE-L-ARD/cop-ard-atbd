@@ -93,7 +93,7 @@ The method stops when the absolute value of :math:`|\Delta t_i| <= \Delta t_{min
 The Coordinates Conversion tool is used in the *Reference Geometry Unit* and in *Coregistration Unit* to compute the association between the Reference DEM and the radar grid.
 
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table

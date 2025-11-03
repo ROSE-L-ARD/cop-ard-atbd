@@ -228,7 +228,7 @@ Considering the definition of :math:`A_{\gamma_x}` in :eq:`eq_Asigma_scaled_tayl
 
 The :math:`ANF` can then be used to scale the radar :math:`\beta^0` to the backscatter coefficient :math:`\gamma^0`.
 
-Detailed variable description
+Detailed variables description
 -----------------------------
 
 .. list-table:: Variable Description Table
