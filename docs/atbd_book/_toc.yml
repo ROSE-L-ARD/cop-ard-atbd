@@ -78,7 +78,6 @@ parts:
         title: CMLC/GMLC Assessment
   - caption: PRO/PAO/GPRO/GPAO
     chapters:
-      - file: pro_pao/pro_pao_overview
       - file: pro_pao/pro_pao_product
       - file: pro_pao/pro_pao_atbd
       - file: pro_pao/pro_pao_data_vis
@@ -88,7 +87,6 @@ parts:
         title: PRO/PAO amplitude demo
   - caption: STRIP_EQ
     chapters:
-      - file: strip_eq/strip_eq_overview
       - file: strip_eq/strip_eq_product
       - file: strip_eq/strip_eq_atbd
       - file: strip_eq/strip_eq_data_vis
