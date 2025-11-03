@@ -102,7 +102,7 @@ Azimuth offset noise in Sentinel-1 and ROSE-L data is significantly higher than 
 
    Simple graphic scheme for the generation of the GGM products starting from the PRO/PAO products.
 
-Detailed variable description
+Detailed variables description
 =============================
 
 .. list-table:: Variable Description Table
