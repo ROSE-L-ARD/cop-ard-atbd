@@ -121,7 +121,6 @@ In contrast, algorithms based on the coherence matrix have a complexity that gro
 
 Possible algorithm improvements
 ===============================
-- Better sampling in radar coordinates of CMLC product.
 - Adaptive parameter selection for the temporal filter, which should be coherence-dependent. This is not trivial as we need to optimize simultaneously the short and the long-term coherence.
 
 
