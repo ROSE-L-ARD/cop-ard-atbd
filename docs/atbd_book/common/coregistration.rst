@@ -33,3 +33,11 @@ Two different and complementary approaches can be used to align SLC images:
   - :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
   - :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.  
   - :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary image warping functions, merging the information with the outcomes of the model-based co-registration. 
+
+Usually, model-based registration is sufficient for C-band Copernicus Sentinel-1 SAR data, where precise orbit files in conjunction with ETAD corrections are adequate. In the case of L-band SAR data, a higher impact of the ionosphere is expected, and data-driven approaches must be adopted to correct large displacements in both slant-range and azimuth directions.
+
+Model-based co‑registration does not require the definition of a real SAR reference image; it is sufficient to define a common reference grid, which can then be used throughout the entire mission lifecycle.
+
+Conversely, in the case of a data-driven approach, a real SAR image is necessary. In addition, to maintain a sufficient degree of coherence between the reference and secondary images, it is necessary to implement a strategy to periodically update the reference image. The same approach proposed in :ref:`GMLP product generation <mlc_label>` can be adopted.
+
+
