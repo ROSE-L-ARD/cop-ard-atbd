@@ -16,7 +16,7 @@
 
 Calibration  
 ~~~~~~~~~~~~~~~~~~~~~~~~  
-The calibration unit provides functionalities for removing thermal noise, calibrating the amplitude, and deramping the phase of the input SLC image.  
+The calibration unit provides functionalities for calibrating the amplitude, and deramping the phase of the input SLC image.  
 
 The algorithm can be divided into three steps, executed in the following sequence:  
 
