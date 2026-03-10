@@ -25,7 +25,7 @@ CSLC products are derived from L1 data and *Geometry Unit* outputs.
 The flow for CSLC production is shown in :numref:`model_based_coregistration_diagram`.
 
 .. _model_based_coregistration_diagram_figure:
-.. figure:: images/Coregistration_diagram.drawio.png
+.. figure:: images/co-registration_only_model_based_detail_ATBD.drawio.png
    :name: model_based_coregistration_diagram
    :width: 600
    :align: center
@@ -40,4 +40,4 @@ Key steps of the *Model based Co-registration*:
 - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
 - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
 
-Notice that, in case of NRB product generated directly from SLC, the *Co-registration Unit* is responsible only for applying ETAD corrections in the :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>` step.
+Notice that the *Co-registration Unit* is responsible for applying ETAD corrections in the :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>` step, also in case of NRB product generated directly from SLC. In fact, the coordinates of each image (reference or secondary) have to be updated considering the ETAD corrections.
