@@ -16,7 +16,7 @@ The diagram of the *Radar Mapping* step is shown in :numref:`radar_mapping_schem
 The conversion into radar coordinates of :math:`\zeta` and :math:`\theta` is necessary for the evaluation of the shadow mask, considering both self-shadow and cast-shadow.
 
 .. _radar_mapping_schema_figure:
-.. figure:: images/Reference_shadow_mask.drawio.png
+.. figure:: images/Reference_shadow_mask_ATBD.drawio.png
    :name: radar_mapping_schema
    :width: 600
    :align: center
