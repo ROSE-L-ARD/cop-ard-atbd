@@ -27,7 +27,7 @@ Key steps of the *Reference Geometry* unit are:
 - :ref:`Radar mapping <radar_mapping>`: Maps variables from ground to radar coordinates, specifically providing layover and shadow masks.
 
 .. _ref_geom_chain_figure:
-.. figure:: images/ARD_Reference_Geometry.drawio.png
+.. figure:: images/ARD_Reference_Geometry_Unit_ATBD.drawio.png
    :name: SNT-1_ref_geom_diagram
    :width: 600
    :align: center
