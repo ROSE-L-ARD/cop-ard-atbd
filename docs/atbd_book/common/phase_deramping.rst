@@ -60,14 +60,6 @@ Starting from this, a polynomial interpolator can be used to reconstruct the pha
 
 :numref:`deramping_schema` presents a simplified schema of this step.
 
-.. _deramping_schema_figure:
-.. figure:: images/Deramping_diagram_v1.drawio.png
-   :name: deramping_schema
-   :align: center
-   :width: 450
-
-   Diagram of image deramping processing step.
-
 Let :math:`\phi_{demod} (t_a,t_r)` be the total demodulation phase. The final demodulated SLC :math:`slc' (t_a,t_r)` is:
 
 .. math::
