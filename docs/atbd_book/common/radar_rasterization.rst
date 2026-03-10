@@ -22,7 +22,7 @@ The *Radar rasterization* tool includes the following operations:
 The following figure is a simple schema for the steps necessary to obtain the intermediate products of the *Radar rasterization* tool.
 
 .. _area_based_proj_schema_figure:
-.. figure:: images/Reference_geometry_radar_rasterization.drawio.png
+.. figure:: images/Reference_geometry_radar_rasterization_ATBD.drawio.png
    :name: area_based_projection_schema
    :width: 600
    :align: center
