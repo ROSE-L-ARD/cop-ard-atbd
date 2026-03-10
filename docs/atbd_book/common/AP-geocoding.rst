@@ -12,14 +12,14 @@ the input is a flattened CSLC intensity image expressed as :math:`\gamma^0_r`, t
 the geocoded :math:`\gamma^0_g` map corresponding to the output geographic grid, leading to 
 the generation of an NRB product.
 
-This technique can also be applied to interferometric phase data such as INT or CMLC products, 
-yielding as output the GINT product or the corresponding GMLC product in ground geometry. 
+This technique can also be applied to interferometric phase data such as INT or CMLP products, 
+yielding as output the GINT product or the corresponding GMLP product in ground geometry. 
 In the case of polarimetric data, where the input consists of a covariance matrix (COV) with 
 complex-valued off-diagonal elements, Area Projection Geocoding can be used to derive the GCOV 
 product.
 
 Area Projection Geocoding is suitable for both full-resolution inputs, as in the case of NRB, 
-and for multilooked data, as with GINT, GCOV, and GMLC. In addition, Area Projection Geocoding 
+and for multilooked data, as with GINT, GCOV, and GMLP. In addition, Area Projection Geocoding 
 can be applied to binary masks—such as layover and shadow maps—allowing their projection to 
 the ground geometry using the same matrix-based interpolation scheme. In this case, 
 floating-point outputs are typically thresholded to recover boolean mask values in the 
@@ -101,7 +101,7 @@ in IW mode is reported in :numref:`area_based_geocoding_lay_figure` and :numref:
 
    *Area based geocoding* shadow mask corresponding to a Sentinel-1 acquisition over Salzburg (AT) in IW mode.
 
-For **complex-valued** input data — such as interferometric phase (INT), multichannel (CMLC), or covariance matrix (COV) products — the Area 
+For **complex-valued** input data — such as interferometric phase (INT), multichannel (CMLP), or covariance matrix (COV) products — the Area 
 Projection Geocoding applies the same APM to the complex-valued samples:
 
 .. math::
@@ -111,7 +111,7 @@ Projection Geocoding applies the same APM to the complex-valued samples:
 
 where :math:`M_x` denotes the set of radar pixels contributing to the ground pixel :math:`x`, and for a radar cell :math:`i` belonging to :math:`M_x`, 
 :math:`cpx_r(i)` is the complex value in radar coordinates and :math:`cpx_g(x)` is the corresponding geocoded complex value.  
-This formulation yields the GINT, GMLC, or GCOV product, depending on the input.
+This formulation yields the GINT, GMLP, or GCOV product, depending on the input.
 
 It is assumed that the complex data are already in baseband (i.e., any phase modulation from acquisition geometry has been removed). 
 If this condition is not met, phase flattening must be applied before geocoding.
