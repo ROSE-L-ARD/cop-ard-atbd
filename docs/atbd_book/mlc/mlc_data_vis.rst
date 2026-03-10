@@ -18,19 +18,19 @@ and feed it to a function that realizes the two-argument arctangent by using onl
 .. math::
     \varphi = \mathrm{atan2}\left(\sin(\phi), \cos(\phi)\right) = 2\:\mathrm{atan}\left(\frac{\sin(\phi)}{1+\cos(\phi)}\right)= 2\:\mathrm{atan}\left(\frac{1- \cos(\phi)}{\sin(\phi)}\right).
 
-This is exemplified in the following figures. The fist of which shows two original phase products (GMLC), representing two (roughly) 5-year interferograms. Re-wrapping the difference with the arctangent function we obtain the second figure, representing a 16-day interferogram between the two dates (2025-01-14 and 2020-01-30).
+This is exemplified in the following figures. The fist of which shows two original phase products (GMLP), representing two (roughly) 5-year interferograms. Re-wrapping the difference with the arctangent function we obtain the second figure, representing a 16-day interferogram between the two dates (2025-01-14 and 2020-01-30).
 
 .. figure:: ./images/Naples_DSC_S4_65_and_66.png
-   :name: Two GMLC products
+   :name: Two GMLP products
    :scale: 55%
    :align: center
    
-   Two GMLC products which represent 5-year interferograms. The reference image is at the beginning of the stack (2020-03-13). Left: 2025-01-24. Right: 2025-01-30.
+   Two GMLP products which represent 5-year interferograms. The reference image is at the beginning of the stack (2020-03-13). Left: 2025-01-24. Right: 2025-01-30.
 
 
 .. figure:: ./images/Naples_DSC_S4_65_66_interferogram.png
-   :name: An interferogram derived from two GMLC products
+   :name: An interferogram derived from two GMLP products
    :scale: 70%
    :align: center
    
-   A 16-day interferogram derived from the two GMLC product. The computation is a band-math operation performed directly in QGIS.
+   A 16-day interferogram derived from the two GMLP product. The computation is a band-math operation performed directly in QGIS.
