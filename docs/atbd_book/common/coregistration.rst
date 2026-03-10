@@ -26,13 +26,19 @@ Two different and complementary approaches can be used to align SLC images:
 
   - :ref:`Coordinate conversion <coordinate_conversion>`: computes the secondary image radar coordinates corresponding to the input DEM.
   - :ref:`Griddata <sparse_grid_to_regular_grid_image_interpolation_linear>`: calculates the difference between the reference and secondary range and azimuth coordinates to obtain the disparity map at the DEM nodes. The disparity map is then interpolated in the radar grid.
+  - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the SLC image to the reference grid, correcting secondary image coordinates according to the ETAD if available.
+  - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
+  - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
 
 - :ref:`Data driven co-registration <coregistration_data_driven>`: Align images with respect to a reference real image correcting the deformation between reference and secondary images exploiting image matching techniques and/or ESD. This module foresees the use of these specific utilities:
 
   - :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
   - :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
-  - :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.  
-  - :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary image warping functions, merging the information with the outcomes of the model-based co-registration. 
+  - :ref:`Rubber sheeting <rubber_sheeting>`: starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary image warping functions, merging the information with the outcomes of the model-based co-registration. 
+  - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid, correcting secondary image coordinates according to the ETAD if available and polynomial corrections from previous steps.
+  - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
+  - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
+  - :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.
 
 Usually, model-based registration is sufficient for C-band Copernicus Sentinel-1 SAR data, where precise orbit files in conjunction with ETAD corrections are adequate. In the case of L-band SAR data, a higher impact of the ionosphere is expected, and data-driven approaches must be adopted to correct large displacements in both slant-range and azimuth directions.
 
@@ -40,4 +46,12 @@ Model-based co‑registration does not require the definition of a real SAR refe
 
 Conversely, in the case of a data-driven approach, a real SAR image is necessary. In addition, to maintain a sufficient degree of coherence between the reference and secondary images, it is necessary to implement a strategy to periodically update the reference image. The same approach proposed in :ref:`GMLP product generation <mlc_label>` can be adopted.
 
+A simple sketch of the co-registration process is shown in :numref:`coregistration_diagram`.
 
+.. _coregistration_diagram_figure:
+.. figure:: images/co-registration_high_level_ATBD.drawio.png
+   :name: coregistration_diagram
+   :width: 600
+   :align: center
+
+   *Co-registration* flow diagram.
