@@ -59,7 +59,7 @@ The method starts from an initial guess of the observation time (e.g. the burst 
 The :numref:`coordinate_conversion_schema` shows a simplified schema of this functionality, with the necessary inputs and the provided outputs.
 
 .. _coordinate_conversion_schema_figure:
-.. figure:: images/ARD_cordinate_conversion.drawio.png
+.. figure:: images/ARD_coordinate_conversion_ATBD.drawio.png
    :name: coordinate_conversion_schema
    :width: 600
    :align: center
