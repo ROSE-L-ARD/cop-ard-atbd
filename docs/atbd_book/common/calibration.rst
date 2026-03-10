@@ -27,7 +27,7 @@ The algorithm can be divided into three steps, executed in the following sequenc
 with the necessary inputs and provided outputs.  
 
 .. _calibration_unit_schema_figure:  
-.. figure:: images/ARD_Calibration.nonoise.drawio.png  
+.. figure:: images/ARD_Calbration_Unit_ATBD.drawio.png
    :name: calibration_unit_schema  
    :width: 450  
    :align: center  
