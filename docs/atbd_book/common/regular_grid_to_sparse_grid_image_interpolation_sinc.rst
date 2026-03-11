@@ -16,7 +16,10 @@ The tool requires the following inputs:
 
 - :math:`SLC_{deramp}`: Deramped SLC image  
 - :math:`(t_{r_r},t_{a_r})`: Output reference grid  
-- :math:`(\Delta t_{r_s},\Delta t_{a_s})`: Secondary disparity map corresponding to the reference grid  
+- :math:`(\Delta t_{r_s},\Delta t_{a_s})`: Secondary disparity map corresponding to the reference grid
+- :math:`E (t_{r_s},E t_{a_s})`: ETAD corrections in correspondence of the seondary image position :math:`(t_{r_s},t_{a_s})` if available
+- :math:`P (t_{r_r},P t_{a_r})`: Polynomial corrections in correspondence of the seondary image position :math:`(t_{r_s},t_{a_s})` computed by data driven co-registration approaches, in case they are applied
+
 
 Outputs
 -------
@@ -37,14 +40,30 @@ The slant range :math:`\Delta t_{r_s}` and azimuth :math:`\Delta t_{a_s}` offset
 
 Let :math:`(S_{r},S_{a})` be the size of the interpolation kernel, with :math:`K_{r}` defined as :math:`\{-S_{r}/2,...,S_{r}/2\}` and :math:`K_{a}` as :math:`\{-S_{a}/2,...,S_{a}/2\}`. The logical steps performed for each output pixel :math:`(t_{r_r},t_{a_r})` are:
 
-1. Identification of the coordinates in the secondary image corresponding to the reference grid:
+1. Identification of the nominal coordinates in the secondary image corresponding to the reference grid:
 
 .. math::
     :label: coreg_abs_coord
 
     (t_{r_s},t_{a_s}) = (t_{r_r},t_{a_r})+(\Delta t_{r_s},\Delta t_{a_s})
 
-2. Computation of the integer and fractional components of the coordinates in the secondary image (see the end of the paragraph for details):
+ 
+ 2. Application of the ETAD to the coordinates identified in the previous step:
+
+.. math::
+    :label: coreg_abs_coord_corr
+
+    (t_{r_s},t_{a_s}) = (t_{r_s},t_{a_s}) + E(t_{r_s},t_{a_s})
+
+3. Application of the polynomial corrections to the coordinates identified in the previous step:
+
+.. math::
+    :label: coreg_abs_coord_corr_poly
+
+    (t_{r_s},t_{a_s}) = (t_{r_s},t_{a_s}) + (P(t_{r_r},t_{a_r})
+
+
+4. Computation of the integer and fractional components of the coordinates in the secondary image (see the end of the paragraph for details):
 
 .. math::
     :label: coreg_int_offset
@@ -56,7 +75,7 @@ Let :math:`(S_{r},S_{a})` be the size of the interpolation kernel, with :math:`K
 
     (\delta t_{r_s},\delta t_{a_s}) = (t_{r_s},t_{a_s}) - (\hat{t}_{r_s},\hat{t}_{a_s})
 
-3. Computation of the kernel based on the fractional offset:
+5. Computation of the kernel based on the fractional offset:
 
 .. math::
     :label: coreg_kernel_1
@@ -73,7 +92,7 @@ Let :math:`(S_{r},S_{a})` be the size of the interpolation kernel, with :math:`K
 
     k(x,y) = k_x^T(x,y) \cdot k_y(x,y)
 
-4. Application of the kernel:
+6. Application of the kernel:
 
 .. math::
     :label: coreg_kernel_apply
@@ -142,6 +161,46 @@ Detailed variables description
      - :math:`(\Delta t_{r_s}, \Delta t_{a_s})`
    * - Description
      - Slant range/azimuth offsets of the secondary image grid, with respect to the reference range/azimuth grid
+   * - Purpose
+     - Input
+   * - Units
+     - (seconds, nanoseconds)
+   * - Type
+     - (float, timedelta64[ns])
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`E(t_{r_s}, t_{a_s})`
+   * - Description
+     - ETAD corrections in slant range/azimuth coordinates of the secondary image grid
+   * - Purpose
+     - Input
+   * - Units
+     - (seconds, nanoseconds)
+   * - Type
+     - (float, timedelta64[ns])
+   * - Dimensionality
+     - (slant range, azimuth)
+   * - Range of values
+     - N/A
+   * - Initial/default values
+     - N/A
+   * - Name in pseudo-code
+     - N/A
+   * - 
+     -
+   * - Symbol
+     - :math:`P(t_{r_r}, t_{a_r})`
+   * - Description
+     - Polynomial corrections to slant range/azimuth offsets of the secondary image grid, with respect to the reference range/azimuth grid computed fromn data driven co-registration approaches
    * - Purpose
      - Input
    * - Units

@@ -18,18 +18,18 @@ parts:
         title: CSLC Sentinel-1 assessment
       - file: cslc/cslc_assessment_sentinel1_etad.ipynb
         title: CSLC Sentinel-1 assessment (ETAD)
-  - caption: CMLC/GMLC
+  - caption: CMLP/GMLP
     chapters:
       - file: mlc/mlc_overview
       - file: mlc/mlc_product
       - file: mlc/mlc_atbd
       - file: mlc/mlc_data_vis
-      - file: mlc/cmlc_gmlc_sentinel_1
-        title: CMLC/GMLC Sentinel-1 demo
-      - file: mlc/cmlc_gmlc_saocom
-        title: CMLC/GMLC SAOCOM demo
+      - file: mlc/cmlp_gmlp_sentinel_1
+        title: CMLP/GMLP Sentinel-1 demo
+      - file: mlc/cmlp_gmlp_saocom
+        title: CMLP/GMLP SAOCOM demo
       - file: mlc/mlc_comparisons
-        title: CMLC/GMLC Assessment
+        title: CMLP/GMLP Assessment
   - caption: Common Algorithms
     chapters:
       - file: common/tools
@@ -72,6 +72,7 @@ parts:
         sections:
           - file: common/burst_merge
           - file: common/tiling
+      - file: common/int_cohe_unw
   - caption: Appendices
     chapters:
       - file: glossary

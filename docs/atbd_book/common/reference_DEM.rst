@@ -28,7 +28,7 @@ The *ReferenceDEM* unit includes the following functionalities:
 The :numref:`reference_dem_unit_schema` presents a simplified schema of this functionality, including the necessary inputs and the generated outputs.  
 
 .. _reference_dem_unit_schema_figure:  
-.. figure:: images/ARD_Reference_DEM.drawio.png  
+.. figure:: images/ARD_Reference_DEM_Unit_ATBD.drawio.png
    :name: reference_dem_unit_schema  
    :width: 300  
    :align: center  

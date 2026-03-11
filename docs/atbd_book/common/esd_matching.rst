@@ -37,13 +37,36 @@ Let :math:`\phi_{r,s}^{i,j}` be the phase difference between the two images and 
 This phase is related to the expected azimuth shift :math:`\Delta t_{a_s}^{i,j}` through the following expression:
 
 .. math::
-    :label: eq_esd
+   :label: eq_esd
 
-    \hat{\Delta t}_{a_s}^{i,j} = \argmax_{\Delta t_{a_s}^{i,j}} \left| \sum_{p \in O_{i,j}} e^{j \left( \phi_{r,s}^{i,j} - 2 \pi \Delta f_{DC}^{i,j} \Delta t_{a_s}^{i,j} \right)} \right|
+   \hat{\Delta t}_{a_s}^{\,i,j}
+   = \arg\max_{\Delta t_{a_s}^{\,i,j}}
+     \left|
+       \sum_{p \in O_{i,j}}
+       \exp^{
+         j\!\left(
+           \phi_{r,s}^{\,i,j}
+           - 2\pi\, \Delta f_{DC}^{\,i,j}\, \Delta t_{a_s}^{\,i,j}
+         \right)}
+     \right|
+
+
+A sketch of the ESD technique is shown in :numref:`esd_diagram`.
+
+.. _esd_diagram_figure:
+.. figure:: images/co-registration_esd_ATBD.drawio.png
+   :name: esd_diagram
+   :width: 600
+   :align: center
+
+   Sketch of the ESD technique.
+
 
 .. note::
     It is important that the phase modulation due to the acquisition geometry (e.g., topography) has been removed.  
     To improve reliability, the summation in :eq:`eq_esd` can be weighted using the interferometric coherence.
+
+    The estimation of the azimuth shift in correspondence of the overlapping area between adjacent bursts can be ambiguous, and this ambibuity has to be resolved in the robust 2D fitting.
 
 
 Code

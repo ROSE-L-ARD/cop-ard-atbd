@@ -32,7 +32,7 @@ Once offset measurements have to be collected in correspondence of patches over 
 The flow for data driven co-registration is shown in :numref:`data_driven_coregistration_diagram`.
 
 .. _data_driven_coregistration_diagram_figure:
-.. figure:: images/Coregistration_data_driven_diagram.drawio.png
+.. figure:: images/co-registration_data_driven_detail_ATBD.drawio.png
    :name: data_driven_coregistration_diagram
    :width: 600
    :align: center
@@ -47,3 +47,4 @@ Key steps of the *Data-driven Co-registration*:
 - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid.
 - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
 - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
+- :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.

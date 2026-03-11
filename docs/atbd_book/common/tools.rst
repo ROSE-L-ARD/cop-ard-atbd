@@ -29,7 +29,7 @@ It includes the algorithms for the following tools:
 - :ref:`Geocoding <geocoding>`:
 
   - :ref:`Point projection <phase_geocoding>`: used to map the correspondence between points in ground to Radar coordinates, and interpolate on the transformed points the complex ore real values. This kind of interpolation is uded when the expected resolution of the input and output product are similar (e.g. GSLC).
-  - :ref:`Area projection <area_projection_geocoding>`: used to map the area covered by a cell in ground coordinates to Radar coordinates and integrate all the involved Radar cells to provide the corresponding value on the ground. This is used in the generation of of all geocoded products where a multilook has to be performed (e.g. NRB, ORB, GCOV, GMLC, GINT, etc.)
+  - :ref:`Area projection <area_projection_geocoding>`: used to map the area covered by a cell in ground coordinates to Radar coordinates and integrate all the involved Radar cells to provide the corresponding value on the ground. This is used in the generation of of all geocoded products where a multilook has to be performed (e.g. NRB, ORB, GCOV, GMLP, GINT, etc.)
 
 - :ref:`Interpolation <interpolation>`:
 

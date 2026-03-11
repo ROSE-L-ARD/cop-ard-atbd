@@ -28,7 +28,7 @@ The *Mosaicking* unit consists of two main modules:
 The :numref:`mosaic_unit_schema` shows a simplified schema of this functionality, with the necessary inputs and the provided outputs.  
 
 .. _mosaic_unit_schema_figure:  
-.. figure:: images/ARD_Mosaic.drawio.png  
+.. figure:: images/ARD_Mosaic_Unit_ATBD.drawio.png
    :name: mosaic_unit_schema  
    :width: 600  
    :align: center  

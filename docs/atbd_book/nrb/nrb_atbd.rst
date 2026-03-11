@@ -43,7 +43,7 @@ The processing units involved are:
 
    Alternatively, it can be generated for a stack of SLC images by aligning all images with respect to a reference image (real or virtual) in radar geometry.
 
-   In either case, the *Co-registration Unit* is involved if timing correction is required, in order to resample the image in correspondence of the correct grid. In this way there is no asymmetry between the reference and theb secondary images. All the images are aligned in radar geometry compensating for timing errors, allowing the generation of all other products (e.g. GSLC, NRB, POL, CMLC, ...) in a consistent way.
+   In either case, the *Co-registration Unit* is involved if timing correction is required, in order to resample the image in correspondence of the correct grid. In this way there is no asymmetry between the reference and theb secondary images. All the images are aligned in radar geometry compensating for timing errors, allowing the generation of all other products (e.g. GSLC, NRB, POL, CMLP, ...) in a consistent way.
 
    All the images before applying the data-driven co-registration, including the "real" reference image, are resampled in the reference radar grid.
    

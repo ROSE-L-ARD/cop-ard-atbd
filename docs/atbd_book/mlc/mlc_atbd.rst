@@ -5,12 +5,12 @@
 Algorithm Theoretical Basis Document (ATBD) 
 ========================================================
 
-.. figure:: ./images/CMLC_generation.png
-   :name: Workflow for CMLC generation.
+.. figure:: ./images/CMLP_generation.png
+   :name: Workflow for CMLP generation.
    :scale: 60%
    :align: center
 
-   High-level workflow for CMLC generation.
+   High-level workflow for CMLP generation.
 
 
 Input data
@@ -35,12 +35,12 @@ The algorithm that generated the CSLC does not require any additional data.
 Algorithm description
 ========================
 
-.. figure:: ./images/CMLC_cartoon_detailed_v4.png
-   :name: Detailed workflow for CMLC generation.
+.. figure:: ./images/CMLP_cartoon_detailed_v4.png
+   :name: Detailed workflow for CMLP generation.
    :scale: 40%
    :align: center
 
-   Detailed internal workflow for CMLC generation.
+   Detailed internal workflow for CMLP generation.
 
 Phase and short-term coherence estimation
 ---------------------------------------------
@@ -206,7 +206,7 @@ Detailed variables description
    * - Description
      - The interferometric phase for the n-th acquisition
    * - Purpose
-     - Internal and Output: main CMLC output, it is also used to update the current reference
+     - Internal and Output: main CMLP output, it is also used to update the current reference
    * - Units
      - rad
    * - Type
