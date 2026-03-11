@@ -30,4 +30,4 @@ datasets.”
 The designated ARD products are:  
 
 * Co-registerd Single Look Complex :ref:`(CSLC/GSLC) <CSLC_overview>`,
-* Co-registered multilooked phase :ref:`(CMLC/GMLC) <mlc_overview>`.
+* Co-registered multilooked phase :ref:`(CMLP/GMLP) <mlc_overview>`.

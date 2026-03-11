@@ -27,7 +27,7 @@ Outputs
 
 The *amplitude calibration* tool provides in output the complex L1 data calibrated in Beta naught :math:`\beta^0`:
 
-- :math:`slc_{ac}`: Calibrated SLC image with amplitude corrected for thermal noise and converted to radar cross-section.
+- :math:`slc_{ac}`: Calibrated SLC image with amplitude converted to radar cross-section.
 
 Processing parameters
 ---------------------
@@ -37,7 +37,7 @@ No processing parameters are needed for this operation.
 Algorithm
 ----------
 
-Let :math:`slc (t_a,t_r)` be the image corrected for thermal noise. The amplitude calibration consists of rescaling the amplitude of the complex signal according to a scaling factor :math:`A_c (t_a,t_r)`. This coefficient can be reconstructed using polynomial interpolation of the LUT elements annotated in the input image.
+Let :math:`slc (t_a,t_r)` be the image. The amplitude calibration consists of rescaling the amplitude of the complex signal according to a scaling factor :math:`A_c (t_a,t_r)`. This coefficient can be reconstructed using polynomial interpolation of the LUT elements annotated in the input image.
 
 .. math::
    :label: eq_amp_calib

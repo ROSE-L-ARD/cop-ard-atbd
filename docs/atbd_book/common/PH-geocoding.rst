@@ -31,7 +31,7 @@ The spectral content of the CSLC image is preserved, meaning that the GSLC prese
 The following diagram illustrates the flow of the point projection geocoding algorithm:
 
 .. _point_based_geocoding_diagram_figure:
-.. figure:: images/ph_geocoding.drawio.png
+.. figure:: images/ph_geocoding_ATBD.drawio.png
    :name: point_based_geocoding_diagram
    :width: 600
    :align: center

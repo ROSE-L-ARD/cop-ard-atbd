@@ -10,15 +10,13 @@ This procedure eliminates the topographic phase contribution from each SLC image
 Inputs
 ------
 The *Phase Flattening* tool requires the following inputs:
-
-    - :math:`CSLC_{deramp}`: Coregistered deramped SLC image  
-    - :math:`\Delta t_{r_s}`: Range offset of the input (secondary) image grid, with respect to the reference range/azimuth grid (one way)
+  - :math:`CSLC_{deramp}`: Coregistered deramped SLC image  
+  - :math:`\Delta t_{r_s}`: Range offset of the input (secondary) image grid, with respect to the reference range/azimuth grid (one way)
 
 Outputs
 -------
 The *Phase Flattening* tool provides the following output:
-
-    - :math:`CSLC_{flatten,deramp}`: SLC data flattened for topographic phase contribution  
+  - :math:`CSLC_{flatten,deramp}`: SLC data flattened for topographic phase contribution  
 
 Processing parameters
 ---------------------

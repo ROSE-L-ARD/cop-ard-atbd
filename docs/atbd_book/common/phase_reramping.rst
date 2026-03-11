@@ -10,16 +10,6 @@ The reramping procedure restores the original linear frequency modulation after 
 Reramping uses the same phase model described in the deramping procedure, except that it must be computed in correspondence with the resampled coordinates.
 This document defines the procedure for performing the reramping modulation of Sentinel-1 TOPS IW, EW, and SM Level-1 SLC products.
 
-:numref:`reramping_diagram_schema` presents a schematic overview of this process:
-
-.. _reramping_diagram_schema_figure:
-.. figure:: images/Reramping_diagram_v1.drawio.png
-   :name: reramping_diagram_schema
-   :align: center
-   :width: 450
-
-   Diagram of image reramping processing step. The output is stored in the *EOProductStorage*.
-
 Inputs
 ------
 

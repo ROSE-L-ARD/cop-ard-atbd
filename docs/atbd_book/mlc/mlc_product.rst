@@ -12,7 +12,7 @@ The target posting is 50 m, in line with the ROSE-L MRD. Advanced realizations c
 
 This product includes two quality layers in the form of coherence. Quality layers can be very useful for the user for example to guide space/time phase unwrapping.
 
-The GMLC ground grid is defined to ensure compatibility between missions and products.
+The GMLP ground grid is defined to ensure compatibility between missions and products.
 
 Main output variables
 ---------------------
@@ -29,5 +29,5 @@ Main output variables
 Metadata
 ------------
 
-The metadata of the input CSLC product should accompany the CMLC product. In addition, the product metadata contain information about the multi-looking factor applied. It could be useful to add the type and parameters of the phase-estimation algorithm.
+The metadata of the input CSLC product should accompany the CMLP product. In addition, the product metadata contain information about the multi-looking factor applied. It could be useful to add the type and parameters of the phase-estimation algorithm.
 
