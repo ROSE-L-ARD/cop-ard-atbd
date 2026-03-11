@@ -45,7 +45,7 @@ Let :math:`slc (t_a,t_r)` be the image. The amplitude calibration consists of re
    slc_{ac} (t_a,t_r) = slc (t_a,t_r) A_c (t_a,t_r)
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

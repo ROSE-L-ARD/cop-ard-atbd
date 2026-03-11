@@ -133,7 +133,7 @@ Possible algorithm improvements
   * Test 2
 
 Detailed variables description
-=============================
+==============================
 
 .. list-table:: Variable Description Table
    :widths: 25 50

@@ -56,7 +56,7 @@ The corrected SLC :math:`slc_{nc} (t_a,t_r )` is obtained as follows:
 where :math:`\angle slc(t_a,t_r )` is the phase of the original SLC image.
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

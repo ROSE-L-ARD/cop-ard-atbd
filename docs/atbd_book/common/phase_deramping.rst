@@ -58,8 +58,6 @@ The Time-Frequency diagram of TOPS SLC burst acquisition, for simplicity, is sho
 The Doppler centroid is provided in a Look-Up Table (LUT).  
 Starting from this, a polynomial interpolator can be used to reconstruct the phase function over all points of interest :math:`(t_a,t_r)`.  
 
-:numref:`deramping_schema` presents a simplified schema of this step.
-
 Let :math:`\phi_{demod} (t_a,t_r)` be the total demodulation phase. The final demodulated SLC :math:`slc' (t_a,t_r)` is:
 
 .. math::
@@ -70,7 +68,7 @@ Let :math:`\phi_{demod} (t_a,t_r)` be the total demodulation phase. The final de
 Phase reramping is the inverse operation of deramping, achieved simply by inverting the sign of the phase in the complex exponent.
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

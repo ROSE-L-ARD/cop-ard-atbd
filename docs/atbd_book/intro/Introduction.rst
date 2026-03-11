@@ -22,7 +22,7 @@ enhancing the quality, interoperability, and accessibility of EO data acquired f
 
 CEOS defines ARD as (see :cite:`CEOS-ARD_PFS_SAR`):  
 
-    “CEOS Analysis Ready Data (CEOS-ARD) are satellite data that have been processed to a \
+“CEOS Analysis Ready Data (CEOS-ARD) are satellite data that have been processed to a \
 minimum set of requirements and organized into a form that allows immediate analysis with a \  
 minimum of additional user effort and interoperability both through time and with other \
 datasets.”  

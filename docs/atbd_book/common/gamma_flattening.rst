@@ -83,7 +83,7 @@ is reported in :numref:`intensity_iw1_92640_044_salzburg`.
    Example of Sentinel-1 image intensity in :math:`\gamma^0` in correspondence of a single burst.
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

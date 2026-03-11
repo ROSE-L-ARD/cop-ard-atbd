@@ -94,7 +94,7 @@ The Coordinates Conversion tool is used in the *Reference Geometry Unit* and in 
 
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50
