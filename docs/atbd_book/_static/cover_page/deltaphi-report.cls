@@ -394,7 +394,7 @@ footskip=48pt}%
 	\logsize
 	\color{esadeepspace-log}
 	\let\trules\hline
-	\begin{tabularx}{\textwidth}{p{8.2cm}|p{1.8cm}|p{2.7cm}|p{2.6cm}}
+	\begin{tabularx}{\textwidth}{p{9.9cm}|p{1.8cm}|p{1.8cm}|p{1.8cm}}
 		\hline
 		Issue Number\quad\@issue & \multicolumn{3}{l}{Revision Number\quad\@revision}\\\hline
 		Reason for change & Date & Page(s) & Paragraph(s)\\\hline
@@ -479,7 +479,7 @@ Page \thepage/\pageref*{LastPage}\\
 \approvaltable
 \vspace*{1.5cm}
 \changelogtable
-\vspace*{1.5cm}
+\pagebreak
 \changerecordtable
 \vspace*{1.5cm}
 %\distributiontable
