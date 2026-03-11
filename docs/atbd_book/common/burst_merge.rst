@@ -115,7 +115,7 @@ Finally, the mosaicked data are tiled according to the modified Sentinel-2 MGRS 
 
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

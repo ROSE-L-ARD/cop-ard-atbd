@@ -51,7 +51,7 @@ A typical example of the elevation angle's evolution in the slant range directio
 .. _elevation_angle_example_figure:
 .. figure:: images/cast_self_shadow_bw.png
    :name: elevation_angle_example
-   :width: 600
+   :width: 200
    :align: center
 
    Example of the evolution of the elevation angle in the slant range direction.  
@@ -78,7 +78,7 @@ The shadow mask is defined as follows:
    shadow_i = \left( \cos{\Theta_{i}} < 0 \right) \,\text{OR}\, \left( Z_i > \max_{j \in B_i}{Z_j} \right), \forall{ i \in P}
 
 Detailed variables description
-'''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''
 
 .. list-table:: Variable Description Table
    :widths: 25 50

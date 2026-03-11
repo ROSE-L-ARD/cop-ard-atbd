@@ -142,7 +142,7 @@ Here, :math:`I_g(x)` denotes the set of ground pixels contributing to the multil
 
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

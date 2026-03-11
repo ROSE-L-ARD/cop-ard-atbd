@@ -192,7 +192,7 @@ Code
         )
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

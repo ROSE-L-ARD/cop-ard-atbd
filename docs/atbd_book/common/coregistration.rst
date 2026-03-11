@@ -33,7 +33,7 @@ Two different and complementary approaches can be used to align SLC images:
 - :ref:`Data driven co-registration <coregistration_data_driven>`: Align images with respect to a reference real image correcting the deformation between reference and secondary images exploiting image matching techniques and/or ESD. This module foresees the use of these specific utilities:
 
   - :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
-  - :ref:`Enhanced Spectral Diverity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
+  - :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
   - :ref:`Rubber sheeting <rubber_sheeting>`: starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary image warping functions, merging the information with the outcomes of the model-based co-registration. 
   - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid, correcting secondary image coordinates according to the ETAD if available and polynomial corrections from previous steps.
   - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.

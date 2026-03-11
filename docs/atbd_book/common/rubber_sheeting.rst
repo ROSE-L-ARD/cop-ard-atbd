@@ -47,7 +47,7 @@ In general, to compensate for ionospheric effects or where a polynomial function
     For instance, outliers can be identified by comparing the values at a given patch with the median of the neighboring patches and discarding them if the difference exceeds a certain threshold. The removed outliers can then be replaced with the corresponding median values.
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

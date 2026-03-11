@@ -17,8 +17,8 @@ The tool requires the following inputs:
 - :math:`SLC_{deramp}`: Deramped SLC image  
 - :math:`(t_{r_r},t_{a_r})`: Output reference grid  
 - :math:`(\Delta t_{r_s},\Delta t_{a_s})`: Secondary disparity map corresponding to the reference grid
-- :math:`E (t_{r_s},E t_{a_s})`: ETAD corrections in correspondence of the seondary image position :math:`(t_{r_s},t_{a_s})` if available
-- :math:`P (t_{r_r},P t_{a_r})`: Polynomial corrections in correspondence of the seondary image position :math:`(t_{r_s},t_{a_s})` computed by data driven co-registration approaches, in case they are applied
+- :math:`E (t_{r_s},E t_{a_s})`: ETAD corrections in correspondence of the secondary image position :math:`(t_{r_s},t_{a_s})` if available
+- :math:`P (t_{r_r},P t_{a_r})`: Polynomial corrections in correspondence of the secondary image position :math:`(t_{r_s},t_{a_s})` computed by data driven co-registration approaches, in case they are applied
 
 
 Outputs
@@ -109,7 +109,7 @@ After these considerations, the computation of the fractional component is strai
 By applying this resampling approach, where each output point is independent, the parallelization of the algorithm becomes straightforward.
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

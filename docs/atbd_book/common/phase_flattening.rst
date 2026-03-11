@@ -41,7 +41,7 @@ The flattened SLC computation follows these steps:
     CSLC_{flatten,deramp} = CSLC_{deramp} e^{j\phi_{topo}}
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50

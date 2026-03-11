@@ -79,7 +79,7 @@ The phases :math:`\Delta \phi_L` and :math:`\Delta \phi_H` must be unwrapped whe
 Due to burst acquisition mode (TOPSAR and ScanSAR), the interferometric phase may be affected by discontinuities between adjacent bursts. To make phase unwrapping feasible, it is useful to rearrange equation :eq:`split_spectrum_solution` into two components: a continuous term :math:`\Delta \hat{\phi}_{L/H}` and a discontinuous term :math:`\Delta \phi^S_{L/H}`.
 
 .. math::
-   :label: split_spectrum_solution
+   :label: split_spectrum_solution_2
 
    \Delta \phi_{iono} = \frac{f_L f_H}{f_H^2 - f_L^2} \left[ \left( \Delta \hat{\phi}_L \frac{f_H}{f_0} - \Delta \hat{\phi}_H \frac{f_L}{f_0} \right) + \left( \Delta \phi^S_L \frac{f_H}{f_0} - \Delta \phi^S_H \frac{f_L}{f_0} \right) \right]
 
@@ -301,7 +301,7 @@ Pseudo-code to compute the ionospheric phase screen.
 
 
 Detailed variables description
------------------------------
+------------------------------
 
 .. list-table:: Variable Description Table
    :widths: 25 50
