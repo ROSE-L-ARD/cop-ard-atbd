@@ -241,7 +241,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="9TrG0aIXqikOP7es_eVK-4" value="Calibration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="9TrG0aIXqikOP7es_eVK-4" value="Ingestion" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="46" y="110" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
