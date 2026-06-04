@@ -11,9 +11,9 @@ parts:
       - file: cslc/cslc_atbd
   - caption: GMLP
     chapters:
-      - file: mlc/mlc_overview
-      - file: mlc/mlc_product
-      - file: mlc/mlc_atbd
+      - file: gmlp/gmlp_overview
+      - file: gmlp/gmlp_product
+      - file: gmlp/gmlp_atbd
   - caption: Common Algorithms
     chapters:
       - file: common/tools
@@ -45,12 +45,12 @@ parts:
             title: CSLC Sentinel-1 assessment (ETAD)
       - file: appendices/appendices_gmlp
         sections:
-          - file: mlc/mlc_data_vis
-          - file: mlc/cmlp_gmlp_sentinel_1
+          - file: gmlp/gmlp_data_vis
+          - file: gmlp/cmlp_gmlp_sentinel_1
             title: CMLP/GMLP Sentinel-1 demo
-          - file: mlc/cmlp_gmlp_saocom
+          - file: gmlp/cmlp_gmlp_saocom
             title: CMLP/GMLP SAOCOM demo
-          - file: mlc/mlc_comparisons
+          - file: gmlp/gmlp_comparisons
             title: CMLP/GMLP Assessment
       - file: glossary
       - file: references
