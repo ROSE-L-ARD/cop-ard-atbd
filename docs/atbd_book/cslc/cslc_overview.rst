@@ -2,7 +2,7 @@
 .. _CSLC_overview:  
 
 ==========================================
-Overview
+CSLC Overview
 ==========================================
 
 Image co-registration involves aligning two or more images so that each pixel corresponds to the same point in the target scene, potentially achieving sub-pixel accuracy. This step is crucial for generating multidimensional stacks of images and facilitating advanced data analysis.
