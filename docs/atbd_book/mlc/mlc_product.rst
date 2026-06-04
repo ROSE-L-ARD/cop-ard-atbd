@@ -4,7 +4,7 @@
 Product Description 
 ================================
 
-The multi-looked phase consists of one layer for each acquisition date of the input CSLC products. We generate it originally in radar geometry and project it to the ground at the very end. Receiving the product in ground coordinates is important for many users. (Mosaicking should also be considered). The time series of MLC phases can be used to quickly obtain interferometric maps between tow dates or relative deformation time series between two or more points.
+The multi-looked phase consists of one layer for each acquisition date of the input CSLC products. We generate it originally in radar geometry and project it to the ground at the very end. Receiving the product in ground coordinates is important for many users. (Mosaicking should also be considered). The time series of GMLP phases can be used to quickly obtain interferometric maps between tow dates or relative deformation time series between two or more points.
 
 Some of the characteristics of this product are shared with the INT and GINT products. All model-driven and data driven corrections (atmosphere, solid earth tides, etc.) can be applied to this product, if they are not already included in the input CSLCs.
 
@@ -14,10 +14,9 @@ This product includes two quality layers in the form of coherence. Quality layer
 
 The GMLP ground grid is defined to ensure compatibility between missions and products.
 
-Main output variables
----------------------
+The main output variables are the following:
 
-- **Wrapped multilooked phase** :math:`\phi_n`: This is a temporal collection of phase maps that can be used to generate multi-looked interferograms for any chosen pair of acquisitions in the stack, without having to start from full-resolution images. Taken singularly, each map represents conceptually the interferometric phase between each acquisition and a fixed reference (e.g. the first acquisition in the stack) that one could compute directly by forming an interferogram with the reference. In practice, the direct interferometric phase and the MLC phase will differ: the MLC phase should be less noisy.
+- **Wrapped multilooked phase** :math:`\phi_n`: This is a temporal collection of phase maps that can be used to generate multi-looked interferograms for any chosen pair of acquisitions in the stack, without having to start from full-resolution images. Taken singularly, each map represents conceptually the interferometric phase between each acquisition and a fixed reference (e.g. the first acquisition in the stack) that one could compute directly by forming an interferogram with the reference. In practice, the direct interferometric phase and the GMLP phase will differ: the GMLP phase should be less noisy.
 
 - **Long-term coherence** :math:`\gamma^l_n`: This is a temporal collection of coherence maps that represents the long-term coherence of each reference with past references. This information can be useful as an indication of the noisiness of interferograms computed between acquisitions that are separated by a large time interval (e.g. 1 year or more). The exact interpretation depends on the chosen processing parameters.
 
@@ -25,9 +24,4 @@ Main output variables
 
 
 
-
-Metadata
-------------
-
-The metadata of the input CSLC product should accompany the CMLP product. In addition, the product metadata contain information about the multi-looking factor applied. It could be useful to add the type and parameters of the phase-estimation algorithm.
 

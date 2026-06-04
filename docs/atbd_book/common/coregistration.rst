@@ -55,3 +55,11 @@ A simple sketch of the co-registration process is shown in :numref:`coregistrati
    :align: center
 
    *Co-registration* flow diagram.
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   coregistration_model_based
+   coregistration_data_driven

@@ -4,53 +4,19 @@ parts:
   - caption: Introduction
     chapters:
       - file: intro/Introduction
-  - caption: CSLC/GSLC
-    chapters: 
+  - caption: CSLC
+    chapters:
       - file: cslc/cslc_overview
       - file: cslc/cslc_product
       - file: cslc/cslc_atbd
-      - file: cslc/cslc_data_vis
-      - file: cslc/cslc_nrb_gslc_sentinel_1
-        title: CSLC-GSLC-NRB Sentinel-1 demo
-      - file: cslc/cslc_nrb_saocom.ipynb
-        title: CSLC-NRB SAOCOM demo
-      - file: cslc/cslc_assessment_sentinel1.ipynb
-        title: CSLC Sentinel-1 assessment
-      - file: cslc/cslc_assessment_sentinel1_etad.ipynb
-        title: CSLC Sentinel-1 assessment (ETAD)
-  - caption: CMLP/GMLP
+  - caption: GMLP
     chapters:
       - file: mlc/mlc_overview
       - file: mlc/mlc_product
       - file: mlc/mlc_atbd
-      - file: mlc/mlc_data_vis
-      - file: mlc/cmlp_gmlp_sentinel_1
-        title: CMLP/GMLP Sentinel-1 demo
-      - file: mlc/cmlp_gmlp_saocom
-        title: CMLP/GMLP SAOCOM demo
-      - file: mlc/mlc_comparisons
-        title: CMLP/GMLP Assessment
   - caption: Common Algorithms
     chapters:
       - file: common/tools
-      - file: common/calibration
-        sections:
-          - file: common/amplitude_calibration
-          - file: common/phase_deramping
-          - file: common/phase_reramping
-      - file: common/geocoding
-        sections:
-          - file: common/PH-geocoding
-          - file: common/AP-geocoding
-      - file: common/interpolation
-        sections:
-          - file: common/regular_grid_to_sparse_grid_image_interpolation_sinc
-          - file: common/sparse_grid_to_regular_grid_image_interpolation_linear
-      - file: common/flattening
-        sections:
-          - file: common/noise_calibration
-          - file: common/phase_flattening
-          - file: common/gamma_flattening
       - file: common/reference_DEM
         sections:
           - file: common/reference_DEM_import
@@ -60,20 +26,31 @@ parts:
           - file: common/coordinate_conversion
           - file: common/radar_rasterization
           - file: common/radar_mapping
-      - file: common/coregistration
+      - file: common/interpolation
         sections:
-          - file: common/coregistration_model_based
-          - file: common/coregistration_data_driven
-          - file: common/image_matching
-          - file: common/esd_matching
-          - file: common/split_spectrum
-          - file: common/rubber_sheeting
-      - file: common/mosaic
-        sections:
-          - file: common/burst_merge
-          - file: common/tiling
-      - file: common/int_cohe_unw
+          - file: common/regular_grid_to_sparse_grid_image_interpolation_sinc
+          - file: common/sparse_grid_to_regular_grid_image_interpolation_linear
   - caption: Appendices
     chapters:
+      - file: appendices/appendices_cslc
+        sections:
+          - file: cslc/cslc_data_vis
+          - file: cslc/cslc_nrb_gslc_sentinel_1
+            title: CSLC-GSLC-NRB Sentinel-1 demo
+          - file: cslc/cslc_nrb_saocom
+            title: CSLC-NRB SAOCOM demo
+          - file: cslc/cslc_assessment_sentinel1
+            title: CSLC Sentinel-1 assessment
+          - file: cslc/cslc_assessment_sentinel1_etad
+            title: CSLC Sentinel-1 assessment (ETAD)
+      - file: appendices/appendices_gmlp
+        sections:
+          - file: mlc/mlc_data_vis
+          - file: mlc/cmlp_gmlp_sentinel_1
+            title: CMLP/GMLP Sentinel-1 demo
+          - file: mlc/cmlp_gmlp_saocom
+            title: CMLP/GMLP SAOCOM demo
+          - file: mlc/mlc_comparisons
+            title: CMLP/GMLP Assessment
       - file: glossary
       - file: references

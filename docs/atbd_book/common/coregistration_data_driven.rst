@@ -42,9 +42,20 @@ The flow for data driven co-registration is shown in :numref:`data_driven_coregi
 Key steps of the *Data-driven Co-registration*:
 
 - :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
-- :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
 - :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary images warping function, merging the information with the outcomes of the model-based co-registration. 
 - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid.
 - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
 - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
+- :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
 - :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   image_matching
+   rubber_sheeting
+   int_cohe_unw
+   esd_matching
+   split_spectrum
