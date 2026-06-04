@@ -12,27 +12,27 @@
    See the License for the specific language governing permissions and  
    limitations under the License.  
 
-.. _calibration:  
+.. _ingestion:  
 
-Calibration  
+Ingestion  
 ~~~~~~~~~~~~~~~~~~~~~~~~  
-The calibration unit provides functionalities for calibrating the amplitude, and deramping the phase of the input SLC image.  
+The ingestion unit provides functionalities for calibrating the amplitude, and deramping the phase of the input SLC image.  
 
 The algorithm can be divided into three steps, executed in the following sequence:  
 
 - :ref:`Amplitude calibration <amplitude_calibration>`  
 - :ref:`Phase deramping <phase_deramping>`  
 
-:numref:`calibration_unit_schema` shows a simplified schema of this functionality,  
+:numref:`ingestion_unit_schema` shows a simplified schema of this functionality,  
 with the necessary inputs and provided outputs.  
 
-.. _calibration_unit_schema_figure:  
+.. _ingestion_unit_schema_figure:  
 .. figure:: images/ARD_Calbration_Unit_ATBD.drawio.png
-   :name: calibration_unit_schema  
+   :name: ingestion_unit_schema  
    :width: 450  
    :align: center  
 
-   Diagram of *Calibration Unit*.  
+   Diagram of *Ingestion Unit*.  
 
 Specifically, the amplitude signal can be extracted from the input digital number (:math:`DN`)  
 and converted to beta-naught (:math:`\beta^0`). 
@@ -47,5 +47,13 @@ As a result, subsequent operations requiring interpolation of data onto the outp
 the radar grid of the reference image (for CSLC products) or the ground grid (for GSLC and NRB products)—  
 can be performed without further preprocessing.  
 
-Additionally, the calibration module updates the image annotation by adding the applied  
+Additionally, the ingestion module updates the image annotation by adding the applied  
 demodulation phase function, allowing it to be removed if requested at the end of the co-registration process.  
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   amplitude_calibration
+   phase_deramping
+   phase_reramping
