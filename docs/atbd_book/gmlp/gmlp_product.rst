@@ -1,4 +1,4 @@
-.. _mlc_product:
+.. _gmlp_product:
 
 ================================
 Product Description 

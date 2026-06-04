@@ -1,4 +1,4 @@
-.. _mlc_data_vis:
+.. _gmlp_data_vis:
 
 =====================
 Data visualization

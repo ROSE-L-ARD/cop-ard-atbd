@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-.. _mlc_label:
+.. _gmlp_label:
 
 ========================================================
 Algorithm Theoretical Basis Document (ATBD) 

@@ -44,7 +44,7 @@ Usually, model-based registration is sufficient for C-band Copernicus Sentinel-1
 
 Model-based co‑registration does not require the definition of a real SAR reference image; it is sufficient to define a common reference grid, which can then be used throughout the entire mission lifecycle.
 
-Conversely, in the case of a data-driven approach, a real SAR image is necessary. In addition, to maintain a sufficient degree of coherence between the reference and secondary images, it is necessary to implement a strategy to periodically update the reference image. The same approach proposed in :ref:`GMLP product generation <mlc_label>` can be adopted.
+Conversely, in the case of a data-driven approach, a real SAR image is necessary. In addition, to maintain a sufficient degree of coherence between the reference and secondary images, it is necessary to implement a strategy to periodically update the reference image. The same approach proposed in :ref:`GMLP product generation <gmlp_label>` can be adopted.
 
 A simple sketch of the co-registration process is shown in :numref:`coregistration_diagram`.
 

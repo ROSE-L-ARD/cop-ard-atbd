@@ -1,4 +1,4 @@
-.. _mlc_overview:
+.. _gmlp_overview:
 
 ==========================================
 GMLP Overview
