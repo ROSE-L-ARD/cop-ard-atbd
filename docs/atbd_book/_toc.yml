@@ -50,7 +50,7 @@ parts:
             title: CMLP/GMLP Sentinel-1 demo
           - file: gmlp/cmlp_gmlp_saocom
             title: CMLP/GMLP SAOCOM demo
-          - file: gmlp/gmlp_comparisons
+          - file: gmlp/mlc_comparisons
             title: CMLP/GMLP Assessment
       - file: glossary
       - file: references
