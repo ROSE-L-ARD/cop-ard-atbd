@@ -41,5 +41,5 @@ The processing units involved are:
    :maxdepth: 1
    :hidden:
 
-   cmlp_generation
+   ./cmlp_generation
    ../common/geocoding
