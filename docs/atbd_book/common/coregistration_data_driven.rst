@@ -29,10 +29,12 @@ In azimuth direction in case of TopSAR and ScanSAR acquisitions it is requested 
 
 Once offset measurements have to be collected in correspondence of patches over all the image, a warping function has to be reconstructed. This process is also known as :ref:`rubber sheeting <rubber_sheeting>`.
 
+After image alignment fine corrections of the phase are applied in order to remove residual tropospheric and ionospheric contributions (:ref:`Split Spectrum <split_spectrum>`, :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`).
+
 The flow for data driven co-registration is shown in :numref:`data_driven_coregistration_diagram`.
 
 .. _data_driven_coregistration_diagram_figure:
-.. figure:: images/co-registration_data_driven_detail_ATBD.drawio.png
+.. figure:: images/co-registration_data_driven_detail_ATBD_macro.drawio.png
    :name: data_driven_coregistration_diagram
    :width: 600
    :align: center
@@ -41,14 +43,23 @@ The flow for data driven co-registration is shown in :numref:`data_driven_coregi
 
 Key steps of the *Data-driven Co-registration*:
 
-- :ref:`Image matching <image_matching>`: compute the offset between reference and secondary images in correspondence of the reference image patches.
-- :ref:`Rubber sheeting <rubber_sheeting>`: Starting from the offsets estimated in correspondence of difference reference image patches, reconstruct the secondary images warping function, merging the information with the outcomes of the model-based co-registration. 
-- :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image to the reference grid.
-- :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
-- :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
-- :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`: compute the double phase difference between reference and secondary images, between adjacent bursts, and estimate a common offset in azimuth direction :cite:`ESD2016`. This porcessing is enabled for TopSAR and ScanSAR acquisition modes.
-- :ref:`Split spectrum <split_spectrum>`: compute the dispersive component of the phase delay (ionosphere), exploiting the phase difference between images acquired in correspondence of sub-bands with different carrier frequencies :cite:`Gomba2016`.
+- *Image Alignment*, including:
 
+   - :ref:`Image matching <image_matching>`: computes the offsets between the reference and secondary images at the locations of the reference image patches.
+
+   - :ref:`Rubber sheeting <rubber_sheeting>`: starting from the offsets estimated at different reference image patches, reconstructs the secondary image warping function by merging this information with the results of the model-based co-registration.
+
+   - :ref:`Image Resampling <regular_grid_to_sparse_grid_image_interpolation_sinc>`: resamples the secondary SLC image onto the reference grid.
+
+   - :ref:`Phase Flattening <phase_flattening>`: applies phase flattening to the co-registered SLC image.
+
+   - :ref:`Phase Reramping <phase_reramping>`: applies phase reramping to the co-registered SLC image.
+
+- :ref:`Split spectrum <split_spectrum>`: computes the dispersive component of the phase delay (ionosphere) by exploiting the phase difference between images acquired in sub-bands with different carrier frequencies :cite:`Gomba2016`.
+
+- :ref:`Enhanced Spectral Diversity (ESD) <esd_matching>`: computes the double phase difference between the reference and secondary images across adjacent bursts and estimates a common azimuth offset :cite:`ESD2016`. This processing step is enabled for TopSAR and ScanSAR acquisition modes.
+
+After each macro-step, a synchronization point is required to ensure that processing has been completed for all images and bursts before proceeding to the next step. Internally, each step is parallelized whenever possible across different bursts and chunks.
 
 .. toctree::
    :maxdepth: 1
@@ -57,5 +68,5 @@ Key steps of the *Data-driven Co-registration*:
    image_matching
    rubber_sheeting
    int_cohe_unw
-   esd_matching
    split_spectrum
+   esd_matching
