@@ -15,7 +15,7 @@
 .. _flattening:
 
 Flattening
----------------
+----------
 The *Flattening* is the process of removing from amplituide or phase signal of the SAR complex image a model:
 
 - :ref:`Noise removal <noise_removal>`: modifies the amplitude of the complex SLC data in order to compensate for estimated noise power. Used in NRB, POL product generation.

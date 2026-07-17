@@ -77,7 +77,7 @@ illustrates the number of looks image obtained from the same SAOCOM acquisition 
    *Area based geocoding* nlook image corresponding to a SAOCOM acquisition over Salamanca (ES) in ascending geometry, beam S4.
 
 The :math:`\gamma^0_r` represents the flattened CSLC intensity in radar geometry, and it is obtained from CSLC product by applying the 
-noise calibration as described :ref:`noise-removal <noise_removal>` and the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`. 
+noise calibration as described in :ref:`noise-removal <noise_removal>` and the Area Normalization Factor (ANF) as described in :ref:`Gamma-flattening <gamma_flattening>`. 
 
 **Layover and shadow masks** are projected using the same matrix, but since masks are expected to be boolean, the floating-point result 
 of the matrix multiplication is thresholded to restore a binary format.

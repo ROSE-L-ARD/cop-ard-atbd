@@ -3,12 +3,10 @@
 Acronyms
 -----------------------------
 
+.. glossary::
 
    AD
       Applicable Document
-
-   SAR
-      Synthetic Aperture Radar
 
    ADFS
       Auxiliary Data Files Specifications

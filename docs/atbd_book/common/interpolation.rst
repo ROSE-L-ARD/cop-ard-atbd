@@ -15,7 +15,7 @@
 .. _interpolation:
 
 Interpolation
----------------
+-------------
 The *Interpolation* is the process of reconstructing the values in a set of points, starting from the known values in correspondence of another set of points. Depending on the distribution of the input and output points different approaches can be followed.
 
 - :ref:`Regular grid to sparse grid interpolation <regular_grid_to_sparse_grid_image_interpolation_sinc>`: used to resample sencondary image into the same grid of the reference image using windowed sinc() interpolation.
