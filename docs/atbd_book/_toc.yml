@@ -30,6 +30,11 @@ parts:
         sections:
           - file: common/regular_grid_to_sparse_grid_image_interpolation_sinc
           - file: common/sparse_grid_to_regular_grid_image_interpolation_linear
+      - file: common/flattening
+        sections:
+          - file: common/noise_removal
+          - file: common/phase_flattening
+          - file: common/gamma_flattening
   - caption: Appendices
     chapters:
       - file: appendices/appendices_cslc
