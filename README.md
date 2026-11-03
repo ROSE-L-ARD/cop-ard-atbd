@@ -24,9 +24,7 @@ The `cop-ard-atbd` repository hosts deliverables and prototype algorithms develo
 
 The repository separates the documentation sources, the reference package, and the prototyping notebooks:
 
-## Repository Contents
-
-- `docs/atbd_book/`: Contains the Phase 2 Algorithm Theoretical Baseline Document (ATBD).
+- `docs/atbd_book/`: Contains the Algorithm Theoretical Baseline Document (ATBD) for the **Coregistered Single-Look Complex (CSLC)** and **Geocoded Multi-Look Phase (GMLP)** products.
 - `rosel/`: Contains the Phase 1 reference Python package.
 - `notebooks/`: Contains the Phase 1 workflows, analysis notebooks, and tests.
 
@@ -69,11 +67,12 @@ pip install -e .
 ## Contributors
 
 **Lead developer:**
-* **Federico Minati** ([@effeminati](https://github.com/effeminati)) — *Lead Developer*
+* **Federico Minati** ([@effeminati](https://github.com/effeminati)) — [B-Open](https://bopen.eu)
 
 **Contributors:**
-* **Alessio Morea** ([@AlessioMorea](https://github.com/AlessioMorea))
-* **Francesco Vecchioli** ([@francesco-vecchioli](https://github.com/francesco-vecchioli))
+* **Alessio Morea** ([@AlessioMorea](https://github.com/AlessioMorea)) — [B-Open](https://bopen.eu)
+* **Carmine Frascella** ([@CarmineFrascella](https://github.com/CarmineFrascella)) — [B-Open](https://bopen.eu)
+* **Francesco Vecchioli** ([@francesco-vecchioli](https://github.com/francesco-vecchioli)) — [B-Open](https://bopen.eu)
 * **Francesco DeZan** ([@fdz-insar](https://github.com/fdz-insar)) — [DeltaPhi](https://www.delta-phi.eu/)
 * **Juan M. Lopez-Sanchez** ([@juanma-lopez](https://github.com/juanma-lopez)) — [University of Alicante](https://www.ua.es/en/)
 * **Paco López-Dekker** ([@pakodekker](https://github.com/pakodekker)) — [TU Delft](https://www.tudelft.nl/en/)
