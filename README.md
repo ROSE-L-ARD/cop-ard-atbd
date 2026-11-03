@@ -1,106 +1,79 @@
-# rose-l-ard
-ROSE-L Analysis Ready Data
+<!--
+  Copyright 2026 European Union
 
-Algorithms and utilities for Analysis Ready Data for Copernicus Missions
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-Enables cloud-native SAR processing via [*Xarray*](https://xarray.pydata.org)
-and [*Dask*](https://dask.org).
+    http://www.apache.org/licenses/LICENSE-2.0
 
-This Open Source project is sponsored by B-Open - https://www.bopen.eu.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 
-## Install
+# COP ARD ATBD
 
-The easiest way to install *rosel* is in a *conda* environment.
-The following commands create a new environment, activate it, install the package and its dependencies:
+> **Repository status:** This repository is archived and read-only. Development is complete and no new updates will be made.
 
-```shell
-# cloning from git repository
-git clone https://github.com/bopen/rose-l-ard.git rose-l-ard
-cd rose-l-ard
+The `cop-ard-atbd` repository hosts deliverables and prototype algorithms developed for the Copernicus Analysis Ready Data (ARD) project.
 
-# create a new conda environment
+## Project Structure
+
+The repository separates the documentation sources, the reference package, and the prototyping notebooks:
+
+## Repository Contents
+
+- `docs/atbd_book/`: Contains the Phase 2 Algorithm Theoretical Baseline Document (ATBD).
+- `rosel/`: Contains the Phase 1 reference Python package.
+- `notebooks/`: Contains the Phase 1 workflows, analysis notebooks, and tests.
+
+## Installation
+
+Use Conda to create the environment and install the package.
+
+### Prerequisites
+
+- Conda installed on your system.
+- Git client configured.
+
+### Setup Steps
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ROSE-L-ARD/cop-ard-atbd.git
+cd cop-ard-atbd
+```
+
+2. Create the environment from `env.yaml`:
+
+```bash
 conda env create -n rosel -f env.yaml
+```
 
-# activate conda environment
+3. Activate the environment:
+
+```bash
 conda activate rosel
+```
 
-# install rosel package
+4. Install the package in editable mode:
+
+```bash
 pip install -e .
 ```
 
-## Test installation
-In order to test the correct installation of *rosel* package execute the following command:
-```python
-# import rosel geocoding module
-import rosel.shiroma
+## Contributors
 
-  
-# check rosel geocoding interface based on area projected algorithm
-rosel.shiroma.map_geo_ap?
-  
-```
+**Lead developer:**
+* **Federico Minati** ([@effeminati](https://github.com/effeminati)) — *Lead Developer*
 
-## Command line usage
-
-
-## Python API usage
-
-The python API has entry points to the same commands and it also gives access to several lower level
-algorithms, but internal APIs should not be considered stable:
-
-```python
->>> import rosel.io
->>> import rosel.shiroma
->>> cslc = rosel.io.read(product_path)
-
-```
-
-
-## Reference documentation
-
-This is the list of the reference documents:
-
-- 
--
-
-## Contributing
-
-The main repository is hosted on GitHub.
-Testing, bug reports and contributions are highly welcomed and appreciated:
-
-https://github.com/bopen/sarsen
-
-Lead developer:
-
-- [Federico Minati](https://github.com/effeminati) - [B-Open](https://bopen.eu)
-
-Main contributors:
-
-- [Francesco Vecchioli ](https://github.com/francesco-vecchioli) - [B-Open](https://bopen.eu)
-- [Francesco De Zan ](https://github.com/fdz-insar) - [DeltaPhi](https://www.delta-phi.eu/)
-- [Juan M Lopez Sanchez ](https://github.com/juanma-lopez) - [University of Alicante](https://www.ua.es/en/)
-- [Paco Lopez Dekker ](https://github.com/) - [TU-Delft](https://www.tudelft.nl/en/)
-
-See also the list of [contributors](https://github.com/bopen/rose-l-ard/contributors) who participated in this project.
-
-## Sponsoring
-
-[B-Open](https://bopen.eu) commits to maintain the project long term and we are happy to accept sponsorships to develop new features.
-
-## License
-
-```
-Copyright 2016-2026 B-Open Solutions srl
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+**Contributors:**
+* **Alessio Morea** ([@AlessioMorea](https://github.com/AlessioMorea))
+* **Francesco Vecchioli** ([@francesco-vecchioli](https://github.com/francesco-vecchioli))
+* **Francesco DeZan** ([@fdz-insar](https://github.com/fdz-insar)) — [DeltaPhi](https://www.delta-phi.eu/)
+* **Juan M. Lopez-Sanchez** ([@juanma-lopez](https://github.com/juanma-lopez)) — [University of Alicante](https://www.ua.es/en/)
+* **Paco López-Dekker** ([@pakodekker](https://github.com/pakodekker)) — [TU Delft](https://www.tudelft.nl/en/)
