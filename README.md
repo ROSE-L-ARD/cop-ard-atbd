@@ -75,4 +75,5 @@ pip install -e .
 * **Francesco Vecchioli** ([@francesco-vecchioli](https://github.com/francesco-vecchioli)) — [B-Open](https://bopen.eu)
 * **Francesco DeZan** ([@fdz-insar](https://github.com/fdz-insar)) — [DeltaPhi](https://www.delta-phi.eu/)
 * **Juan M. Lopez-Sanchez** ([@juanma-lopez](https://github.com/juanma-lopez)) — [University of Alicante](https://www.ua.es/en/)
+* **Yan Yuan** ([@Yan-518](https://github.com/Yan-518)) — [TU Delft](https://www.tudelft.nl/en/)
 * **Paco López-Dekker** ([@pakodekker](https://github.com/pakodekker)) — [TU Delft](https://www.tudelft.nl/en/)
